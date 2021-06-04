@@ -21,12 +21,20 @@
   - `npx clusteriomaster bootstrap create-ctl-config <username>`
 
 ### Configure a local slave
+  - Navigate to Cluster Root
   - Create the configuration
   - `npx clusterioctl slave create-config --name local --generate-token`
 
 ### Configure a remote slave
 TODO
+
+### Install plugins
+  - Must be installed on the master and each remote slave
+  - Navigate to Cluster Root
+  - `npm install @clusterio/plugin-global_chat`
+  - `npx clusteriomaster plugin add @clusterio/plugin-global_chat`
   
+
 ## Running
 
 ### Start the master server
@@ -50,4 +58,13 @@ TODO
   - Adjust configuration as required - suggest using UI
   - `npx clusterioctl instance start "My Instance Name"`
 
+### Stop an Instance
+  - Use the UI OR
+  - `npx clusterioctl instance stop "My Instance Name"`
  
+### Stop a slave (local or remote)
+  - Use the UI
+  
+### Stop the master server
+  - Navigate to the Cluster Root
+  - `npx clusteriomaster stop`
