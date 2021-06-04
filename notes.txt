@@ -1,0 +1,14 @@
+TODO:
+	Document exact setup steps for ubuntu machine
+	
+	Update local clusterio
+	Get a pure vanilla running
+	Add in global chat - test
+	
+	Use old ATR scenario base to create empty scenario - test
+	Add in clusteriolib mod
+	Add in subspace mod
+	Add in subspace plugin - Test
+	Munge in clusteriolib mod
+	Munge in subspace mod
+
