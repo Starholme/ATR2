@@ -11,10 +11,8 @@
   - `wget -O factorio.tar.gz https://www.factorio.com/get-download/latest/headless/linux64`
   - `tar -xf factorio.tar.gz`
 
-### Install plugins
-TODO
-
 ### Configure master server
+  - Navigate to Cluster Root
   - Set the local only HTTP port
   - `npx clusteriomaster config set master.http_port 8181`
   - Setup an admin account

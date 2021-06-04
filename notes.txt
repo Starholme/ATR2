@@ -1,8 +1,6 @@
 TODO:
 	Document exact setup steps for ubuntu machine
 	
-	Add in global chat - test
-	
 	Use old ATR scenario base to create empty scenario - test
 	Add in clusteriolib mod
 	Add in subspace mod
