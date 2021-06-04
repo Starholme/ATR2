@@ -56,6 +56,7 @@ TODO
   - `npx clusterioctl instance create "My Instance Name"`
   - `npx clusterioctl instance assign "My Instance Name" "Slave Name"`
   - Adjust configuration as required - suggest using UI
+  - Move the desired save file to the instance save folder
   - `npx clusterioctl instance start "My Instance Name"`
 
 ### Stop an Instance

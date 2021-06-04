@@ -1,7 +1,6 @@
 TODO:
 	Document exact setup steps for ubuntu machine
 	
-	Use old ATR scenario base to create empty scenario - test
 	Add in clusteriolib mod
 	Add in subspace mod
 	Add in subspace plugin - Test
