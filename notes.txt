@@ -8,3 +8,6 @@ TODO:
 	Munge in clusteriolib mod
 	Munge in subspace mod
 
+	Setup backups for cluster root/database folder
+	Document setting ports for each instance factorio.game_port: https://github.com/clusterio/factorioClusterio/blob/master/docs/configuration.md
+	
