@@ -1,8 +1,6 @@
 TODO:
 	Document exact setup steps for ubuntu machine
 	
-	Update local clusterio
-	Get a pure vanilla running
 	Add in global chat - test
 	
 	Use old ATR scenario base to create empty scenario - test
