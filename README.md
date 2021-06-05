@@ -33,7 +33,14 @@ TODO
   - Navigate to Cluster Root
   - `npm install @clusterio/plugin-global_chat`
   - `npx clusteriomaster plugin add @clusterio/plugin-global_chat`
-  
+  - `npm install @clusterio/plugin-subspace_storage'
+  - `npx clusteriomaster plugin add @clusterio/plugin-subspace_storage`
+
+### Install mods
+  - Download current mods
+    - https://mods.factorio.com/mod/clusterio_lib
+	- https://mods.factorio.com/mod/subspace_storage
+  - Place in ClusterRoot\sharedMods folder
 
 ## Running
 
