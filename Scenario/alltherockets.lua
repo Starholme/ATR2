@@ -4,19 +4,27 @@
 --      3. Put other stuff into their own files where possible
 
 -- Require other modules
+local CONFIG = require("config")
+local Spawn = require("lib/atr_spawn")
+local Utils = require("lib/atr_utils")
+local Gui = require("lib/atr_gui")
+
 
 -- Event handlers
 local function OnInit(event)
+    Spawn.Setup()
+end
 
+local function OnGuiClick(event)
+    if not (event and event.element and event.element.valid) then return end
 
-    rendering.draw_text{text="Testing1",
-                    surface="nauvis",
-                    target= {x=-15.5,y=-23},
-                    color={0.9, 0.7, 0.3, 0.8},
-                    scale=30,
-                    --Allowed fonts: default-dialog-button default-game compilatron-message-font default-large default-large-semibold default-large-bold heading-1 compi
-                    font="compi",
-                    draw_on_ground=true}
+    Gui.OnGuiClick(event)
+
+end
+
+local function OnPlayerCreated(event)
+    local player = game.players[event.player_index]
+    Gui.OnPlayerCreated(player)
 end
 
 local function tick120(event)
@@ -24,6 +32,10 @@ local function tick120(event)
 end
 
 return {
+    events = {
+        [defines.events.on_gui_click] = OnGuiClick,
+        [defines.events.on_player_created] = OnPlayerCreated
+    },
     on_init = OnInit,
     on_nth_tick = {[120] = tick120}
 }
