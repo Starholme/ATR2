@@ -2,45 +2,7 @@ local ATR_BUTTON = "atr_button"
 local ATR_GUI = "atr_gui"
 
 local mod_gui = require("mod-gui")
-
-local function DoesGuiExist(player, name)
-    return (mod_gui.get_frame_flow(player)[name] ~= nil)
-end
-
-local function IsGuiVisible(player, name)
-    local gui = mod_gui.get_frame_flow(player)[name]
-    return (gui.visible)
-end
-
-local function HideGui(player, name)
-    local gui = mod_gui.get_frame_flow(player)[name]
-    gui.visible = false
-    player.opened = nil
-end
-
-local function ShowGui(player, name)
-    local gui = mod_gui.get_frame_flow(player)[name]
-    gui.visible = true
-    player.opened = gui
-end
-
--- Apply a style option to a GUI
-local function ApplyStyle (guiIn, styleIn)
-    for k,v in pairs(styleIn) do
-        guiIn.style[k]=v
-    end
-end
-
--- Shorter way to add a label with a style
-local function AddLabel(gui, name, message, style)
-    local g = gui.add{name = name, type = "label",
-                    caption=message}
-    if (type(style) == "table") then
-        ApplyStyle(g, style)
-    else
-        g.style = style
-    end
-end
+local GuiUtils = require("atr_guiUtils")
 
 local function CreateGuiButton(player)
     if (mod_gui.get_button_flow(player).atr_button == nil) then
@@ -73,7 +35,7 @@ local function CreateAtrGuiTabsPane(player)
         type="frame",
         name="sub_header",
         style = "changelog_subheader_frame"}
-    AddLabel(subhead, "scen_info", "Scenario Info and Controls", "subheader_caption_label")
+    GuiUtils.AddLabel(subhead, "scen_info", "Scenario Info and Controls", "subheader_caption_label")
 
     -- TABBED PANE
     local oarc_tabs = inside_frame.add{
@@ -96,13 +58,13 @@ local function OnGuiClick(event)
             event.element.sprite="utility/expand_dots"
         end
 
-        if (not DoesGuiExist(player, ATR_GUI)) then
+        if (not GuiUtils.DoesGuiExist(player, ATR_GUI)) then
             CreateAtrGuiTabsPane(player)
         else
-            if (IsGuiVisible(player, ATR_GUI)) then
-                HideGui(player, ATR_GUI)
+            if (GuiUtils.IsGuiVisible(player, ATR_GUI)) then
+                GuiUtils.HideGui(player, ATR_GUI)
             else
-                ShowGui(player, ATR_GUI)
+                GuiUtils.ShowGui(player, ATR_GUI)
                 --FakeTabChangeEventOarcGui(player)
             end
         end
