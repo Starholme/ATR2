@@ -5,9 +5,9 @@
 
 --REQUIRES--
 local CONFIG = require("config")
-local Spawn = require("lib/atr_spawn")
-local Utils = require("lib/atr_utils")
-local Gui = require("lib/atr_gui")
+local spawn = require("lib/atr_spawn")
+local utils = require("lib/atr_utils")
+local gui = require("lib/atr_gui")
 
 --Holds items that are exported
 local exports = {
@@ -16,19 +16,19 @@ local exports = {
 }
 
 function exports.on_init(event)
-    Spawn.Setup()
+    spawn.setup()
 end
 
 exports.events[defines.events.on_gui_click] = function (event)
     if not (event and event.element and event.element.valid) then return end
 
-    Gui.OnGuiClick(event)
+    gui.on_gui_click(event)
 
 end
 
 exports.events[defines.events.on_player_created] = function (event)
     local player = game.players[event.player_index]
-    Gui.OnPlayerCreated(player)
+    gui.on_player_created(player)
 end
 
 exports.on_nth_tick[120] = function (event)
