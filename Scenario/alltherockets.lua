@@ -3,39 +3,36 @@
 --      2. Put all config options in config.lua
 --      3. Put other stuff into their own files where possible
 
--- Require other modules
+--REQUIRES--
 local CONFIG = require("config")
 local Spawn = require("lib/atr_spawn")
 local Utils = require("lib/atr_utils")
 local Gui = require("lib/atr_gui")
 
+--Holds items that are exported
+local exports = {
+    events = {},
+    on_nth_tick = {}
+}
 
--- Event handlers
-local function OnInit(event)
+function exports.on_init(event)
     Spawn.Setup()
 end
 
-local function OnGuiClick(event)
+exports.events[defines.events.on_gui_click] = function (event)
     if not (event and event.element and event.element.valid) then return end
 
     Gui.OnGuiClick(event)
 
 end
 
-local function OnPlayerCreated(event)
+exports.events[defines.events.on_player_created] = function (event)
     local player = game.players[event.player_index]
     Gui.OnPlayerCreated(player)
 end
 
-local function tick120(event)
+exports.on_nth_tick[120] = function (event)
     game.print("Tick 120 fired")
 end
 
-return {
-    events = {
-        [defines.events.on_gui_click] = OnGuiClick,
-        [defines.events.on_player_created] = OnPlayerCreated
-    },
-    on_init = OnInit,
-    on_nth_tick = {[120] = tick120}
-}
+return exports

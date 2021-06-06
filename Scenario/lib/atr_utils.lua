@@ -1,5 +1,11 @@
+--CONSTANTS--
 local LARGE = 10
 local ORANGE = {0.9, 0.7, 0.3, 0.8}
+
+--REQUIRES--
+
+--Holds items that are exported
+local exports = {}
 
 local function DrawText(surface, x, y, scale, color, text)
     rendering.draw_text{
@@ -14,10 +20,8 @@ local function DrawText(surface, x, y, scale, color, text)
     }
 end
 
-local function DrawTextLarge(text, x, y)
+function exports.DrawTextLarge(text, x, y)
     DrawText("nauvis", x, y, LARGE, ORANGE, text)
 end
 
-return {
-    DrawTextLarge = DrawTextLarge
-}
+return exports

@@ -1,8 +1,13 @@
+--CONSTANTS--
 local ATR_BUTTON = "atr_button"
 local ATR_GUI = "atr_gui"
 
+--REQUIRES--
 local mod_gui = require("mod-gui")
 local GuiUtils = require("atr_guiUtils")
+
+--Holds items that are exported
+local exports = {}
 
 local function CreateGuiButton(player)
     if (mod_gui.get_button_flow(player).atr_button == nil) then
@@ -65,7 +70,7 @@ local function AtrButtonClick(event, player)
     end
 end
 
-local function OnGuiClick(event)
+function exports.OnGuiClick(event)
     local name = event.element.name
     local player = game.players[event.player_index]
 
@@ -75,11 +80,8 @@ local function OnGuiClick(event)
 
 end
 
-local function OnPlayerCreated(player)
+function exports.OnPlayerCreated(player)
     CreateGuiButton(player)
 end
 
-return{
-    OnGuiClick = OnGuiClick,
-    OnPlayerCreated = OnPlayerCreated
-}
+return exports

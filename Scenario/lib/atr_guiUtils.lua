@@ -1,21 +1,27 @@
+--CONSTANTS--
+
+--REQUIRES--
 local mod_gui = require("mod-gui")
 
-local function DoesGuiExist(player, name)
+--Holds items that are exported
+local exports = {}
+
+function exports.DoesGuiExist(player, name)
     return (mod_gui.get_frame_flow(player)[name] ~= nil)
 end
 
-local function IsGuiVisible(player, name)
+function exports.IsGuiVisible(player, name)
     local gui = mod_gui.get_frame_flow(player)[name]
     return (gui.visible)
 end
 
-local function HideGui(player, name)
+function exports.HideGui(player, name)
     local gui = mod_gui.get_frame_flow(player)[name]
     gui.visible = false
     player.opened = nil
 end
 
-local function ShowGui(player, name)
+function exports.ShowGui(player, name)
     local gui = mod_gui.get_frame_flow(player)[name]
     gui.visible = true
     player.opened = gui
@@ -29,7 +35,7 @@ local function ApplyStyle (guiIn, styleIn)
 end
 
 -- Shorter way to add a label with a style
-local function AddLabel(gui, name, message, style)
+function exports.AddLabel(gui, name, message, style)
     local g = gui.add{name = name, type = "label",
                     caption=message}
     if (type(style) == "table") then
@@ -39,10 +45,4 @@ local function AddLabel(gui, name, message, style)
     end
 end
 
-return{
-    DoesGuiExist = DoesGuiExist,
-    IsGuiVisible = IsGuiVisible,
-    HideGui = HideGui,
-    ShowGui = ShowGui,
-    AddLabel = AddLabel
-}
+return exports
