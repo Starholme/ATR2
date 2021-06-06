@@ -1,0 +1,8 @@
+{
+    "scenario": {
+        "name": "all-the-rockets",
+        "modules": [
+            "alltherockets"
+        ]
+    }
+}

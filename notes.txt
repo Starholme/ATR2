@@ -1,10 +1,23 @@
 TODO:
 	Document exact setup steps for ubuntu machine
 	
-	Use old ATR scenario base to create empty scenario - test
-	Add in clusteriolib mod
-	Add in subspace mod
 	Add in subspace plugin - Test
-	Munge in clusteriolib mod
-	Munge in subspace mod
+		- Fails, get unknown mod name error in server console
+	Add in clusteriolib mod 
+	Add in subspace mod
+		-Works with these three.
+		
+	For now:
+		Keep as mod
+		Expand scenario to add extra features, like world eater
+		
+	Next steps:
+		Add intro GUI from OARC
 
+	Setup backups for cluster root/database folder
+	Document setting ports for each instance factorio.game_port: https://github.com/clusterio/factorioClusterio/blob/master/docs/configuration.md
+	
+	
+What is MVP?
+	Running cluster on box
+	TLS setup
