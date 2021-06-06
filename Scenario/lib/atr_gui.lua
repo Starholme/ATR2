@@ -45,31 +45,34 @@ local function CreateAtrGuiTabsPane(player)
     oarc_tabs.style.top_padding = 8
 end
 
+local function AtrButtonClick(event, player)
+    --On first click, change to elipsis
+    if (event.element.caption ~= "") then
+        event.element.caption = ""
+        event.element.style.width = 20
+        event.element.sprite="utility/expand_dots"
+    end
+
+    if (not GuiUtils.DoesGuiExist(player, ATR_GUI)) then
+        CreateAtrGuiTabsPane(player)
+    else
+        if (GuiUtils.IsGuiVisible(player, ATR_GUI)) then
+            GuiUtils.HideGui(player, ATR_GUI)
+        else
+            GuiUtils.ShowGui(player, ATR_GUI)
+            --FakeTabChangeEventOarcGui(player)
+        end
+    end
+end
+
 local function OnGuiClick(event)
     local name = event.element.name
     local player = game.players[event.player_index]
 
     if (name == ATR_BUTTON) then
-
-        --On first click, change to elipsis
-        if (event.element.caption ~= "") then
-            event.element.caption = ""
-            event.element.style.width = 20
-            event.element.sprite="utility/expand_dots"
-        end
-
-        if (not GuiUtils.DoesGuiExist(player, ATR_GUI)) then
-            CreateAtrGuiTabsPane(player)
-        else
-            if (GuiUtils.IsGuiVisible(player, ATR_GUI)) then
-                GuiUtils.HideGui(player, ATR_GUI)
-            else
-                GuiUtils.ShowGui(player, ATR_GUI)
-                --FakeTabChangeEventOarcGui(player)
-            end
-        end
-
+        AtrButtonClick(event, player)
     end
+
 end
 
 local function OnPlayerCreated(player)
