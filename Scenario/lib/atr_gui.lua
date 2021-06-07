@@ -5,6 +5,7 @@ local ATR_GUI = "atr_gui"
 --REQUIRES--
 local mod_gui = require("mod-gui")
 local gui_utils = require("atr_gui_utils")
+local CONFIG = require("config")
 
 --Holds items that are exported
 local exports = {}
@@ -17,6 +18,30 @@ local function create_gui_button(player)
                                                         style=mod_gui.button_style}
         b.style.padding=2
     end
+end
+
+local function init_gui_tabs(player, tab_pane)
+    local tab = gui_utils.add_tab(player, tab_pane, "Info")
+    gui_utils.add_label(tab, "welcome_label", "Welcome to All The Rockets!", gui_utils.STYLES.LABEL_HEADER_STYLE)
+    gui_utils.add_label(tab, "welcome_text", CONFIG.WELCOME_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+
+    --Enemy Settings
+    local enemy_expansion_txt = "disabled"
+    if game.map_settings.enemy_expansion.enabled then enemy_expansion_txt = "enabled" end
+
+    local enemy_text="Server Run Time: " .. gui_utils.formattime_hours_mins(game.tick) .. "\n" ..
+    "Current Evolution: " .. string.format("%i", game.forces["enemy"].evolution_factor) .. "\n" ..
+    "Enemy evolution time/pollution/destroy factors: " ..
+    string.format("%.1f", game.map_settings.enemy_evolution.time_factor * 10000000) .. "/" ..
+    string.format("%.0f", game.map_settings.enemy_evolution.pollution_factor * 10000000) .. "/" ..
+    string.format("%.0f", game.map_settings.enemy_evolution.destroy_factor * 100000) .. "\n" ..
+    "Enemy expansion is " .. enemy_expansion_txt
+
+    gui_utils.add_label(tab, "enemy_info", enemy_text, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+
+    -- Soft Mods
 end
 
 local function create_atr_gui_skeleton(player)
@@ -43,11 +68,13 @@ local function create_atr_gui_skeleton(player)
     gui_utils.add_label(subhead, "scen_info", "Scenario Info and Controls", "subheader_caption_label")
 
     -- TABBED PANE
-    local oarc_tabs = inside_frame.add{
+    local atr_tabs = inside_frame.add{
         name="atr_tabs",
         type="tabbed-pane",
         style="tabbed_pane"}
-    oarc_tabs.style.top_padding = 8
+    atr_tabs.style.top_padding = 8
+
+    init_gui_tabs(player, atr_tabs)
 end
 
 local function atr_button_click(event, player)
@@ -65,7 +92,6 @@ local function atr_button_click(event, player)
             gui_utils.hide_gui(player, ATR_GUI)
         else
             gui_utils.show_gui(player, ATR_GUI)
-            --FakeTabChangeEventOarcGui(player)
         end
     end
 end

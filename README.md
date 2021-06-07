@@ -1,11 +1,30 @@
 ## Setup
 
+### Install Ubuntu 20.04 LTS
+  - During install, ensure you choose to install SSH
+  - Edit the config.yaml to set up the correct IP addresses, or DHCP
+  - After install, copy and run the scripts
+  - `scp *.* username@someip:`
+  - `scp .* username@someip:`
+  - Reload bash
+  - `exec bash`
+  - Copy the other files to a setup folder
+  - `mkdir setup`
+  - `mv * setup/`
+  - `cd setup`
+  - Execute the setup script
+  - `bash setup.sh`
+  - Update and restart
+  - `upandauto`
+
 ### Install nodejs, clusterio, and factorio
   - Choose a directory to be the Cluster Root.
   - `mkdir \atr`
   - `cd \atr`
-  - `sudo apt update`
-  - `sudo apt install nodejs npm`
+  - `curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+  - `sudo apt-get install -y nodejs npm`
+  - Check your node version, currently needs to be 14
+  - `node -v`
   - `npm init -y`
   - `npm install @clusterio/master @clusterio/slave @clusterio/ctl`
   - `wget -O factorio.tar.gz https://www.factorio.com/get-download/latest/headless/linux64`
@@ -20,20 +39,12 @@
   - `npx clusteriomaster bootstrap create-admin <username>`
   - `npx clusteriomaster bootstrap create-ctl-config <username>`
 
-### Configure a local slave
-  - Navigate to Cluster Root
-  - Create the configuration
-  - `npx clusterioctl slave create-config --name local --generate-token`
-
-### Configure a remote slave
-TODO
-
 ### Install plugins
   - Must be installed on the master and each remote slave
   - Navigate to Cluster Root
   - `npm install @clusterio/plugin-global_chat`
   - `npx clusteriomaster plugin add @clusterio/plugin-global_chat`
-  - `npm install @clusterio/plugin-subspace_storage'
+  - `npm install @clusterio/plugin-subspace_storage`
   - `npx clusteriomaster plugin add @clusterio/plugin-subspace_storage`
 
 ### Install mods
@@ -41,6 +52,15 @@ TODO
     - https://mods.factorio.com/mod/clusterio_lib
 	- https://mods.factorio.com/mod/subspace_storage
   - Place in ClusterRoot\sharedMods folder
+
+### Configure a local slave
+  - Start the master server, see "Running: Start the master server" below
+  - Navigate to Cluster Root
+  - Create the configuration
+  - `npx clusterioctl slave create-config --name local --generate-token`
+
+### Configure a remote slave
+TODO
 
 ## Running
 
@@ -76,3 +96,11 @@ TODO
 ### Stop the master server
   - Navigate to the Cluster Root
   - `npx clusteriomaster stop`
+  
+### Use screen to keep running while detached
+  - This is ideal when running over SSH, or if you don't want to leave terminals open
+  - Start a new screen session with `screen -S somename`
+  - Start your long running process, like the master server
+  - CTRL-A CTRL-D to detach
+  - Reattach to it with `screen -R` later
+  - List screen sessions with `screen -list`
