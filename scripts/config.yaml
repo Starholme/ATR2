@@ -1,0 +1,9 @@
+network:
+    version: 2
+    ethernets:
+        enp2s0:
+            addresses:
+                - 216.197.161.146/24
+            gateway4: 216.197.161.254
+            nameservers:
+                addresses: [1.1.1.1,8.8.8.8]
