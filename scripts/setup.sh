@@ -8,8 +8,16 @@ sudo cp config.yaml /etc/netplan
 sudo netplan generate
 sudo netplan apply
 
+echo Updating apt package list
+sudo apt update
+
 echo Installing nmon
-sudo apt-get install nmon
+sudo apt install -y nmon
+
+echo Installing nginx
+sudo apt install -y nginx
+echo Installing certbot
+sudo apt install -y certbot python3-certbot-nginx
 
 echo Enabling and configuring firewall rules
 sudo ufw default deny incoming

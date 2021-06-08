@@ -14,8 +14,25 @@
   - `cd setup`
   - Execute the setup script
   - `bash setup.sh`
+  - The setup script should
+    - setup the network based on config.yaml
+    - Install nmon
+    - Install nginx
   - Update and restart
   - `upandauto`
+
+### Configure nginx
+  - Create a folder for your domain
+  - `sudo mkdir -p /var/www/atr/html`
+  - `sudo chown -R $USER:$USER /var/www/atr/html`
+  - `sudo cp nginx_atr /etc/nginx/sites-available/nginx_atr`
+  - `sudo ln -s /etc/nginx/sites-available/nginx_atr /etc/nginx/sites-enabled/`
+
+### Configure CertBot
+  - `sudo certbot --nginx -d alltherockets.duckdns.org -d www.alltherockets.duckdns.org`
+  - Add the auto renew to cron `crontab -e`
+  - Add this line: `0 12 * * * /usr/bin/certbot renew --quiet`
+  - Test the auto renew `sudo certbot renew --dry-run`
 
 ### Install nodejs, clusterio, and factorio
   - Choose a directory to be the Cluster Root.
@@ -89,14 +106,14 @@ TODO
 ### Stop an Instance
   - Use the UI OR
   - `npx clusterioctl instance stop "My Instance Name"`
- 
+
 ### Stop a slave (local or remote)
   - Use the UI
-  
+
 ### Stop the master server
   - Navigate to the Cluster Root
   - `npx clusteriomaster stop`
-  
+
 ### Use screen to keep running while detached
   - This is ideal when running over SSH, or if you don't want to leave terminals open
   - Start a new screen session with `screen -S somename`
