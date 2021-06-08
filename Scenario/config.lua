@@ -10,5 +10,8 @@ return {
     MOD_TEXT = "Mods:\n"..
     "Clusterio Library - Used to communicate with the cluster"..
     "Subspace Storage - Allows storing items and fluids in a limitless space, " ..
-    "   shared across the cluster"
+    "   shared across the cluster",
+
+    ENABLE_RESEARCH_QUEUE = true,
+    FRIENDLY_FIRE = false
 }

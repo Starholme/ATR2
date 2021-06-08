@@ -17,6 +17,11 @@ local exports = {
 
 function exports.on_init(event)
     spawn.setup()
+
+    --Does this belong somewhere else?
+    game.forces.player.research_queue_enabled = CONFIG.ENABLE_RESEARCH_QUEUE
+    game.forces.player.friendly_fire = CONFIG.FRIENDLY_FIRE
+
 end
 
 exports.events[defines.events.on_gui_click] = function (event)
