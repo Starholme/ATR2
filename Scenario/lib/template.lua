@@ -1,5 +1,5 @@
 --CONSTANTS--
-SOME_CONSTANT = "val"
+local SOME_CONSTANT = "val"
 
 --REQUIRES--
 local req = require("whatever")
