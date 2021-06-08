@@ -33,7 +33,7 @@ local function init_gui_tabs(player, tab_pane)
     local enemy_text="Server Run Time: " .. gui_utils.formattime_hours_mins(game.tick) .. "\n" ..
     "Current Evolution: " .. string.format("%i", game.forces["enemy"].evolution_factor) .. "\n" ..
     "Enemy evolution time/pollution/destroy factors: " ..
-    string.format("%.1f", game.map_settings.enemy_evolution.time_factor * 10000000) .. "/" ..
+    string.format("%.0f", game.map_settings.enemy_evolution.time_factor * 10000000) .. "/" ..
     string.format("%.0f", game.map_settings.enemy_evolution.pollution_factor * 10000000) .. "/" ..
     string.format("%.0f", game.map_settings.enemy_evolution.destroy_factor * 100000) .. "\n" ..
     "Enemy expansion is " .. enemy_expansion_txt
