@@ -23,7 +23,7 @@ end
 local function init_gui_tabs(player, tab_pane)
     local tab = gui_utils.add_tab(player, tab_pane, "Info")
     gui_utils.add_label(tab, "welcome_label", "Welcome to All The Rockets!", gui_utils.STYLES.LABEL_HEADER_STYLE)
-    gui_utils.add_label(tab, "welcome_text", CONFIG.WELCOME_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_label(tab, "scenario_text", CONFIG.SCENARIO_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
     gui_utils.add_spacer_line(tab)
 
     --Enemy Settings
@@ -41,7 +41,12 @@ local function init_gui_tabs(player, tab_pane)
     gui_utils.add_label(tab, "enemy_info", enemy_text, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
     gui_utils.add_spacer_line(tab)
 
-    -- Soft Mods
+    -- Mods
+    gui_utils.add_label(tab, "mods_text", CONFIG.MOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_label(tab, "softmods_text", CONFIG.SOFTMOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+
+    -- Contact information
+    gui_utils.add_label(tab, "contact_text", CONFIG.CONTACT_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end
 
 local function create_atr_gui_skeleton(player)
