@@ -43,7 +43,8 @@ local function init_gui_tabs(player, tab_pane)
 
     -- Mods
     gui_utils.add_label(tab, "mods_text", CONFIG.MOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
-    gui_utils.add_label(tab, "softmods_text", CONFIG.SOFTMOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_label(tab, "softmods_text", "\n" .. CONFIG.SOFTMOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
 
     -- Contact information
     gui_utils.add_label(tab, "contact_text", CONFIG.CONTACT_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
