@@ -8,6 +8,7 @@ local CONFIG = require("config")
 local spawn = require("lib/atr_spawn")
 local utils = require("lib/atr_utils")
 local gui = require("lib/atr_gui")
+local test_mode = require("lib/atr_test_mode")
 
 --Holds items that are exported
 local exports = {
@@ -34,10 +35,17 @@ end
 exports.events[defines.events.on_player_created] = function (event)
     local player = game.players[event.player_index]
     gui.on_player_created(player)
+
+    if (CONFIG.TEST_MODE) then
+        test_mode.on_player_created(player)
+    end
+
 end
 
-exports.on_nth_tick[120] = function (event)
-    game.print("Tick 120 fired")
+exports.on_nth_tick[600] = function (event)
+    if (CONFIG.TEST_MODE) then
+        game.print("TEST MODE ACTIVE!")
+    end
 end
 
 return exports
