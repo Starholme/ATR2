@@ -1,17 +1,18 @@
 TODO:
-			
+
 	For now:
 		Keep as mod
 		Expand scenario to add extra features, like world eater
-		
+
 	Next steps:
 		Add intro GUI from OARC
 		Get TLS working for prod cluster, documented
 
 	Setup backups for cluster root/database folder
 	Document setting ports for each instance factorio.game_port: https://github.com/clusterio/factorioClusterio/blob/master/docs/configuration.md
-	
-	
+
+
 What is MVP?
 	Running cluster on box - DONE
 	TLS setup
+	Connectable instance

@@ -116,5 +116,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias stats='uptime; free -m; df -h;'
+alias stats='uptime; free -m; df -h -T -x tmpfs -x squashfs -x devtmpfs; screen -list'
 alias upandauto='sudo apt-get update; sudo apt-get upgrade; sudo apt-get autoremove; sudo shutdown -r now'
