@@ -14,5 +14,5 @@ TODO:
 
 What is MVP?
 	Running cluster on box - DONE
-	TLS setup
+	TLS setup - DONE
 	Connectable instance
