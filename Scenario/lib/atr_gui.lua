@@ -32,7 +32,7 @@ local function build_info_tab(tab)
     if game.map_settings.enemy_expansion.enabled then enemy_expansion_txt = "enabled" end
 
     local enemy_text="Server Run Time: " .. gui_utils.formattime_hours_mins(game.tick) .. "\n" ..
-    "Current Evolution: " .. string.format("%i", game.forces["enemy"].evolution_factor) .. "\n" ..
+    "Current Evolution: " .. string.format("%i", game.forces["enemy"].evolution_factor * 100) .. "%\n" ..
     "Enemy evolution time/pollution/destroy factors: " ..
     string.format("%.0f", game.map_settings.enemy_evolution.time_factor * 10000000) .. "/" ..
     string.format("%.0f", game.map_settings.enemy_evolution.pollution_factor * 10000000) .. "/" ..
