@@ -27,6 +27,8 @@ local function build_info_tab(tab)
     gui_utils.add_label(tab, "server_text", CONFIG.SERVER_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
     gui_utils.add_spacer_line(tab)
 
+    gui_utils.add_label(tab, "map_info", CONFIG.MAP_INFO, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+
     --Enemy Settings
     local enemy_expansion_txt = "disabled"
     if game.map_settings.enemy_expansion.enabled then enemy_expansion_txt = "enabled" end

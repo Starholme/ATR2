@@ -3,6 +3,7 @@ return {
     "ATR is a cooperative game that is intended to provide some continuity across map resets. \n" ..
     "Rules: Be polite. Ask before changing other player's stuff. Have fun!",
     SERVER_TEXT = "Enjoy your time on this thin slice of nauvis.",
+    MAP_INFO = "128 tile ribbon, no cliffs",
     MOD_TEXT = "Mods:\n"..
     "Clusterio Library - Used to communicate with the cluster\n"..
     "Subspace Storage - Allows storing items and fluids in a limitless space, shared across the cluster",
