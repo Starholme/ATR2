@@ -5,8 +5,14 @@ TODO:
 		Expand scenario to add extra features, like world eater
 
 	Next steps:
-		Add intro GUI from OARC
-		Get TLS working for prod cluster, documented
+		Fix GUI text not updating
+		Get two instances running
+			One a ribbon?
+			One a resource rich?
+		Add and test out the stats export plugin: https://github.com/clusterio/factorioClusterio/blob/master/plugins/statistics_exporter/README.md
+		Should show up at https://alltherockets.duckdns.org/clusterio/metrics
+
+
 
 	Setup backups for cluster root/database folder
 	Document setting ports for each instance factorio.game_port: https://github.com/clusterio/factorioClusterio/blob/master/docs/configuration.md

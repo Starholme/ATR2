@@ -20,10 +20,11 @@ local function create_gui_button(player)
     end
 end
 
-local function init_gui_tabs(player, tab_pane)
-    local tab = gui_utils.add_tab(player, tab_pane, "Info")
+local function build_info_tab(tab)
     gui_utils.add_label(tab, "welcome_label", "Welcome to All The Rockets!", gui_utils.STYLES.LABEL_HEADER_STYLE)
     gui_utils.add_label(tab, "scenario_text", CONFIG.SCENARIO_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+    gui_utils.add_label(tab, "server_text", CONFIG.SERVER_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
     gui_utils.add_spacer_line(tab)
 
     --Enemy Settings
@@ -48,6 +49,18 @@ local function init_gui_tabs(player, tab_pane)
 
     -- Contact information
     gui_utils.add_label(tab, "contact_text", CONFIG.CONTACT_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+end
+
+local function init_gui_tabs(player, tab_pane)
+    local tab = gui_utils.add_tab(player, tab_pane, "Info")
+    build_info_tab(tab)
+end
+
+local function refresh_gui_tabs(player)
+    local all_tabs = mod_gui.get_frame_flow(player)[ATR_GUI].atr_if.atr_tabs
+
+    all_tabs["Info_if"].clear()
+    build_info_tab(all_tabs["Info_if"])
 end
 
 local function create_atr_gui_skeleton(player)
@@ -97,6 +110,7 @@ local function atr_button_click(event, player)
         if (gui_utils.is_gui_visible(player, ATR_GUI)) then
             gui_utils.hide_gui(player, ATR_GUI)
         else
+            refresh_gui_tabs(player)
             gui_utils.show_gui(player, ATR_GUI)
         end
     end
