@@ -49,6 +49,10 @@ local function build_info_tab(tab)
     gui_utils.add_label(tab, "softmods_text", "\n" .. CONFIG.SOFTMOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
     gui_utils.add_spacer_line(tab)
 
+    -- Discord
+    tab.add{type="textfield",
+            tooltip="Come join the discord (copy this invite)!",
+            text=CONFIG.DISCORD}
     -- Contact information
     gui_utils.add_label(tab, "contact_text", CONFIG.CONTACT_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end

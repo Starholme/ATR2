@@ -5,20 +5,12 @@ TODO:
 		Expand scenario to add extra features, like world eater
 
 	Next steps:
-		Fix GUI text not updating
-		Get two instances running
-			One a ribbon?
-			One a resource rich?
+
 		Add and test out the stats export plugin: https://github.com/clusterio/factorioClusterio/blob/master/plugins/statistics_exporter/README.md
 		Should show up at https://alltherockets.duckdns.org/clusterio/metrics
-
+		Add and test out the server jumping plugin
+		Add discord link to scenario
+			Patch existing?
 
 
 	Setup backups for cluster root/database folder
-	Document setting ports for each instance factorio.game_port: https://github.com/clusterio/factorioClusterio/blob/master/docs/configuration.md
-
-
-What is MVP?
-	Running cluster on box - DONE
-	TLS setup - DONE
-	Connectable instance
