@@ -1,7 +1,7 @@
 ## Setup
 
 ### Install Ubuntu 20.04 LTS
-  - During install, ensure you choose to install SSH
+  - During install, ensure you choose to install SSH, Prometheus
   - Edit the config.yaml to set up the correct IP addresses, or DHCP
   - After install, copy and run the scripts
   - `scp *.* username@someip:`
@@ -16,6 +16,7 @@
   - `bash setup.sh`
   - The setup script should
     - setup the network based on config.yaml
+	- setup prometheus based on prometheus.yml
     - Install nmon
     - Install nginx
   - Update and restart
@@ -63,6 +64,8 @@
   - `npx clusteriomaster plugin add @clusterio/plugin-global_chat`
   - `npm install @clusterio/plugin-subspace_storage`
   - `npx clusteriomaster plugin add @clusterio/plugin-subspace_storage`
+  - `npm install @clusterio/plugin-statistics_exporter`
+  - `npx clusteriomaster plugin add @clusterio/plugin-statistics_exporter`
 
 ### Install mods
   - Download current mods
