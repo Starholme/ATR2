@@ -2,8 +2,7 @@ TODO:
 
 	Next steps:
 		Add and test out the server jumping plugin?
-		Add discord link to scenario
-			Patch existing?
+		
 		Start atr homepage
 			What is ATR section
 			Discord link

@@ -55,6 +55,7 @@ local function build_info_tab(tab)
             text=CONFIG.DISCORD}
     -- Contact information
     gui_utils.add_label(tab, "contact_text", CONFIG.CONTACT_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_label(tab, "version_text", CONFIG.VERSION, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end
 
 local function init_gui_tabs(player, tab_pane)
