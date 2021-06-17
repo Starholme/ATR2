@@ -1,16 +1,32 @@
 TODO:
 
-	For now:
-		Keep as mod
-		Expand scenario to add extra features, like world eater
-
 	Next steps:
-
-		Add and test out the stats export plugin: https://github.com/clusterio/factorioClusterio/blob/master/plugins/statistics_exporter/README.md
-		Should show up at https://alltherockets.duckdns.org/clusterio/metrics
-		Add and test out the server jumping plugin
+		Add and test out the server jumping plugin?
 		Add discord link to scenario
 			Patch existing?
+		Start atr homepage
+			What is ATR section
+			Discord link
+			Running servers
+			
+			
+			Contact info
+			
+			Prometheus stats:
+				Players online
+				Instances online
+				Total pollution
+				Biters liberated
+				Trees (terminated with extreme prejudice)
+				Players deaths?
+				Current subspace piling cabinet
+					toxic waste dump
+					junkheap
+					dumping ground
+				Rockets total
 
 
-	Setup backups for cluster root/database folder
+	Setup backups for 
+		cluster root/database folder
+		instance saves
+		
