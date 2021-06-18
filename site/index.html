@@ -28,6 +28,7 @@
           <div class="card bg-dark text-center mt-3 col-auto">
             <div class="card-body">
               <span class="badge bg-success" id="online_players"></span>
+              <span class="badge bg-success" id="ticks"></span>
             </div>
           </div>
         </div>
@@ -162,7 +163,7 @@
         }
 
         function MungeRawStatistics(data){
-          let stats = {players:0};
+          let stats = {players:0, ticks:0};
           data = data.split("\n");
           for (const key in data) {
             const element = data[key];
@@ -171,8 +172,6 @@
             if (element.startsWith('#')) continue;
             if (element == "") continue;
 
-            //console.log("|" + element + "|");
-
             let temp = element.split(" ");
             let val = parseInt(temp[1]);
             let dimension = temp[0];
@@ -180,11 +179,13 @@
             let metric = temp[0];
             let labels = temp[1];
 
-            //console.log("Metric: " + metric + " val:" + val + " labels:" + labels);
-
             if (metric == "clusterio_statistics_exporter_instance_player_count"){
               stats[dimension]=val;
               stats.players += val;
+            }
+            else if (metric == "clusterio_statistics_exporter_instance_game_ticks_total"){
+              stats[dimension]=val;
+              stats.ticks += val;
             }
           }
           UpdateStatistics(stats);
@@ -193,6 +194,7 @@
         function UpdateStatistics(stats){
           //Top line badges
           $('#online_players').text("Online Players: " + stats.players);
+          $('#ticks').text("Time wasted: " + ticksToTime(stats.ticks));
 
           //Each instance
           $('.server').each(function(){
@@ -203,10 +205,44 @@
             //Player count
             badges += '<span class="badge bg-secondary">'
             badges +="Players: " + stats['clusterio_statistics_exporter_instance_player_count{instance_id="' + instanceId + '"}'];
+            badges += '</span> '
+
+            //Ticks
+            badges += '<span class="badge bg-secondary">'
+            badges += ticksToTime(stats['clusterio_statistics_exporter_instance_game_ticks_total{instance_id="' + instanceId + '"}']);
             badges += '</span>'
 
             $(this).append(badges);
           });
+        }
+
+        var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+        function abbreviateNumber(number){
+
+            // what tier? (determines SI symbol)
+            var tier = Math.log10(Math.abs(number)) / 3 | 0;
+
+            // if zero, we don't need a suffix
+            if(tier == 0) return number;
+
+            // get suffix and determine scale
+            var suffix = SI_SYMBOL[tier];
+            var scale = Math.pow(10, tier * 3);
+
+            // scale the number
+            var scaled = number / scale;
+
+            // format number and add suffix
+            return scaled.toFixed(1) + suffix;
+        }
+
+        function ticksToTime(ticks){
+          //milliseconds
+          const ms = Math.round(ticks/60) * 1000;
+
+          let d = luxon.Duration.fromMillis(ms);
+
+          return d.toFormat("d 'Days', hh:mm:ss");
         }
 
       })();
@@ -215,7 +251,7 @@
       if (window.location.protocol == 'file:'){
         setTimeout(function(){
             document.location.reload();
-          }, 10000 * 1000);
+          }, 5 * 1000);
       }
     </script>
   </body>
