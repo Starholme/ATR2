@@ -12,17 +12,12 @@ TODO:
 			Contact info
 			
 			Prometheus stats:
-				Players online
-				Instances online
 				Total pollution
 				Biters liberated
 				Trees (terminated with extreme prejudice)
 				Players deaths?
-				Current subspace piling cabinet
-					toxic waste dump
-					junkheap
-					dumping ground
 				Rockets total
+				artisanal mining
 
 
 	Setup backups for 

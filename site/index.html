@@ -29,6 +29,11 @@
             <div class="card-body">
               <span class="badge bg-success" id="online_players"></span>
               <span class="badge bg-success" id="ticks"></span>
+              <span class="badge bg-success" id="subspace_stuff" title="Current count of things in Subspace Storage"></span>
+              <span class="badge bg-success" id="trees" title="Trees. What did you expect?"></span>
+              <span class="badge bg-success" id="enemies" title="We killed lots of them"></span>
+              <span class="badge bg-success" id="homes" title="I don't know why they don't like us"></span>
+              <span class="badge bg-success" id="pollution" title="EPU: Excessive Pollution Unit"></span>
             </div>
           </div>
         </div>
@@ -163,7 +168,16 @@
         }
 
         function MungeRawStatistics(data){
-          let stats = {players:0, ticks:0};
+          let stats = {
+            players:0,
+            ticks:0,
+            stuff:0,
+            trees:0,
+            enemies:0,
+            homes:0,
+            pollution:0
+          };
+
           data = data.split("\n");
           for (const key in data) {
             const element = data[key];
@@ -187,6 +201,37 @@
               stats[dimension]=val;
               stats.ticks += val;
             }
+            else if (metric == "clusterio_subspace_storage_master_inventory"){
+              stats.stuff += val;
+            }
+            else if (metric == "clusterio_statistics_exporter_instance_force_flow_statistics"){
+              //Trees
+              if (dimension.indexOf('name="tree') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dead-dry-hairy-tree"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dead-grey-trunk"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dead-tree-desert"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dry-hairy-tree"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dry-tree"') !== -1) stats.trees += val;
+
+              if (dimension.indexOf('statistic="kill_count_statistics"') !== -1){
+                //Biters
+                if (dimension.indexOf('direction="input",name="small-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="medium-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="big-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="behemoth-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="small-spitter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="medium-spitter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="big-spitter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="behemoth-spitter"') !== -1) stats.enemies += val;
+
+                //Homes
+                if (dimension.indexOf('direction="input",name="biter-spawner"') !== -1) stats.homes += val;
+                if (dimension.indexOf('direction="input",name="spitter-spawner"') !== -1) stats.homes += val;
+              }
+            }
+            else if (metric == "clusterio_statistics_exporter_instance_game_flow_statistics"){
+              stats.pollution += val;
+            }
           }
           UpdateStatistics(stats);
         }
@@ -195,6 +240,12 @@
           //Top line badges
           $('#online_players').text("Online Players: " + stats.players);
           $('#ticks').text("Time wasted: " + ticksToTime(stats.ticks));
+          $('#subspace_stuff').text("Junk heaped: " + abbreviateNumber(stats.stuff));
+          $('#trees').text("True Enemies Terminated with Extreme Prejudice: " + abbreviateNumber(stats.trees));
+          $('#enemies').text("Combatants Liberated: " + abbreviateNumber(stats.enemies));
+          $('#homes').text("Combatant Homes Euphemised: " + abbreviateNumber(stats.homes));
+          $('#pollution').text("Enviromentally Beneficial EPU's Generated: " + abbreviateNumber(stats.pollution));
+
 
           //Each instance
           $('.server').each(function(){
