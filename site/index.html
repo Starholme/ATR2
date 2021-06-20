@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="./lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>ATR!</title>
+  </head>
+
+
+  <body class="bg-dark">
+    <main class="">
+      <div class="container-md text-white">
+
+        <div class="row justify-content-md-center mb-3">
+          <div class="card bg-dark text-center border-warning mt-3 col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">All The Rockets</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+          <div class="card bg-dark text-center mt-3 col-auto">
+            <div class="card-body">
+              <span class="badge bg-success" id="online_players"></span>
+              <span class="badge bg-success" id="ticks"></span>
+              <span class="badge bg-success" id="subspace_stuff" title="Current count of things in Subspace Storage"></span>
+              <span class="badge bg-success" id="trees" title="Trees. What did you expect?"></span>
+              <span class="badge bg-success" id="enemies" title="We killed lots of them"></span>
+              <span class="badge bg-success" id="homes" title="I don't know why they don't like us"></span>
+              <span class="badge bg-success" id="pollution" title="EPU: Excessive Pollution Unit"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card bg-dark border-secondary">
+              <div class="card-body">
+                <h5 class="card-title">Welcome to ATR!</h5>
+                <p>ATR is a cooperative game that is intended to provide some continuity across map resets.</p>
+                <p>Each ATR instance is connected to the other running instances in the <a href="https://github.com/clusterio/factorioClusterio">Clusterio</a> cluster.
+                  This allows for item sharing via the <a href="https://mods.factorio.com/mod/subspace_storage">Subspace Storage</a> mod and
+                  chat to all servers via <a href="https://github.com/clusterio/factorioClusterio/blob/master/plugins/global_chat/README.md">Global Chat</a> plugin.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card bg-dark border-secondary">
+              <div class="card-body">
+                <h5 class="card-title">Rules</h5>
+                <p>
+                  <ul>
+                  <li>Be polite</li>
+                  <li>Ask before changing other player's stuff</li>
+                  <li>Have fun!</li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 mt-3">
+
+          <div class="col">
+            <div class="card h-100 bg-dark border-success">
+              <div class="card-body">
+                <h5 class="card-title">World 1 <span class="badge bg-success">Running</span></h5>
+                <p>
+                  Enjoy your time on this thin slice of nauvis.<br/>
+                  128 tile ribbon, no cliffs
+                </p>
+                <div class="server" data-instanceid="1309285413"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card h-100 bg-dark border-success">
+              <div class="card-body">
+                <h5 class="card-title">World 2 <span class="badge bg-success">Running</span></h5>
+                <p>
+                  Riches abound, spread far and wide.<br/>
+                  Very rich large resources, low frequency
+              </p>
+              <div class="server" data-instanceid="1989355807"></div>
+              </div>
+            </div>
+          </div>
+
+          <!--Dying Template
+          <div class="col">
+            <div class="card h-100 bg-dark border-danger">
+              <div class="card-body">
+                <h5 class="card-title">World X <span class="badge bg-danger">Dying</span></h5>
+                <p>
+                  Riches abound, spread far and wide.<br/>
+                  Very rich large resources, low frequency
+                </p>
+                <p>The world eater has arrived!</p>
+                <div class="server" data-instanceid="123"></div>
+              </div>
+            </div>
+          </div>
+          -->
+
+          <!--Dead Template
+          <div class="col">
+            <div class="card h-100 bg-dark border-secondary">
+              <div class="card-body">
+                <h5 class="card-title">World X <span class="badge bg-secondary">Dead</span></h5>
+                <p>
+                  Riches abound, spread far and wide.<br/>
+                  Very rich large resources, low frequency
+                </p>
+                <p>Death by lag</p>
+                <div class="server" data-instanceid="123"></div>
+              </div>
+            </div>
+          </div>
+        -->
+
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="footer py-3">
+      <div class="container">
+        <span id="version" class="text-muted"></span>
+        <span id="timestamp" class="text-muted"></span>
+      </div>
+    </footer>
+
+    <script src="./lib/jquery-3.6.0.min.js"></script>
+    <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./lib/luxon.min.js"></script>
+    <script>
+      (function(){
+        const VERSION = '1.0.1';
+        let METRICS_URL = './metrics.txt';
+        const DateTime = luxon.DateTime
+
+        $(document).ready(function(){
+          console.log("ready");
+          $('#version').text('V' + VERSION);
+          $('#timestamp').text(DateTime.utc().toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET));
+
+          GetStatistics();
+        });
+
+        function GetStatistics (){
+          //Get the metrics
+          $.get(METRICS_URL)
+          .done(function(data){
+            //console.log("Raw Statistics:")
+            //console.log(data);
+            MungeRawStatistics(data);
+          });
+        }
+
+        function MungeRawStatistics(data){
+          let stats = {
+            players:0,
+            ticks:0,
+            stuff:0,
+            trees:0,
+            enemies:0,
+            homes:0,
+            pollution:0
+          };
+
+          data = data.split("\n");
+          for (const key in data) {
+            const element = data[key];
+
+            //Ignore comments, empty lines
+            if (element.startsWith('#')) continue;
+            if (element == "") continue;
+
+            let temp = element.split(" ");
+            let val = parseInt(temp[1]);
+            let dimension = temp[0];
+            temp = dimension.replace('}', "").split('{');
+            let metric = temp[0];
+            let labels = temp[1];
+
+            if (metric == "clusterio_statistics_exporter_instance_player_count"){
+              stats[dimension]=val;
+              stats.players += val;
+            }
+            else if (metric == "clusterio_statistics_exporter_instance_game_ticks_total"){
+              stats[dimension]=val;
+              stats.ticks += val;
+            }
+            else if (metric == "clusterio_subspace_storage_master_inventory"){
+              stats.stuff += val;
+            }
+            else if (metric == "clusterio_statistics_exporter_instance_force_flow_statistics"){
+              //Trees
+              if (dimension.indexOf('name="tree') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dead-dry-hairy-tree"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dead-grey-trunk"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dead-tree-desert"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dry-hairy-tree"') !== -1) stats.trees += val;
+              if (dimension.indexOf('name="dry-tree"') !== -1) stats.trees += val;
+
+              if (dimension.indexOf('statistic="kill_count_statistics"') !== -1){
+                //Biters
+                if (dimension.indexOf('direction="input",name="small-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="medium-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="big-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="behemoth-biter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="small-spitter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="medium-spitter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="big-spitter"') !== -1) stats.enemies += val;
+                if (dimension.indexOf('direction="input",name="behemoth-spitter"') !== -1) stats.enemies += val;
+
+                //Homes
+                if (dimension.indexOf('direction="input",name="biter-spawner"') !== -1) stats.homes += val;
+                if (dimension.indexOf('direction="input",name="spitter-spawner"') !== -1) stats.homes += val;
+              }
+            }
+            else if (metric == "clusterio_statistics_exporter_instance_game_flow_statistics"){
+              stats.pollution += val;
+            }
+          }
+          UpdateStatistics(stats);
+        }
+
+        function UpdateStatistics(stats){
+          //Top line badges
+          $('#online_players').text("Online Players: " + stats.players);
+          $('#ticks').text("Time wasted: " + ticksToTime(stats.ticks));
+          $('#subspace_stuff').text("Junk heaped: " + abbreviateNumber(stats.stuff));
+          $('#trees').text("True Enemies Terminated with Extreme Prejudice: " + abbreviateNumber(stats.trees));
+          $('#enemies').text("Combatants Liberated: " + abbreviateNumber(stats.enemies));
+          $('#homes').text("Combatant Homes Euphemised: " + abbreviateNumber(stats.homes));
+          $('#pollution').text("Enviromentally Beneficial EPU's Generated: " + abbreviateNumber(stats.pollution));
+
+
+          //Each instance
+          $('.server').each(function(){
+            const instanceId = this.dataset.instanceid;
+
+            let badges = "";
+
+            //Player count
+            badges += '<span class="badge bg-secondary">'
+            badges +="Players: " + stats['clusterio_statistics_exporter_instance_player_count{instance_id="' + instanceId + '"}'];
+            badges += '</span> '
+
+            //Ticks
+            badges += '<span class="badge bg-secondary">'
+            badges += ticksToTime(stats['clusterio_statistics_exporter_instance_game_ticks_total{instance_id="' + instanceId + '"}']);
+            badges += '</span>'
+
+            $(this).append(badges);
+          });
+        }
+
+        var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+        function abbreviateNumber(number){
+
+            // what tier? (determines SI symbol)
+            var tier = Math.log10(Math.abs(number)) / 3 | 0;
+
+            // if zero, we don't need a suffix
+            if(tier == 0) return number;
+
+            // get suffix and determine scale
+            var suffix = SI_SYMBOL[tier];
+            var scale = Math.pow(10, tier * 3);
+
+            // scale the number
+            var scaled = number / scale;
+
+            // format number and add suffix
+            return scaled.toFixed(1) + suffix;
+        }
+
+        function ticksToTime(ticks){
+          //milliseconds
+          const ms = Math.round(ticks/60) * 1000;
+
+          let d = luxon.Duration.fromMillis(ms);
+
+          return d.toFormat("d 'Days', hh:mm:ss");
+        }
+
+      })();
+
+      //Debugging bits
+      if (window.location.protocol == 'file:'){
+        setTimeout(function(){
+            document.location.reload();
+          }, 5 * 1000);
+      }
+    </script>
+  </body>
+</html>
