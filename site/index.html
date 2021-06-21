@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="./lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./lib/bootstrap-icons-1.5.0/bootstrap-icons.css" rel="stylesheet">
 
     <title>ATR!</title>
   </head>
@@ -16,6 +17,7 @@
     <main class="">
       <div class="container-md text-white">
 
+        <!--Logo and Header-->
         <div class="row justify-content-md-center mb-3">
           <div class="card bg-dark text-center border-warning mt-3 col-md-6">
             <div class="card-body">
@@ -24,8 +26,9 @@
           </div>
         </div>
 
+        <!--Global stats-->
         <div class="row justify-content-md-center">
-          <div class="card bg-dark text-center mt-3 col-auto">
+          <div class="card bg-dark border-0 text-center mt-3 col-auto">
             <div class="card-body">
               <span class="badge bg-success" id="online_players"></span>
               <span class="badge bg-success" id="ticks"></span>
@@ -38,6 +41,7 @@
           </div>
         </div>
 
+        <!--About, Rules-->
         <div class="row">
           <div class="col-md-6">
             <div class="card bg-dark border-secondary">
@@ -68,6 +72,7 @@
           </div>
         </div>
 
+        <!--Server Cards-->
         <div class="row row-cols-1 row-cols-md-3 mt-3">
 
           <div class="col">
@@ -130,6 +135,28 @@
 
         </div>
 
+        <div class="row mt-3">
+          <!--Discord-->
+          <div class="col-auto border-secondary">
+            <div class="card h-100 bg-dark border-secondary">
+              <iframe src="https://discord.com/widget?id=852755130398670850&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            </div>
+          </div>
+          <!--Contact-->
+          <div class="col">
+            <div class="card bg-dark border-0">
+              <div class="card-body">
+                <dl class="row">
+                  <dt class="col-sm-2 text-center"><i class="bi-discord" style="font-size: 2rem;"></i></dt>
+                  <dd class="col-sm-10">Join us on Discord! <a href="https://discord.gg/6dq2CbJ3Gx">https://discord.gg/6dq2CbJ3Gx</a></dd>
+
+                  <dt class="col-sm-2 text-center"><i class="bi-github" style="font-size: 2rem;"></i></dt>
+                  <dd class="col-sm-10">The scenario code and most of the configuration used to set up this cluster are available on GitHub <a href="https://github.com/Starholme/ATR2">https://github.com/Starholme/ATR2</a></dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -302,7 +329,7 @@
       if (window.location.protocol == 'file:'){
         setTimeout(function(){
             document.location.reload();
-          }, 5 * 1000);
+          }, 60 * 1000);
       }
     </script>
   </body>
