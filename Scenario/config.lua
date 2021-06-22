@@ -11,7 +11,7 @@ return {
     SOFTMOD_TEXT = "Soft Mods:\n"..
     "Global Chat - Chat text is shared across all servers in the cluster",
     DISCORD = "https://discord.gg/6dq2CbJ3Gx",
-    CONTACT_TEXT = "SteamID:Starholme | Russel.Delainey@gmail.com | Discord:Starholme#3744",
+    CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
 
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
