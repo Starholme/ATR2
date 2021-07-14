@@ -2,7 +2,7 @@
 -- https://mods.factorio.com/mod/VehicleSnap
 -- Based on V1.18.4
 
-local SNAPS = 16
+local SNAPS = 8
 local NUM_CHECKS_FOR_STABLE = 10
 local MIN_SPEED_TO_SNAP = 0.03
 
