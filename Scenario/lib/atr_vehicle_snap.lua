@@ -24,6 +24,10 @@ function exports.on_player_driving_changed_state(event)
 end
 
 function exports.on_nth_tick()
+    if not global.atr_vehicle_snap then
+        return
+    end
+
     for player_index, player_data in pairs(global.atr_vehicle_snap) do
         local player = game.players[player_index]
 
