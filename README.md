@@ -130,3 +130,27 @@ TODO
   - CTRL-A CTRL-D to detach
   - Reattach to it with `screen -R` later
   - List screen sessions with `screen -list`
+
+# Updates
+
+## Factorio
+  - Starting in the Cluster Root
+  - Download the newest headless server
+  - `wget -O factorio.tar.gz https://www.factorio.com/get-download/latest/headless/linux64`
+  - Untar
+  - `tar -xf factorio.tar.gz`
+  - Stop and start each instance
+
+## Clusterio
+  - Stop the cluster
+  - Starting in the Cluster Root
+  - `npm update`
+  - Start the cluster
+
+## Ubuntu
+  - The 'upandauto' alias does the following:
+    - sudo apt-get update
+	- sudo apt-get upgrade
+	- sudo apt-get autoremove
+    - sudo shutdown -r now
+  - `upandauto'
