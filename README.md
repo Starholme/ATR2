@@ -103,8 +103,8 @@ TODO
   - `npx clusterioctl instance create "My Instance Name"`
   - `npx clusterioctl instance assign "My Instance Name" "Slave Name"`
   - Adjust configuration as required - suggest using UI
-    - game_port, between 31490 and 31500
-	- name = "All The Rockets - World X"
+    - game_port, between 34190 and 34200
+	- name = "[ATR] All The Rockets - World X"
 	- description = "ATR is a cooperative game that is intended to provide some continuity across map resets. \nSERVER_TEXT \nMAP_INFO"
 	- tags ["clusterio","ATR","COOP"]
 	- username set to factorio username
