@@ -86,12 +86,14 @@ TODO
 
 ### Start the master server
   - Navigate to the Cluster Root
+  - `screen -R master`
   - `npx clusteriomaster run`
   - Log into the UI at http://127.0.0.1:8181/
   - The token can be found in `config-control.json`
 
 ### Start local slave
   - Navigate to the Cluster Root
+  - `screen -R slave`
   - `npx clusterioslave run`
   - This slave should now be visible in the UI
 
