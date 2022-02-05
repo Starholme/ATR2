@@ -6,15 +6,10 @@ TODO:
 		Add website to scenario gui
 		
 		Start atr homepage
-			Running servers
-				Current players? Player time?
 			
 			Contact info
 			
 			Prometheus stats:
-				Total pollution
-				Biters liberated
-				Trees (terminated with extreme prejudice)
 				Players deaths?
 				Rockets total
 				artisanal mining
@@ -22,7 +17,8 @@ TODO:
 				Traditional handmade genuine 
 				Small batch vegan rocket fuel
 				
-
+			Prometheus static scrape page for historical data
+				When you archive a server, grab it's stats, add to this static page
 
 	Setup backups for 
 		cluster root/database folder

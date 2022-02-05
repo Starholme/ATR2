@@ -86,12 +86,14 @@ TODO
 
 ### Start the master server
   - Navigate to the Cluster Root
+  - `screen -R master`
   - `npx clusteriomaster run`
   - Log into the UI at http://127.0.0.1:8181/
   - The token can be found in `config-control.json`
 
 ### Start local slave
   - Navigate to the Cluster Root
+  - `screen -R slave`
   - `npx clusterioslave run`
   - This slave should now be visible in the UI
 
@@ -103,8 +105,8 @@ TODO
   - `npx clusterioctl instance create "My Instance Name"`
   - `npx clusterioctl instance assign "My Instance Name" "Slave Name"`
   - Adjust configuration as required - suggest using UI
-    - game_port, between 31490 and 31500
-	- name = "All The Rockets - World X"
+    - game_port, between 34190 and 34200
+	- name = "[ATR] All The Rockets - World X"
 	- description = "ATR is a cooperative game that is intended to provide some continuity across map resets. \nSERVER_TEXT \nMAP_INFO"
 	- tags ["clusterio","ATR","COOP"]
 	- username set to factorio username
@@ -130,3 +132,27 @@ TODO
   - CTRL-A CTRL-D to detach
   - Reattach to it with `screen -R` later
   - List screen sessions with `screen -list`
+
+# Updates
+
+## Factorio
+  - Starting in the Cluster Root
+  - Download the newest headless server
+  - `wget -O factorio.tar.gz https://www.factorio.com/get-download/latest/headless/linux64`
+  - Untar
+  - `tar -xf factorio.tar.gz`
+  - Stop and start each instance
+
+## Clusterio
+  - Stop the cluster
+  - Starting in the Cluster Root
+  - `npm update`
+  - Start the cluster
+
+## Ubuntu
+  - The 'upandauto' alias does the following:
+    - sudo apt-get update
+	- sudo apt-get upgrade
+	- sudo apt-get autoremove
+    - sudo shutdown -r now
+  - `upandauto'
