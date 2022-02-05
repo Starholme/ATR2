@@ -6,8 +6,6 @@ TODO:
 		Add website to scenario gui
 		
 		Start atr homepage
-			Running servers
-				Current players? Player time?
 			
 			Contact info
 			
