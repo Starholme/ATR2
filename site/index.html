@@ -9,6 +9,8 @@
     <link href="./lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./lib/bootstrap-icons-1.5.0/bootstrap-icons.css" rel="stylesheet">
 
+    <link href="./lib/Chartjs-2.9.4/Chart.min.css" rel="stylesheet">
+
     <title>ATR!</title>
   </head>
 
@@ -84,6 +86,7 @@
                   128 tile ribbon, no cliffs
                 </p>
                 <div class="server" data-instanceid="1309285413"></div>
+                <span class="badge bg-secondary">Players: <span></span></span>
               </div>
             </div>
           </div>
@@ -170,11 +173,19 @@
     <script src="./lib/jquery-3.6.0.min.js"></script>
     <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="./lib/luxon.min.js"></script>
+    <script src="./lib/moment.js"></script>
+    <script src="./lib/Chartjs-2.9.4/Chart.min.js"></script>
+    <script src="./lib/prometheus-query.umd.min.js"></script>
+    <script src="./lib/chartjs-plugin-datasource-prometheus.umd.min.js"></script>
+
     <script>
       (function(){
         const VERSION = '1.1.0';
+        const PROMETHEUS_ENDPOINT = "http://alltherockets.duckdns.org:9090";
         let METRICS_URL = './metrics.txt';
-        const DateTime = luxon.DateTime
+        const MS_PER_STAT = 1000;
+
+        const DateTime = luxon.DateTime;
 
         $(document).ready(function(){
           console.log("ready");
@@ -182,7 +193,28 @@
           $('#timestamp').text(DateTime.utc().toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET));
 
           GetStatistics();
+
+          SetupPromQueries();
         });
+
+        function SetupPromQueries(){
+          //Each instance
+          $('.server').each(function(){
+            const instanceId = this.dataset.instanceid;
+            const serverCard = $(this.parentElement);
+
+            let badges = "";
+            //Player count
+            badges += '<span class="badge bg-secondary">Players: <span class="players">...</span></span>';
+            //Ticks
+            badges += '<span class="badge bg-secondary time">...</span>'
+            $(this).append(badges);
+
+            StatsUpdater.Add('clusterio_statistics_exporter_instance_player_count{instance_id="'+instanceId+'"}', $('.players', serverCard), StatsUpdater.TYPES.SPAN);
+            StatsUpdater.Add('clusterio_statistics_exporter_instance_game_ticks_total{instance_id="'+instanceId+'"}', $('.time', serverCard), StatsUpdater.TYPES.SPAN, ticksToTime);
+          });
+        }
+
 
         function GetStatistics (){
           //Get the metrics
@@ -273,28 +305,71 @@
           $('#homes').text("Combatant Homes Euphemised: " + abbreviateNumber(stats.homes));
           $('#pollution').text("Enviromentally Beneficial EPU's Generated: " + abbreviateNumber(stats.pollution));
 
-
-          //Each instance
-          $('.server').each(function(){
-            const instanceId = this.dataset.instanceid;
-
-            let badges = "";
-
-            //Player count
-            badges += '<span class="badge bg-secondary">'
-            badges +="Players: " + stats['clusterio_statistics_exporter_instance_player_count{instance_id="' + instanceId + '"}'];
-            badges += '</span> '
-
-            //Ticks
-            badges += '<span class="badge bg-secondary">'
-            badges += ticksToTime(stats['clusterio_statistics_exporter_instance_game_ticks_total{instance_id="' + instanceId + '"}']);
-            badges += '</span>'
-
-            $(this).append(badges);
-          });
         }
 
-        var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+        const StatsUpdater = (function(){
+          let exports = {};
+
+          const prom = new Prometheus.PrometheusDriver({
+            endpoint: PROMETHEUS_ENDPOINT,
+            baseURL: "/api/v1" // default value
+          });
+
+          const stats = new Array();
+          let next = 0;
+          let len = 0;
+
+          function UpdateNext(){
+            if (next >= len){
+              next = 0;
+              return;
+            }
+
+            let stat = stats[next];
+            if (stat.type == TYPES.CONSOLE){
+              prom.instantQuery(stat.promql)
+                  .then((res) => {
+                      const series = res.result;
+                      series.forEach((serie) => {
+                          console.log("Serie:", serie.metric.toString());
+                          console.log("Time:", serie.value.time);
+                          console.log("Value:", serie.value.value);
+                      });
+                  })
+                  .catch(console.error);
+            }
+            if (stat.type == TYPES.SPAN){
+              prom.instantQuery(stat.promql)
+                  .then((res) => {
+                      let val = res.result[0].value.value;
+                      if (stat.formatter !== null) val = stat.formatter(val);
+                      stat.dom.text(val);
+                  })
+                  .catch(console.error);
+            }
+
+            next++;
+          }
+          setInterval(UpdateNext, MS_PER_STAT);
+
+          exports.Add = function(promql, dom, type, formatter){
+            if (formatter == undefined) formatter = null;
+            stats.push({promql, dom, type, formatter});
+            len++;
+          }
+
+          const TYPES = {
+            CONSOLE: "CONSOLE",
+            SPAN: "SPAN"
+          };
+          exports.TYPES = TYPES;
+
+          return exports;
+        })();
+        let statsList = new Array();
+
+
+        const SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
         function abbreviateNumber(number){
 
             // what tier? (determines SI symbol)
