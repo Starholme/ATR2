@@ -1,0 +1,78 @@
+# HELP clusterio_instance_factorio_cpu_time_total Factorio CPU time spent in seconds.
+# TYPE clusterio_instance_factorio_cpu_time_total gauge
+clusterio_instance_factorio_cpu_time_total{instance_id="1234"} 0.0
+
+# HELP clusterio_statistics_exporter_instance_game_ticks_total Game tick an instance has progressed to
+# TYPE clusterio_statistics_exporter_instance_game_ticks_total gauge
+clusterio_statistics_exporter_instance_game_ticks_total{instance_id="1234"} 1
+
+# HELP clusterio_statistics_exporter_instance_force_flow_statistics Items/fluids/enemies/buildings produced/built/killed by a force
+# TYPE clusterio_statistics_exporter_instance_force_flow_statistics gauge
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="stone-brick"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="concrete"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="hazard-concrete"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="landfill"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="repair-pack"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="satellite"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="coal"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="stone"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="iron-ore"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="copper-ore"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="uranium-ore"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="rocket-fuel"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="atomic-bomb"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="item_production_statistics",direction="output",name="raw-fish"} 1
+
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-02"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-03"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-04"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-05"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-09"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-02-red"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-07"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-06"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-06-brown"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-09-brown"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-09-red"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-08"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="tree-08-brown"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="dead-grey-trunk"} 1
+
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="small-biter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="medium-biter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="big-biter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="behemoth-biter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="small-spitter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="medium-spitter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="big-spitter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="behemoth-spitter"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="small-worm-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="medium-worm-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="big-worm-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="behemoth-worm-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="biter-spawner"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="player",statistic="kill_count_statistics",direction="input",name="spitter-spawner"} 1
+
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="flamethrower-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="gun-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="laser-turret"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="radar"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="tank"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="character"} 1
+clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1234",force="enemy",statistic="kill_count_statistics",direction="input",name="destroyer"} 1
+
+# HELP clusterio_statistics_exporter_instance_game_flow_statistics Pollution produced/consumed in the game
+# TYPE clusterio_statistics_exporter_instance_game_flow_statistics gauge
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="assembling-machine-1"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="assembling-machine-2"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="assembling-machine-3"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="boiler"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="centrifuge"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="chemical-plant"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="electric-furnace"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="electric-mining-drill"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="oil-refinery"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="pumpjack"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="steel-furnace"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="stone-furnace"} 1
+clusterio_statistics_exporter_instance_game_flow_statistics{instance_id="1234",statistic="pollution_statistics",direction="input",name="subspace-fluid-extractor"} 1

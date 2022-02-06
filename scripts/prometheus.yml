@@ -32,3 +32,10 @@ scrape_configs:
 
     static_configs:
       - targets: ['localhost:8181']
+      
+  - job_name: 'archive'
+    metrics_path: "/archive.txt"
+    scheme: "https"
+    
+    static_configs:
+      - targets: ['alltherockets.duckdns.org']
