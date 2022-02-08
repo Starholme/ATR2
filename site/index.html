@@ -273,7 +273,7 @@
             }
 
             let stat = stats[next];
-            console.log("Updating stat " + i + ": " + stat.promql);
+            console.log("Updating stat " + next + ": " + stat.promql);
 
             if (stat.type == TYPES.CONSOLE){
               prom.instantQuery(stat.promql)
