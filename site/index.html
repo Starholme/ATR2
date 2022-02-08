@@ -163,7 +163,7 @@
             <div class="card bg-dark border-secondary">
               <div class="card-body">
                 <ul>
-                  <li>V1.2.1 2022-02-08
+                  <li>V1.2.2 2022-02-08
                     <ul>
                       <li>Create server status badges, using Prometheus data</li>
                       <li>Catch bad or missing values from Prometheus, replace with N/A</li>
@@ -200,9 +200,9 @@
 
     <script>
       (function(){
-        const VERSION = '1.2.1';
+        const VERSION = '1.2.2';
         const PROMETHEUS_ENDPOINT = "https://alltherockets.duckdns.org/prometheus/";
-        const MS_PER_STAT = 1000;
+        const MS_PER_STAT = 2000;
 
         const DateTime = luxon.DateTime;
 
@@ -268,10 +268,13 @@
             if (next >= len){
               next = 0;
               firstRun = false;
+              setTimeout(UpdateNext, firstRun? 100 : MS_PER_STAT);
               return;
             }
 
             let stat = stats[next];
+            console.log("Updating stat " + i + ": " + stat.promql);
+
             if (stat.type == TYPES.CONSOLE){
               prom.instantQuery(stat.promql)
                   .then((res) => {
