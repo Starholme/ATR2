@@ -80,7 +80,7 @@
           <div class="col">
             <div class="card h-100 bg-dark border-success">
               <div class="card-body">
-                <h5 class="card-title">World 1 <span class="badge bg-success">Running</span></h5>
+                <h5 class="card-title">World 1 <span class="badge bg-success">Active</span></h5>
                 <p>
                   Enjoy your time on this thin slice of nauvis.<br/>
                   128 tile ribbon, no cliffs
@@ -93,7 +93,7 @@
           <div class="col">
             <div class="card h-100 bg-dark border-success">
               <div class="card-body">
-                <h5 class="card-title">World 2 <span class="badge bg-success">Running</span></h5>
+                <h5 class="card-title">World 2 <span class="badge bg-success">Active</span></h5>
                 <p>
                   Riches abound, spread far and wide.<br/>
                   Very rich large resources, low frequency
@@ -158,6 +158,27 @@
               </div>
             </div>
           </div>
+          <!--Changelog-->
+          <div class="col-xs-12 mt-3">
+            <div class="card bg-dark border-secondary">
+              <div class="card-body">
+                <ul>
+                  <li>V1.2.1 2022-02-08
+                    <ul>
+                      <li>Create server status badges, using Prometheus data</li>
+                      <li>Catch bad or missing values from Prometheus, replace with N/A</li>
+                    </ul>
+                  </li>
+                  <li>V1.2.0 2022-02-05
+                    <ul>
+                      <li>Added change log</li>
+                      <li>Pulling stats from Prometheus</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -179,7 +200,7 @@
 
     <script>
       (function(){
-        const VERSION = '1.2.0';
+        const VERSION = '1.2.1';
         const PROMETHEUS_ENDPOINT = "https://alltherockets.duckdns.org/prometheus/";
         const MS_PER_STAT = 1000;
 
@@ -200,16 +221,27 @@
             const serverCard = $(this.parentElement);
 
             let badges = "";
+            //Instance status
+            badges += '<span class="badge bg-secondary">Server: <span class="status">...</span></span> ';
             //Player count
-            badges += '<span class="badge bg-secondary">Players: <span class="players">...</span></span>';
+            badges += '<span class="badge bg-secondary">Players: <span class="players">...</span></span> ';
             //Ticks
             badges += '<span class="badge bg-secondary time">...</span>'
             $(this).append(badges);
 
             StatsUpdater.Add('clusterio_statistics_exporter_instance_player_count{instance_id="'+instanceId+'"}', $('.players', serverCard), StatsUpdater.TYPES.SPAN);
             StatsUpdater.Add('clusterio_statistics_exporter_instance_game_ticks_total{instance_id="'+instanceId+'"}', $('.time', serverCard), StatsUpdater.TYPES.SPAN, ticksToTime);
+            StatsUpdater.Add('clusterio_statistics_exporter_instance_player_count{instance_id="'+instanceId+'"}', null, StatsUpdater.TYPES.CALLBACK, function(val){
+              if (val == "N/A"){
+                $('.status', serverCard).text("OFFLINE").parent().addClass("bg-danger").removeClass("bg-success");
+              }
+              else{
+                $('.status', serverCard).text("Running").parent().addClass("bg-success").removeClass("bg-danger");
+              }
+            });
           });
 
+          //Top badges bar
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_player_count)', $('#online_players'), StatsUpdater.TYPES.SPAN);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_game_ticks_total)', $('#ticks'), StatsUpdater.TYPES.SPAN, ticksToTime);
           StatsUpdater.Add('sum(clusterio_subspace_storage_master_inventory)', $('#subspace_stuff'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
@@ -217,7 +249,6 @@
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{name=~".*-biter|.*-spitter|.*worm-turret", direction="input"})', $('#enemies'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{name=~".*-spawner", direction="input"})', $('#homes'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_game_flow_statistics{direction="input", statistic="pollution_statistics"})', $('#pollution'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
-
         }
 
         const StatsUpdater = (function(){
@@ -256,9 +287,27 @@
             if (stat.type == TYPES.SPAN){
               prom.instantQuery(stat.promql)
                   .then((res) => {
-                      let val = res.result[0].value.value;
-                      if (stat.formatter !== null) val = stat.formatter(val);
+                      let val = "N/A"
+                      try {
+                        val = res.result[0].value.value;
+                        if (stat.formatter !== null) val = stat.formatter(val);
+                      } catch (error) {
+                        //Not available.
+                      }
                       stat.dom.text(val);
+                  })
+                  .catch(console.error);
+            }
+            if (stat.type == TYPES.CALLBACK){
+              prom.instantQuery(stat.promql)
+                  .then((res) => {
+                      let val = "N/A"
+                      try {
+                        val = res.result[0].value.value;
+                      } catch (error) {
+                        //Not available.
+                      }
+                      stat.formatter(val);
                   })
                   .catch(console.error);
             }
@@ -272,13 +321,18 @@
 
           exports.Add = function(promql, dom, type, formatter){
             if (formatter == undefined) formatter = null;
+            if (type == TYPES.CALLBACK && formatter == null){
+              alert("No callback supplied! - " + promql);
+              return;
+            }
             stats.push({promql, dom, type, formatter});
             len++;
           }
 
           const TYPES = {
             CONSOLE: "CONSOLE",
-            SPAN: "SPAN"
+            SPAN: "SPAN",
+            CALLBACK: "CALLBACK"
           };
           exports.TYPES = TYPES;
 

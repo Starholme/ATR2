@@ -3,22 +3,16 @@ TODO:
 	Next steps:
 		Add and test out the server jumping plugin?
 		
-		Add website to scenario gui
-		
 		Start atr homepage
-			
-			Contact info
 			
 			Prometheus stats:
 				Players deaths?
+				Train murder
 				Rockets total
 				artisanal mining
 				Free range robots (logistics)
 				Traditional handmade genuine 
 				Small batch vegan rocket fuel
-				
-			Prometheus static scrape page for historical data
-				When you archive a server, grab it's stats, add to this static page
 
 	Setup backups for 
 		cluster root/database folder
