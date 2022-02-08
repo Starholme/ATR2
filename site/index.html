@@ -256,8 +256,13 @@
             if (stat.type == TYPES.SPAN){
               prom.instantQuery(stat.promql)
                   .then((res) => {
-                      let val = res.result[0].value.value;
+                      let val = "N/A"
+                      try {
+                        val = res.result[0].value.value;
                       if (stat.formatter !== null) val = stat.formatter(val);
+                      } catch (error) {
+                        //Not available.
+                      }
                       stat.dom.text(val);
                   })
                   .catch(console.error);
