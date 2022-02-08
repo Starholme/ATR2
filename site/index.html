@@ -158,6 +158,27 @@
               </div>
             </div>
           </div>
+          <!--Changelog-->
+          <div class="col-xs-12 mt-3">
+            <div class="card bg-dark border-secondary">
+              <div class="card-body">
+                <ul>
+                  <li>V1.2.1 2022-02-08
+                    <ul>
+                      <li>Create server status badges, using Prometheus data</li>
+                      <li>Catch bad or missing values from Prometheus, replace with N/A</li>
+                    </ul>
+                  </li>
+                  <li>V1.2.0 2022-02-05
+                    <ul>
+                      <li>Added change log</li>
+                      <li>Pulling stats from Prometheus</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -179,7 +200,7 @@
 
     <script>
       (function(){
-        const VERSION = '1.2.0';
+        const VERSION = '1.2.1';
         const PROMETHEUS_ENDPOINT = "https://alltherockets.duckdns.org/prometheus/";
         const MS_PER_STAT = 1000;
 
