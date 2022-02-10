@@ -8,7 +8,7 @@ TODO:
 			Prometheus stats:
 				Players deaths?
 				Train murder
-				Rockets total
+				Rockets total - clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1989355807",force="player",statistic="item_production_statistics",direction="output",name="satellite"}
 				artisanal mining
 				Free range robots (logistics)
 				Traditional handmade genuine 
@@ -17,4 +17,8 @@ TODO:
 	Setup backups for 
 		cluster root/database folder
 		instance saves
-		
+	
+	Scenario
+		OARC riff?
+			essentially a oarc shareables for in map, and clusterio for in cluster?
+			Cost for receiving items from oarc chests? Like x MJ of some fuel?

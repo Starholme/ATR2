@@ -3,7 +3,7 @@
 -- Based on V1.18.4
 
 local SNAPS = 8
-local NUM_CHECKS_FOR_STABLE = 10
+local NUM_CHECKS_FOR_STABLE = 7
 local MIN_SPEED_TO_SNAP = 0.03
 
 local exports = {}
