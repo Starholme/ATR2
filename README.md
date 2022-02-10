@@ -66,6 +66,8 @@
   - `npx clusteriomaster plugin add @clusterio/plugin-subspace_storage`
   - `npm install @clusterio/plugin-statistics_exporter`
   - `npx clusteriomaster plugin add @clusterio/plugin-statistics_exporter`
+  - `npm install @hornwitser/server_select`
+  - `npx clusteriomaster plugin add @hornwitser/server_select`
 
 ### Install mods
   - Download current mods
@@ -78,6 +80,7 @@
   - Navigate to Cluster Root
   - Create the configuration
   - `npx clusterioctl slave create-config --name local --generate-token`
+  - Update the 'public_address' in config-slave.json to match your DNS name or IP address
 
 ### Configure a remote slave
 TODO

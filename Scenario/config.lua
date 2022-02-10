@@ -1,5 +1,5 @@
 return {
-    VERSION = "V1.1.0",
+    VERSION = "V1.3.0",
     SCENARIO_TEXT =
     "ATR is a cooperative game that is intended to provide some continuity across map resets. \n" ..
     "Rules: Be polite. Ask before changing other player's stuff. Have fun!",
@@ -10,6 +10,7 @@ return {
     "Subspace Storage - Allows storing items and fluids in a limitless space, shared across the cluster",
     SOFTMOD_TEXT = "Soft Mods:\n"..
     "Global Chat - Chat text is shared across all servers in the cluster\n"..
+    "Server Select - Jump directly between servers in the cluster\n"..
     "Vehicle Snap - Cars are easier to drive on roads, they snap to one of 8 directions",
     DISCORD = "https://discord.gg/6dq2CbJ3Gx",
     CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
