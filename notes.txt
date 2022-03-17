@@ -1,9 +1,8 @@
 TODO:
 
 	Next steps:
-		Add and test out the server jumping plugin?
 		
-		Start atr homepage
+		Atr homepage
 			
 			Prometheus stats:
 				Players deaths?
@@ -19,6 +18,12 @@ TODO:
 		instance saves
 	
 	Scenario
-		OARC riff?
-			essentially a oarc shareables for in map, and clusterio for in cluster?
-			Cost for receiving items from oarc chests? Like x MJ of some fuel?
+		Split spawns
+			Need a central spawn area, with info?
+			Need a jail?
+			GUI
+				I want my own spawn
+				Invite to my spawn
+				Teleport home
+		Subspace Storage pads
+			
