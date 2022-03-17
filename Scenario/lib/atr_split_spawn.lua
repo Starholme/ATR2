@@ -97,7 +97,7 @@ local function find_new_spawn_area()
 
 end
 
-local function build_spawn_area(center)
+local function build_spawn_area(center, player_index)
     utils.draw_text_small("Welcome home!", center.x - 7, center.y - 10)
     local surface = game.get_surface("nauvis")
     local top_left = {x = center.x - SPAWN_SIZE / 2, y = center.y - SPAWN_SIZE / 2}
@@ -148,6 +148,7 @@ local function build_spawn_area(center)
     utils.spawn_ore_blob("stone", ORE_AMOUNT / 5, bottom_right.x - 10, bottom_right.y - 10, surface)
     utils.spawn_ore_blob("coal", ORE_AMOUNT / 2, bottom_right.x - 10, top_left.y + 10, surface)
 
+    global.atr_split_spawn.player_info[player_index].state = STATE_READY
 end
 
 local function set_new_player_spawn(player_index)
@@ -166,11 +167,6 @@ local function set_new_player_spawn(player_index)
         y = position.y,
         state = STATE_WAITING
     }
-
-    build_spawn_area(position)
-
-    global.atr_split_spawn.player_info[player_index].state = STATE_READY
-
 end
 
 local function teleport_home(player_index)
@@ -208,9 +204,11 @@ function exports.on_load()
     global.atr_split_spawn.player_info = global.atr_split_spawn.player_info or {}
 end
 
-function exports.check_spawn_ready()
+function exports.check_spawn_state()
     for player_index, value in pairs(global.atr_split_spawn.player_info) do
-        if value.state == STATE_READY then
+        if value.state == STATE_WAITING then
+            build_spawn_area({x=value.x, y=value.y}, player_index)
+        elseif value.state == STATE_READY then
             value.state = STATE_DONE
             teleport_home(player_index)
         end

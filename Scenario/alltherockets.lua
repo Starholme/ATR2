@@ -58,7 +58,7 @@ exports.on_nth_tick[6] = function (event)
 end
 
 exports.on_nth_tick[120] = function (event)
-    split_spawn.check_spawn_ready()
+    split_spawn.check_spawn_state()
 end
 
 exports.on_nth_tick[600] = function (event)
