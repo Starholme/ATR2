@@ -15,6 +15,7 @@ local STATE_DONE = "DONE"
 
 --REQUIRES--
 local utils = require("lib/atr_utils")
+local CONFIG = require("config")
 
 --GLOBAL--
 --global.atr_split_spawn:{
@@ -188,23 +189,31 @@ local exports = {}
 
 
 function exports.on_player_created(player_index)
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
     game.print("player created" .. player_index)
     set_new_player_spawn(player_index)
 end
 
 function exports.on_init()
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
     --Ensure the global exists
     global.atr_split_spawn = {}
     global.atr_split_spawn.player_info = {}
 end
 
 function exports.on_load()
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
     --Ensure the global exists
     global.atr_split_spawn = global.atr_split_spawn or {}
     global.atr_split_spawn.player_info = global.atr_split_spawn.player_info or {}
 end
 
 function exports.check_spawn_state()
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
     for player_index, value in pairs(global.atr_split_spawn.player_info) do
         if value.state == STATE_WAITING then
             build_spawn_area({x=value.x, y=value.y}, player_index)
