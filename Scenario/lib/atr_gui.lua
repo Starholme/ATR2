@@ -58,9 +58,52 @@ local function build_info_tab(tab)
     gui_utils.add_label(tab, "version_text", CONFIG.VERSION, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end
 
+local function build_spawn_tab(tab)
+    gui_utils.add_label(tab, "welcome_label", "Welcome to All The Rockets!", gui_utils.STYLES.LABEL_HEADER_STYLE)
+    gui_utils.add_label(tab, "scenario_text", CONFIG.SCENARIO_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+    gui_utils.add_label(tab, "server_text", CONFIG.SERVER_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+
+    gui_utils.add_label(tab, "map_info", CONFIG.MAP_INFO, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+
+    --Enemy Settings
+    local enemy_expansion_txt = "disabled"
+    if game.map_settings.enemy_expansion.enabled then enemy_expansion_txt = "enabled" end
+
+    local enemy_text="Server Run Time: " .. gui_utils.formattime_hours_mins(game.tick) .. "\n" ..
+    "Current Evolution: " .. string.format("%i", game.forces["enemy"].evolution_factor * 100) .. "%\n" ..
+    "Enemy evolution time/pollution/destroy factors: " ..
+    string.format("%.0f", game.map_settings.enemy_evolution.time_factor * 10000000) .. "/" ..
+    string.format("%.0f", game.map_settings.enemy_evolution.pollution_factor * 10000000) .. "/" ..
+    string.format("%.0f", game.map_settings.enemy_evolution.destroy_factor * 100000) .. "\n" ..
+    "Enemy expansion is " .. enemy_expansion_txt
+
+    gui_utils.add_label(tab, "enemy_info", enemy_text, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+
+    -- Mods
+    gui_utils.add_label(tab, "mods_text", CONFIG.MOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_label(tab, "softmods_text", "\n" .. CONFIG.SOFTMOD_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_spacer_line(tab)
+
+    -- Discord
+    tab.add{type="textfield",
+            tooltip="Come join the discord (copy this invite)!",
+            text=CONFIG.DISCORD}
+    -- Contact information
+    gui_utils.add_label(tab, "contact_text", CONFIG.CONTACT_TEXT, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+    gui_utils.add_label(tab, "version_text", CONFIG.VERSION, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+end
+
 local function init_gui_tabs(player, tab_pane)
     local tab = gui_utils.add_tab(player, tab_pane, "Info")
     build_info_tab(tab)
+
+    if CONFIG.ENABLE_SPLIT_SPAWN then
+        tab = gui_utils.add_tab(player, tab_pane, "Spawn")
+        build_spawn_tab(tab)
+    end
 end
 
 local function refresh_gui_tabs(player)
@@ -68,6 +111,11 @@ local function refresh_gui_tabs(player)
 
     all_tabs["Info_if"].clear()
     build_info_tab(all_tabs["Info_if"])
+
+    if CONFIG.ENABLE_SPLIT_SPAWN then
+        all_tabs["Spawn_if"].clear()
+        build_spawn_tab(all_tabs["Spawn_if"])
+    end
 end
 
 local function create_atr_gui_skeleton(player)
