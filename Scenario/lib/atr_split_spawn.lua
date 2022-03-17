@@ -2,8 +2,9 @@
 
 --CONSTANTS--
 local CHUNKSIZE = 32
-local EMPTY_RADIUS_CHUNKS = 2 -- How many chunks need to be open in each direction to consider this spot 'open'
+local EMPTY_RADIUS_CHUNKS = 4 -- How many chunks need to be open in each direction to consider this spot 'open'
 local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
+local SPAWN_SIZE = 64 -- How large is each generated spawn area
 
 --REQUIRES--
 local utils = require("lib/atr_utils")
@@ -90,8 +91,14 @@ local function find_new_spawn_area()
 end
 
 local function build_spawn_area(center)
-    utils.draw_text_large("Welcome home!", center.x, center.y)
+    utils.draw_text_small("Welcome home!", center.x, center.y)
+    local surface = game.get_surface("nauvis")
+
+    --Ensure area is generated
+    surface.request_to_generate_chunks(center, 3)
+
     --Clear area
+    surface.build_checkerboard({{center.x - SPAWN_SIZE, center.y - SPAWN_SIZE},{center.x + SPAWN_SIZE, center.y + SPAWN_SIZE}})
     --Set to grass or whatever
     --Add a moat
     --Add some trees
