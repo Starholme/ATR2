@@ -7,13 +7,17 @@ local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
 local SPAWN_SIZE = 64 -- How large is each generated spawn area
 local MOAT_WIDTH = 2 -- How many tiles wide is the moat
 
+local STATE_WAITING = "WAITING"
+local STATE_READY = "READY"
+local STATE_DONE = "DONE"
+
 --REQUIRES--
 local utils = require("lib/atr_utils")
 
 --GLOBAL--
 --global.atr_split_spawn:{
 --  player_info:[
---      playerIndex: {x,y}
+--      playerIndex: {x,y,state}
 --  ],
 --  last_cycle: {i}
 --}
@@ -121,10 +125,12 @@ local function build_spawn_area(center)
 
     --Add some trees
     --Add ores
+
+
 end
 
 local function set_new_player_spawn(player_index)
-    game.print("set new player spawn")
+    --game.print("set new player spawn")
 
     local player = game.players[player_index]
 
@@ -135,15 +141,27 @@ local function set_new_player_spawn(player_index)
 
     --Where should they spawn?
     global.atr_split_spawn.player_info[player_index] = {
-        x = position.x * CHUNKSIZE,
-        y = position.y * CHUNKSIZE
+        x = position.x,
+        y = position.y,
+        state = STATE_WAITING
     }
 
     build_spawn_area(position)
 
+    global.atr_split_spawn.player_info[player_index].state = STATE_READY
+
 end
 
+local function teleport_home(player_index)
+    local player = game.get_player(player_index)
+    local player_info = global.atr_split_spawn.player_info[player_index]
 
+    if player_info.state == STATE_READY or player_info.state == STATE_DONE then
+        player.teleport({player_info.x, player_info.y})
+        --game.print("TELEPORT HOME: "..player_info.x..","..player_info.y)
+    end
+
+end
 
 --Holds items that are exported
 local exports = {}
@@ -167,6 +185,15 @@ function exports.on_load()
     --Ensure the global exists
     global.atr_split_spawn = global.atr_split_spawn or {}
     global.atr_split_spawn.player_info = global.atr_split_spawn.player_info or {}
+end
+
+function exports.check_spawn_ready()
+    for player_index, value in pairs(global.atr_split_spawn.player_info) do
+        if value.state == STATE_READY then
+            value.state = STATE_DONE
+            teleport_home(player_index)
+        end
+    end
 end
 
 return exports

@@ -57,6 +57,10 @@ exports.on_nth_tick[6] = function (event)
     vehicle_snap.on_nth_tick()
 end
 
+exports.on_nth_tick[120] = function (event)
+    split_spawn.check_spawn_ready()
+end
+
 exports.on_nth_tick[600] = function (event)
     if (CONFIG.TEST_MODE) then
         game.print("TEST MODE ACTIVE!")
