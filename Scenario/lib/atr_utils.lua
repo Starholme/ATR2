@@ -31,7 +31,7 @@ end
 
 function exports.spawn_ore_blob(name, amount, x_position, y_position, surface)
     --ie: spawn_ore_blob("iron-ore", 10000, -50, -50, game.get_surface("nauvis"))
-    local tile_to_amount_ratio = 10000
+    local tile_to_amount_ratio = 8000
     local tiles  = amount / tile_to_amount_ratio
 
     local biases = {[0] = {[0] = 1}}
