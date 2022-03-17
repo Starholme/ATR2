@@ -4,7 +4,7 @@
 local CHUNKSIZE = 32
 local EMPTY_RADIUS_CHUNKS = 4 -- How many chunks need to be open in each direction to consider this spot 'open'
 local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
-local SPAWN_SIZE = 64 -- How large is each generated spawn area
+local SPAWN_SIZE = 96 -- How large is each generated spawn area
 local MOAT_WIDTH = 2 -- How many tiles wide is the moat
 local TREE_SIZE = 4
 local ORE_AMOUNT = 250000
@@ -112,21 +112,30 @@ local function build_spawn_area(center)
 
     --Add a moat, fill center with grass
     local tiles = {}
+    local tile
     for x = 0, SPAWN_SIZE do
         for y = 0, SPAWN_SIZE do
+            --Default to grass
+            tile = {name = "grass-1", position = {top_left.x + x, top_left.y + y}}
+
+            --Add a moat
             if x < MOAT_WIDTH or x > SPAWN_SIZE - MOAT_WIDTH or
                 y < MOAT_WIDTH or y > SPAWN_SIZE - MOAT_WIDTH
             then
-                table.insert(tiles, {name = "water", position = {top_left.x + x, top_left.y + y}})
-            else
-                table.insert(tiles, {name = "grass-1", position = {top_left.x + x, top_left.y + y}})
+                tile.name = "water"
             end
+            --gap in the moat at top
+            if x > center.x-2 and x < center.x+2 then
+                tile.name = "grass-2"
+            end
+
+            table.insert(tiles, tile)
         end
     end
     surface.set_tiles(tiles)
 
     --Add some trees
-    local tree_position = {x=center.x, y=top_left.y + 5}
+    local tree_position = {x=center.x, y=top_left.y}
     for x = 0, TREE_SIZE do
         for y = 0, TREE_SIZE do
             surface.create_entity({name="tree-01", position = {tree_position.x + x, tree_position.y + y}})
