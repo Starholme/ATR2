@@ -92,17 +92,19 @@ local function find_new_spawn_area()
 end
 
 local function build_spawn_area(center)
-    utils.draw_text_small("Welcome home!", center.x - 10, center.y - 10)
+    utils.draw_text_small("Welcome home!", center.x - 7, center.y - 10)
     local surface = game.get_surface("nauvis")
     local top_left = {x = center.x - SPAWN_SIZE / 2, y = center.y - SPAWN_SIZE / 2}
-
+    local bottom_right = {x = center.x + SPAWN_SIZE / 2, y = center.y + SPAWN_SIZE / 2}
     --Ensure area is generated
     surface.request_to_generate_chunks(center, 3)
 
     --Clear area
-    --Set to grass or whatever
+    for _, v in pairs(surface.find_entities({top_left, bottom_right})) do
+        v.destroy()
+    end
 
-    --Add a moat
+    --Add a moat, fill center with grass
     local tiles = {}
     for x = 0, SPAWN_SIZE do
         for y = 0, SPAWN_SIZE do
