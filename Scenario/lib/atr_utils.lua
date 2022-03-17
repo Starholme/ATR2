@@ -1,5 +1,6 @@
 --CONSTANTS--
 local LARGE = 10
+local SMALL = 5
 local ORANGE = {0.9, 0.7, 0.3, 0.8}
 
 --REQUIRES--
@@ -22,6 +23,10 @@ end
 
 function exports.draw_text_large(text, x, y)
     draw_text("nauvis", x, y, LARGE, ORANGE, text)
+end
+
+function exports.draw_text_small(text, x, y)
+    draw_text("nauvis", x, y, SMALL, ORANGE, text)
 end
 
 return exports
