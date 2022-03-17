@@ -1,12 +1,12 @@
 --Provide each player it's own place to spawn
 
 --CONSTANTS--
-local FREE_CHUNKS_XY = 6 -- How many chunks need to be open in each direction to consider this spot 'open'
-local CHUNKSIZE = 32 -- Size of chunks to work with
-local MAX_CYCLES = 5 -- How many 'rings' around spawn to check before giving up
+local CHUNKSIZE = 32
+local EMPTY_RADIUS_CHUNKS = 2 -- How many chunks need to be open in each direction to consider this spot 'open'
+local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
 
 --REQUIRES--
---local req = require("whatever")
+local utils = require("lib/atr_utils")
 
 --GLOBAL--
 --global.atr_split_spawn:{
@@ -16,14 +16,25 @@ local MAX_CYCLES = 5 -- How many 'rings' around spawn to check before giving up
 --  last_cycle: {i}
 --}
 
-local function testChunk(x,y)
-    game.print("x:"..x.." y:"..y)
-    if x == 2 and y == 2 then
+local function test_chunk(x, y, surface)
+    --Ensure no player entities nearby
+    --Count entities within a radius
+    local radius = EMPTY_RADIUS_CHUNKS * CHUNKSIZE
+    local position = {x = x * CHUNKSIZE, y = y * CHUNKSIZE}
+    local count = surface.count_entities_filtered({
+        position = position,
+        radius = radius,
+        force = "player",
+        limit = 10
+    })
+
+    game.print("test_chunk: x:"..x.." y:"..y.." entities: "..count)
+    if count == 0 then
         return {x = x, y = y}
     end
 end
 
-local function find_new_spawn_area(player_index)
+local function find_new_spawn_area()
     --Find somewhere on the map that has room for a new base
 
     local surface = game.get_surface("nauvis")
@@ -33,7 +44,7 @@ local function find_new_spawn_area(player_index)
 
     local found
 
-    while cycle < 5 do
+    while cycle < MAX_CYCLES do
         local ymin = cycle * -1
         local ymax = cycle
         local xmin = cycle * -1
@@ -41,35 +52,50 @@ local function find_new_spawn_area(player_index)
 
         --go right
         for i = xmin,xmax,1 do
-            found = testChunk(i, ymin)
+            found = test_chunk(i, ymin, surface)
             if found then break end
         end
         if found then break end
         --go down
         for i = ymin,ymax,1 do
-            found = testChunk(xmax, i)
+            found = test_chunk(xmax, i, surface)
             if found then break end
         end
         if found then break end
         --go left
         for i = xmax,xmin,-1 do
-            found = testChunk(i, ymax)
+            found = test_chunk(i, ymax, surface)
             if found then break end
         end
         if found then break end
         --go up
         for i = ymax,ymin,-1 do
-            found = testChunk(xmin, i)
+            found = test_chunk(xmin, i, surface)
             if found then break end
         end
         if found then break end
         cycle = cycle + 1
     end
 
-    game.print("cycle:"..cycle)
+    if found then
+        game.print("FOUND x:"..found.x.." y:"..found.y)
+        found.x = found.x * CHUNKSIZE
+        found.y = found.y * CHUNKSIZE
+    else
+        game.print("Unable to find spawn point for new player!")
+    end
 
-    game.print("FOUND x:"..found.x.." y:"..found.y)
+    return found
 
+end
+
+local function build_spawn_area(center)
+    utils.draw_text_large("Welcome home!", center.x, center.y)
+    --Clear area
+    --Set to grass or whatever
+    --Add a moat
+    --Add some trees
+    --Add ores
 end
 
 local function set_new_player_spawn(player_index)
@@ -77,26 +103,22 @@ local function set_new_player_spawn(player_index)
 
     local player = game.players[player_index]
 
+    local position = find_new_spawn_area()
+    if not position then
+        return --Failed to find a suitable location
+    end
+
     --Where should they spawn?
     global.atr_split_spawn.player_info[player_index] = {
-        x = player.character.position.x + 100,
-        y = player.character.position.y + 100
+        x = position.x * CHUNKSIZE,
+        y = position.y * CHUNKSIZE
     }
 
-    game.print("x:" .. player.character.position.x)
-    game.print("y:" .. player.character.position.y)
-
-    find_new_spawn_area(player_index)
+    build_spawn_area(position)
 
 end
 
-local function build_spawn_area()
-    --Clear area
-    --Set to grass or whatever
-    --Add a moat
-    --Add some trees
-    --Add ores
-end
+
 
 --Holds items that are exported
 local exports = {}
