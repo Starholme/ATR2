@@ -6,6 +6,7 @@ local EMPTY_RADIUS_CHUNKS = 4 -- How many chunks need to be open in each directi
 local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
 local SPAWN_SIZE = 64 -- How large is each generated spawn area
 local MOAT_WIDTH = 2 -- How many tiles wide is the moat
+local TREE_SIZE = 4
 
 local STATE_WAITING = "WAITING"
 local STATE_READY = "READY"
@@ -124,6 +125,13 @@ local function build_spawn_area(center)
     surface.set_tiles(tiles)
 
     --Add some trees
+    local tree_position = {x=center.x, y=top_left.y + 5}
+    for x = 0, TREE_SIZE do
+        for y = 0, TREE_SIZE do
+            surface.create_entity({name="tree-01", position = {tree_position.x + x, tree_position.y + y}})
+        end
+    end
+
     --Add ores
 
 
