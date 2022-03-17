@@ -5,6 +5,7 @@ local CHUNKSIZE = 32
 local EMPTY_RADIUS_CHUNKS = 4 -- How many chunks need to be open in each direction to consider this spot 'open'
 local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
 local SPAWN_SIZE = 64 -- How large is each generated spawn area
+local MOAT_WIDTH = 2 -- How many tiles wide is the moat
 
 --REQUIRES--
 local utils = require("lib/atr_utils")
@@ -91,7 +92,7 @@ local function find_new_spawn_area()
 end
 
 local function build_spawn_area(center)
-    utils.draw_text_small("Welcome home!", center.x, center.y)
+    utils.draw_text_small("Welcome home!", center.x - 10, center.y - 10)
     local surface = game.get_surface("nauvis")
     local top_left = {x = center.x - SPAWN_SIZE / 2, y = center.y - SPAWN_SIZE / 2}
 
@@ -105,7 +106,9 @@ local function build_spawn_area(center)
     local tiles = {}
     for x = 0, SPAWN_SIZE do
         for y = 0, SPAWN_SIZE do
-            if x == 0 or x == SPAWN_SIZE or y == 0 or y == SPAWN_SIZE then
+            if x < MOAT_WIDTH or x > SPAWN_SIZE - MOAT_WIDTH or
+                y < MOAT_WIDTH or y > SPAWN_SIZE - MOAT_WIDTH
+            then
                 table.insert(tiles, {name = "water", position = {top_left.x + x, top_left.y + y}})
             else
                 table.insert(tiles, {name = "grass-1", position = {top_left.x + x, top_left.y + y}})
