@@ -29,7 +29,7 @@ local function test_chunk(x, y, surface)
         limit = 10
     })
 
-    game.print("test_chunk: x:"..x.." y:"..y.." entities: "..count)
+    --game.print("test_chunk: x:"..x.." y:"..y.." entities: "..count)
     if count == 0 then
         return {x = x, y = y}
     end
@@ -93,14 +93,27 @@ end
 local function build_spawn_area(center)
     utils.draw_text_small("Welcome home!", center.x, center.y)
     local surface = game.get_surface("nauvis")
+    local top_left = {x = center.x - SPAWN_SIZE / 2, y = center.y - SPAWN_SIZE / 2}
 
     --Ensure area is generated
     surface.request_to_generate_chunks(center, 3)
 
     --Clear area
-    surface.build_checkerboard({{center.x - SPAWN_SIZE, center.y - SPAWN_SIZE},{center.x + SPAWN_SIZE, center.y + SPAWN_SIZE}})
     --Set to grass or whatever
+
     --Add a moat
+    local tiles = {}
+    for x = 0, SPAWN_SIZE do
+        for y = 0, SPAWN_SIZE do
+            if x == 0 or x == SPAWN_SIZE or y == 0 or y == SPAWN_SIZE then
+                table.insert(tiles, {name = "water", position = {top_left.x + x, top_left.y + y}})
+            else
+                table.insert(tiles, {name = "grass-1", position = {top_left.x + x, top_left.y + y}})
+            end
+        end
+    end
+    surface.set_tiles(tiles)
+
     --Add some trees
     --Add ores
 end
