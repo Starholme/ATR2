@@ -7,6 +7,7 @@ local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
 local SPAWN_SIZE = 64 -- How large is each generated spawn area
 local MOAT_WIDTH = 2 -- How many tiles wide is the moat
 local TREE_SIZE = 4
+local ORE_AMOUNT = 150000
 
 local STATE_WAITING = "WAITING"
 local STATE_READY = "READY"
@@ -133,7 +134,7 @@ local function build_spawn_area(center)
     end
 
     --Add ores
-
+    utils.spawn_ore_blob("iron-ore", ORE_AMOUNT, center.x, center.y, surface)
 
 end
 
