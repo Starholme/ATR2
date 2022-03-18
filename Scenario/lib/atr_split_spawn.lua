@@ -9,9 +9,10 @@ local MOAT_WIDTH = 2 -- How many tiles wide is the moat
 local TREE_SIZE = 4
 local ORE_AMOUNT = 250000
 
-local STATE_WAITING = "WAITING"
-local STATE_READY = "READY"
-local STATE_DONE = "DONE"
+local STATE_NEW = "NEW" --New player, can make own spawn area
+local STATE_WAITING = "WAITING" -- In queue for a spawn point
+local STATE_READY = "READY" --Location is prepared, user will be teleported
+local STATE_DONE = "DONE" --Nothing needs to be done
 
 --REQUIRES--
 local utils = require("lib/atr_utils")
@@ -153,7 +154,7 @@ local function build_spawn_area(center, player_index)
     global.atr_split_spawn.player_info[player_index].state = STATE_READY
 end
 
-local function set_new_player_spawn(player_index)
+local function find_new_player_spawn(player_index)
     --game.print("set new player spawn")
 
     local player = game.players[player_index]
@@ -190,14 +191,6 @@ local exports = {}
 --Variables and functions should be named lowecase with underscores
 --Constants should be all uppercase with underscores
 
-
-function exports.on_player_created(player_index)
-    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
-
-    game.print("player created" .. player_index)
-    set_new_player_spawn(player_index)
-end
-
 function exports.on_init()
     if not CONFIG.ENABLE_SPLIT_SPAWN then return end
 
@@ -212,6 +205,17 @@ function exports.on_load()
     --Ensure the global exists
     global.atr_split_spawn = global.atr_split_spawn or {}
     global.atr_split_spawn.player_info = global.atr_split_spawn.player_info or {}
+end
+
+function exports.on_player_created(player_index)
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
+    --Default spawn is 0,0
+    global.atr_split_spawn.player_info[player_index] = {
+        x = 0,
+        y = 0,
+        state = STATE_NEW
+    }
 end
 
 function exports.check_spawn_state()
@@ -237,6 +241,10 @@ function exports.build_tab(tab, player)
 
     gui_utils.add_button(tab, "atr_spawn_teleport_home", "Teleport Home")
 
+    if CONFIG.TEST_MODE or player_info.state == STATE_NEW then
+        gui_utils.add_button(tab, "atr_spawn_find_new", "I want my own spawn point!")
+    end
+
     gui_utils.add_spacer_line(tab)
     gui_utils.add_label(tab, "home_info", "My home:"..player_info.x..","..player_info.y, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end
@@ -244,7 +252,9 @@ end
 function exports.on_gui_click(event)
     if not CONFIG.ENABLE_SPLIT_SPAWN then return end
 
-    if event.element.name == "atr_spawn_teleport_home" then teleport_home(event.player_index) end
+    if event.element.name == "atr_spawn_teleport_home" then teleport_home(event.player_index)
+    elseif event.element.name == "atr_spawn_find_new" then find_new_player_spawn(event.player_index) end
+
 end
 
 return exports
