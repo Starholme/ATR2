@@ -125,10 +125,10 @@ local function build_spawn_area(center, player_index)
                 y < MOAT_WIDTH or y > SPAWN_SIZE - MOAT_WIDTH
             then
                 tile.name = "water"
-            end
-            --gap in the moat at top
-            if x > center.x-2 and x < center.x+2 then
-                tile.name = "grass-2"
+                --gap in the moat at top
+                if y < MOAT_WIDTH and x > (SPAWN_SIZE/2) - 2 and x < (SPAWN_SIZE/2) + 2 then
+                    tile.name = "grass-2"
+                end
             end
 
             table.insert(tiles, tile)
