@@ -2,7 +2,7 @@
 
 --CONSTANTS--
 local CHUNKSIZE = 32
-local EMPTY_RADIUS_CHUNKS = 4 -- How many chunks need to be open in each direction to consider this spot 'open'
+local EMPTY_RADIUS_CHUNKS = 5 -- How many chunks need to be open in each direction to consider this spot 'open'
 local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
 local SPAWN_SIZE = 96 -- How large is each generated spawn area
 local MOAT_WIDTH = 2 -- How many tiles wide is the moat
