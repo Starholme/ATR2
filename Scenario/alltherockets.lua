@@ -57,6 +57,7 @@ end
 
 exports.on_nth_tick[6] = function (event)
     vehicle_snap.on_nth_tick()
+    spawn.on_nth_tick()
 end
 
 exports.on_nth_tick[120] = function (event)
