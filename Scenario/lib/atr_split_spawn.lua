@@ -182,7 +182,7 @@ local function teleport_home(player_index)
         return
     end
 
-    if player_info.state == STATE_READY or player_info.state == STATE_DONE then
+    if player_info.state ~= STATE_WAITING then
         player.teleport({player_info.x, player_info.y})
     end
 end
