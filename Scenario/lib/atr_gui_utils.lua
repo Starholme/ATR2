@@ -57,13 +57,22 @@ local function apply_style (guiIn, styleIn)
     end
 end
 
--- Shorter way to add a label with a style
 function exports.add_label(gui, name, message, style)
     local g = gui.add{name = name, type = "label",
                     caption=message}
     if (type(style) == "table") then
         apply_style(g, style)
     else
+        g.style = style
+    end
+end
+
+function exports.add_button(gui, name, message, style)
+    local g = gui.add{name = name, type = "button",
+                    caption=message}
+    if (type(style) == "table") then
+        apply_style(g, style)
+    elseif style then
         g.style = style
     end
 end

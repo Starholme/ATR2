@@ -15,6 +15,7 @@ local STATE_DONE = "DONE"
 
 --REQUIRES--
 local utils = require("lib/atr_utils")
+local gui_utils = require("lib/atr_gui_utils")
 local CONFIG = require("config")
 
 --GLOBAL--
@@ -222,6 +223,23 @@ function exports.check_spawn_state()
             teleport_home(player_index)
         end
     end
+end
+
+function exports.build_tab(tab)
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
+    gui_utils.add_label(tab, "title", "Spawn options?!", gui_utils.STYLES.LABEL_HEADER_STYLE)
+    gui_utils.add_spacer_line(tab)
+
+    gui_utils.add_button(tab, "atr_spawn_teleport_home", "Teleport Home")
+
+    gui_utils.add_spacer_line(tab)
+end
+
+function exports.on_gui_click(event)
+    if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
+    if event.element.name == "atr_spawn_teleport_home" then teleport_home(event.player_index) end
 end
 
 return exports

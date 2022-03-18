@@ -36,6 +36,8 @@ exports.events[defines.events.on_gui_click] = function (event)
 
     gui.on_gui_click(event)
 
+    split_spawn.on_gui_click(event)
+
 end
 
 exports.events[defines.events.on_player_created] = function (event)
