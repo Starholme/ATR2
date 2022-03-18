@@ -19,6 +19,8 @@ local utils = require("lib/atr_utils")
 local gui_utils = require("lib/atr_gui_utils")
 local CONFIG = require("config")
 
+local atr_gui_ref --Used to keep a handle back to the gui
+
 --GLOBAL--
 --global.atr_split_spawn:{
 --  player_info:[
@@ -231,8 +233,10 @@ function exports.check_spawn_state()
     end
 end
 
-function exports.build_tab(tab, player)
+function exports.build_tab(tab, player, gui)
     if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
+    atr_gui_ref = gui --Store a handle so we can call close/refresh/etc.
 
     local player_info = global.atr_split_spawn.player_info[player.index]
 
@@ -252,8 +256,14 @@ end
 function exports.on_gui_click(event)
     if not CONFIG.ENABLE_SPLIT_SPAWN then return end
 
-    if event.element.name == "atr_spawn_teleport_home" then teleport_home(event.player_index)
-    elseif event.element.name == "atr_spawn_find_new" then find_new_player_spawn(event.player_index) end
+    local player = game.players[event.player_index]
+    if event.element.name == "atr_spawn_teleport_home" then
+        teleport_home(event.player_index)
+        atr_gui_ref.hide_gui(player)
+    elseif event.element.name == "atr_spawn_find_new" then
+        find_new_player_spawn(event.player_index)
+        atr_gui_ref.hide_gui(player)
+    end
 
 end
 

@@ -65,7 +65,7 @@ local function init_gui_tabs(player, tab_pane)
 
     if CONFIG.ENABLE_SPLIT_SPAWN then
         tab = gui_utils.add_tab(player, tab_pane, "Spawn")
-        split_spawn.build_tab(tab, player)
+        split_spawn.build_tab(tab, player, exports)
     end
 end
 
@@ -77,7 +77,7 @@ local function refresh_gui_tabs(player)
 
     if CONFIG.ENABLE_SPLIT_SPAWN then
         all_tabs["Spawn_if"].clear()
-        split_spawn.build_tab(all_tabs["Spawn_if"], player)
+        split_spawn.build_tab(all_tabs["Spawn_if"], player, exports)
     end
 end
 
@@ -131,6 +131,12 @@ local function atr_button_click(event, player)
             refresh_gui_tabs(player)
             gui_utils.show_gui(player, ATR_GUI)
         end
+    end
+end
+
+function exports.hide_gui(player)
+    if (gui_utils.is_gui_visible(player, ATR_GUI)) then
+        gui_utils.hide_gui(player, ATR_GUI)
     end
 end
 
