@@ -175,11 +175,13 @@ local function teleport_home(player_index)
     local player = game.get_player(player_index)
     local player_info = global.atr_split_spawn.player_info[player_index]
 
-    if player_info.state == STATE_READY or player_info.state == STATE_DONE then
-        player.teleport({player_info.x, player_info.y})
-        --game.print("TELEPORT HOME: "..player_info.x..","..player_info.y)
+    if not player_info then
+        return
     end
 
+    if player_info.state == STATE_READY or player_info.state == STATE_DONE then
+        player.teleport({player_info.x, player_info.y})
+    end
 end
 
 --Holds items that are exported
@@ -225,8 +227,10 @@ function exports.check_spawn_state()
     end
 end
 
-function exports.build_tab(tab)
+function exports.build_tab(tab, player)
     if not CONFIG.ENABLE_SPLIT_SPAWN then return end
+
+    local player_info = global.atr_split_spawn.player_info[player.index]
 
     gui_utils.add_label(tab, "title", "Spawn options?!", gui_utils.STYLES.LABEL_HEADER_STYLE)
     gui_utils.add_spacer_line(tab)
@@ -234,6 +238,7 @@ function exports.build_tab(tab)
     gui_utils.add_button(tab, "atr_spawn_teleport_home", "Teleport Home")
 
     gui_utils.add_spacer_line(tab)
+    gui_utils.add_label(tab, "home_info", "My home:"..player_info.x..","..player_info.y, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end
 
 function exports.on_gui_click(event)
