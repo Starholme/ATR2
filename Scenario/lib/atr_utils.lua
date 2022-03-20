@@ -1,7 +1,9 @@
 --CONSTANTS--
 local LARGE = 10
 local SMALL = 5
+local TINY = 1
 local ORANGE = {0.9, 0.7, 0.3, 0.8}
+local ORANGE_SOLID = {0.9, 0.7, 0.3, 1}
 
 --REQUIRES--
 
@@ -27,6 +29,10 @@ end
 
 function exports.draw_text_small(text, x, y)
     draw_text("nauvis", x, y, SMALL, ORANGE, text)
+end
+
+function exports.draw_text_tiny(text, x, y)
+    draw_text("nauvis", x, y, TINY, ORANGE_SOLID, text)
 end
 
 function exports.spawn_ore_blob(name, amount, x_position, y_position, surface)
