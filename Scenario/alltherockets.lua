@@ -5,11 +5,13 @@
 
 --REQUIRES--
 local CONFIG = require("config")
-local spawn = require("lib/atr_spawn")
 local gui = require("lib/atr_gui")
+local spawn = require("lib/atr_spawn")
+local split_spawn = require("lib/atr_split_spawn")
+local subspace = require("lib/atr_subspace")
 local test_mode = require("lib/atr_test_mode")
 local vehicle_snap = require("lib/atr_vehicle_snap")
-local split_spawn = require("lib/atr_split_spawn")
+
 
 --Holds items that are exported
 local exports = {
@@ -29,6 +31,10 @@ end
 
 function exports.on_load(event)
     split_spawn.on_load()
+end
+
+exports.events[defines.events.on_chunk_generated] = function (event)
+    subspace.on_chunk_generated(event)
 end
 
 exports.events[defines.events.on_gui_click] = function (event)

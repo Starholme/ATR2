@@ -20,10 +20,7 @@ TODO:
 	Scenario
 		Split spawns
 			Need a central spawn area, with info?
-			Need a jail?
 			GUI
-				I want my own spawn
 				Invite to my spawn
-				Teleport home
 		Subspace Storage pads
 			
