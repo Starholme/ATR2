@@ -6,13 +6,43 @@ local utils = require("lib/atr_utils")
 
 local step_table = {}
 local function build_step_table()
-    --10x10 hazard concrete center
+
+    table.insert(step_table, function (surface)
+        utils.draw_text_large("Welcome to ATR!", -20, -10)
+    end)
+
+    --Clear entities
+    table.insert(step_table, function (surface)
+        for _, v in pairs(surface.find_entities({{-50,-50}, {50,50}})) do
+            if v.name ~= "character" then
+                v.destroy()
+            end
+        end
+    end)
+
+    --concrete under welcome
+    table.insert(step_table, function (surface)
+        local tiles = {}
+        local tile
+        for x=-25,25 do
+            for y=-10,10 do
+                tile = {name="refined-concrete", position={x,y}}
+                table.insert(tiles,tile)
+            end
+        end
+        surface.set_tiles(tiles)
+    end)
+
+    --10x10 hazard concrete for combinator
     table.insert(step_table, function (surface)
         local tiles = {}
         local tile
         for x=-5,5 do
-            for y=-5,5 do
-                tile = {name="refined-hazard-concrete-left", position={x,y}}
+            for y=0,10 do
+                tile = {name="refined-concrete", position={x,y}}
+                if x == -5 or x == 5 or y == 0 or y == 10 then
+                    tile.name = "refined-hazard-concrete-left"
+                end
                 table.insert(tiles,tile)
             end
         end
@@ -21,8 +51,9 @@ local function build_step_table()
 
     --Combinator
     table.insert(step_table, function (surface)
-        local combinator = surface.create_entity({name="constant-combinator", position = {0,0}, force="player"})
+        local combinator = surface.create_entity({name="constant-combinator", position = {0,5}, force="player"})
         combinator.destructible = false
+        combinator.minable = false
     end)
 end
 
@@ -32,7 +63,7 @@ local exports = {}
 function exports.setup()
     global.atr_spawn = {step = 0}
 
-    utils.draw_text_large("Welcome to ATR!", -20, -6)
+
 
     build_step_table()
 end
