@@ -51,7 +51,7 @@ local function build_step_table()
 
     --Combinator
     table.insert(step_table, function (surface)
-        local combinator = surface.create_entity({name="constant-combinator", position = {0,5}, force="player"})
+        local combinator = surface.create_entity({name="subspace-resource-combinator", position = {0,5}, force="player"})
         combinator.destructible = false
         combinator.minable = false
     end)
