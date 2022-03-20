@@ -4,8 +4,9 @@ local ATR_GUI = "atr_gui"
 
 --REQUIRES--
 local mod_gui = require("mod-gui")
-local gui_utils = require("atr_gui_utils")
+local gui_utils = require("lib/atr_gui_utils")
 local CONFIG = require("config")
+local split_spawn = require("lib/atr_split_spawn")
 
 --Holds items that are exported
 local exports = {}
@@ -61,6 +62,11 @@ end
 local function init_gui_tabs(player, tab_pane)
     local tab = gui_utils.add_tab(player, tab_pane, "Info")
     build_info_tab(tab)
+
+    if CONFIG.ENABLE_SPLIT_SPAWN then
+        tab = gui_utils.add_tab(player, tab_pane, "Spawn")
+        split_spawn.build_tab(tab, player, exports)
+    end
 end
 
 local function refresh_gui_tabs(player)
@@ -68,6 +74,11 @@ local function refresh_gui_tabs(player)
 
     all_tabs["Info_if"].clear()
     build_info_tab(all_tabs["Info_if"])
+
+    if CONFIG.ENABLE_SPLIT_SPAWN then
+        all_tabs["Spawn_if"].clear()
+        split_spawn.build_tab(all_tabs["Spawn_if"], player, exports)
+    end
 end
 
 local function create_atr_gui_skeleton(player)
@@ -120,6 +131,12 @@ local function atr_button_click(event, player)
             refresh_gui_tabs(player)
             gui_utils.show_gui(player, ATR_GUI)
         end
+    end
+end
+
+function exports.hide_gui(player)
+    if (gui_utils.is_gui_visible(player, ATR_GUI)) then
+        gui_utils.hide_gui(player, ATR_GUI)
     end
 end
 
