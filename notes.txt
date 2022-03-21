@@ -19,8 +19,6 @@ TODO:
 	
 	Scenario
 		Split spawns
-			Need a central spawn area, with info?
 			GUI
 				Invite to my spawn
-		Subspace Storage pads
-			
+				Show invites to other spawns
