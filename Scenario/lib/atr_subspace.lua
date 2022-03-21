@@ -1,5 +1,5 @@
 --CONSTANTS--
-local CHANCE_OF_SUBSPACE_PAD = 100 --Chance is 1/this constant, so 1 over 100, or 1 over 1000, etc.
+local CHANCE_OF_SUBSPACE_PAD = 500 --Chance is 1/this constant, so 1 over 100, or 1 over 1000, etc.
 
 --REQUIRES--
 local CONFIG = require("config")
@@ -41,8 +41,7 @@ local function spawn_subspace_pad(chunk_position)
     surface.set_tiles(tiles)
 
     --Add the entity
-    local subspace = global.atr_subspace or {}
-    local last_spawned = subspace.last_spawned or "subspace-item-injector"
+    local last_spawned = global.atr_subspace.last_spawned
     local name
     if last_spawned == "subspace-fluid-extractor" then
         name = "subspace-item-injector"
@@ -53,10 +52,14 @@ local function spawn_subspace_pad(chunk_position)
     elseif last_spawned == "subspace-fluid-injector" then
         name = "subspace-fluid-extractor"
     end
-    subspace.last_spawned = name
+    global.atr_subspace.last_spawned = name
     local entity = surface.create_entity({name=name, position = {top_left.x + 16, top_left.y + 16}, force="player"})
     entity.destructible = false
     entity.minable = false
+end
+
+function exports.on_init()
+    global.atr_subspace = {last_spawned = "subspace-item-injector"}
 end
 
 function exports.on_chunk_generated(event)
