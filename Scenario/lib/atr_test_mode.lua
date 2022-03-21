@@ -15,6 +15,7 @@ local exports = {}
 
 function exports.on_player_created(player)
     player.insert{name="power-armor-mk2", count = 1}
+    player.character_running_speed_modifier = 2
 
     if player and player.get_inventory(defines.inventory.character_armor) ~= nil and player.get_inventory(defines.inventory.character_armor)[1] ~= nil then
         local p_armor = player.get_inventory(defines.inventory.character_armor)[1].grid
