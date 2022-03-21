@@ -2,15 +2,17 @@
 
 --CONSTANTS--
 local CHUNKSIZE = 32
-local EMPTY_RADIUS_CHUNKS = 5 -- How many chunks need to be open in each direction to consider this spot 'open'
-local MAX_CYCLES = 10 -- How many 'rings' around spawn to check before giving up
+local EMPTY_RADIUS_CHUNKS = 10 -- How many chunks need to be open in each direction to consider this spot 'open'
+local MAX_CYCLES = 100 -- How many 'rings' around spawn to check before giving up
 local SPAWN_SIZE = 96 -- How large is each generated spawn area
 local MOAT_WIDTH = 2 -- How many tiles wide is the moat
 local TREE_SIZE = 4
 local ORE_AMOUNT = 250000
 
 local STATE_NEW = "NEW" --New player, can make own spawn area
-local STATE_WAITING = "WAITING" -- In queue for a spawn point
+local STATE_WAITING = "WAITING" -- Waiting for chunks to generate
+local STATE_CLEARING = "CLEARING" -- Clearing automatic entities
+local STATE_BUILDING = "BUILDING" -- Creating the spawn area
 local STATE_READY = "READY" --Location is prepared, user will be teleported
 local STATE_DONE = "DONE" --Nothing needs to be done
 
@@ -91,7 +93,7 @@ local function find_new_spawn_area()
     end
 
     if found then
-        game.print("FOUND x:"..found.x.." y:"..found.y)
+        --game.print("FOUND x:"..found.x.." y:"..found.y)
         found.x = found.x * CHUNKSIZE
         found.y = found.y * CHUNKSIZE
     else
@@ -102,18 +104,66 @@ local function find_new_spawn_area()
 
 end
 
-local function build_spawn_area(center, player_index)
-    utils.draw_text_small("Welcome home!", center.x - 7, center.y - 10)
-    local surface = game.get_surface("nauvis")
-    local top_left = {x = center.x - SPAWN_SIZE / 2, y = center.y - SPAWN_SIZE / 2}
-    local bottom_right = {x = center.x + SPAWN_SIZE / 2, y = center.y + SPAWN_SIZE / 2}
-    --Ensure area is generated
-    surface.request_to_generate_chunks(center, 3)
+local function check_spawn_charted(center, player_index)
+    local player = game.get_player(player_index)
+    player.print("Looking for your new home...")
+    --game.print("Checking "..center.x..","..center.y)
 
+    local surface = game.get_surface("nauvis")
+    local force = game.forces.player
+
+    local size_in_chunks = (SPAWN_SIZE / CHUNKSIZE)
+    local center_chunk = {x=center.x/32, y=center.y/32}
+
+    local all_charted = true
+    for x = -size_in_chunks, size_in_chunks do
+        for y = -size_in_chunks, size_in_chunks do
+            local i_chunk = {x = center_chunk.x + x, y = center_chunk.y + y}
+            if force.is_chunk_charted(surface, i_chunk) == false then
+                all_charted = false
+            end
+        end
+    end
+
+    if all_charted then
+        --game.print("All charted "..center.x..","..center.y)
+        global.atr_split_spawn.player_info[player_index].state = STATE_CLEARING
+    else
+        --Chart a slightly larger area than the spawn area
+        size_in_chunks = size_in_chunks + 3
+        local top_left = {x = center.x - size_in_chunks * CHUNKSIZE, y = center.y - size_in_chunks * CHUNKSIZE}
+        local bottom_right = {x = center.x + size_in_chunks * CHUNKSIZE, y = center.y + size_in_chunks * CHUNKSIZE}
+        --game.print("Request chart "..center.x..","..center.y)
+        force.chart(surface, {top_left, bottom_right})
+    end
+
+end
+
+local function clear_spawn_area(center, player_index)
+    --game.print("Clearing! "..center.x..","..center.y)
+    local player = game.get_player(player_index)
+    player.print("Clearing out space for your new home...")
+
+    local surface = game.get_surface("nauvis")
+    local size_in_chunks = (SPAWN_SIZE / CHUNKSIZE) + 3
+    local top_left = {x = center.x - size_in_chunks * CHUNKSIZE, y = center.y - size_in_chunks * CHUNKSIZE}
+    local bottom_right = {x = center.x + size_in_chunks * CHUNKSIZE, y = center.y + size_in_chunks * CHUNKSIZE}
     --Clear area
     for _, v in pairs(surface.find_entities({top_left, bottom_right})) do
         v.destroy()
     end
+    --game.print("Cleared! "..top_left.x..","..top_left.y.." "..bottom_right.x..","..bottom_right.y)
+    global.atr_split_spawn.player_info[player_index].state = STATE_BUILDING
+end
+
+local function build_spawn_area(center, player_index)
+    local player = game.get_player(player_index)
+    player.print("Building your new home...")
+
+    utils.draw_text_small("Welcome home!", center.x - 7, center.y - 10)
+    local surface = game.get_surface("nauvis")
+    local top_left = {x = center.x - SPAWN_SIZE / 2, y = center.y - SPAWN_SIZE / 2}
+    local bottom_right = {x = center.x + SPAWN_SIZE / 2, y = center.y + SPAWN_SIZE / 2}
 
     --Add a moat, fill center with grass
     local tiles = {}
@@ -225,6 +275,10 @@ function exports.check_spawn_state()
 
     for player_index, value in pairs(global.atr_split_spawn.player_info) do
         if value.state == STATE_WAITING then
+            check_spawn_charted({x=value.x, y=value.y}, player_index)
+        elseif value.state == STATE_CLEARING then
+            clear_spawn_area({x=value.x, y=value.y}, player_index)
+        elseif value.state == STATE_BUILDING then
             build_spawn_area({x=value.x, y=value.y}, player_index)
         elseif value.state == STATE_READY then
             value.state = STATE_DONE

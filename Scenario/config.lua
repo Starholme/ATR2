@@ -18,5 +18,6 @@ return {
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
     TEST_MODE = true,
-    ENABLE_SPLIT_SPAWN = true
+    ENABLE_SPLIT_SPAWN = true,
+    ENABLE_SUBSPACE = true
 }

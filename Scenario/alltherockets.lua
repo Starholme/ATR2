@@ -22,6 +22,7 @@ local exports = {
 function exports.on_init(event)
     spawn.setup()
     split_spawn.on_init()
+    subspace.on_init()
 
     --Does this belong somewhere else?
     game.forces.player.research_queue_enabled = CONFIG.ENABLE_RESEARCH_QUEUE
