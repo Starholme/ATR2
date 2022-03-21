@@ -14,7 +14,7 @@ local exports = {}
 
 local function spawn_subspace_pad(chunk_position)
     local top_left = {x = chunk_position.x * 32, y=chunk_position.y * 32}
-    game.print("Making a subspace pad at: "..top_left.x..","..top_left.y)
+    --game.print("Making a subspace pad at: "..top_left.x..","..top_left.y)
 
     local surface = game.get_surface("nauvis")
     local tiles = {}
