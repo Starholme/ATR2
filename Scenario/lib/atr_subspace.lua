@@ -56,6 +56,8 @@ local function spawn_subspace_pad(chunk_position)
     local entity = surface.create_entity({name=name, position = {top_left.x + 16, top_left.y + 16}, force="player"})
     entity.destructible = false
     entity.minable = false
+
+    remote.call("clusterio","reset")
 end
 
 function exports.on_init()

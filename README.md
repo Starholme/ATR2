@@ -100,6 +100,23 @@ TODO
   - `npx clusterioslave run`
   - This slave should now be visible in the UI
 
+### Create and Start an instance
+  - Can be created and started via the UI as well
+  - Instances are created, assigned to a slave, then started
+  - One slave can run multiple instances
+  - Navigate to the Cluster Root
+  - `npx clusterioctl instance create "My Instance Name"`
+  - `npx clusterioctl instance assign "My Instance Name" "Slave Name"`
+  - Adjust configuration as required - suggest using UI
+    - game_port, between 34190 and 34200
+	- name = "[ATR] All The Rockets - World X"
+	- description = "ATR is a cooperative game that is intended to provide some continuity across map resets. \nSERVER_TEXT \nMAP_INFO"
+	- tags ["clusterio","ATR","COOP"]
+	- username set to factorio username
+	- token set to service token from player-data.json
+  - Move the desired save file to the instance save folder
+  - `npx clusterioctl instance start "My Instance Name"`
+
 ### Stop an Instance
   - Use the UI OR
   - `npx clusterioctl instance stop "My Instance Name"`
@@ -171,18 +188,27 @@ TODO
 # Adding a instance
 
 ## Edit scenario config
+ - Turn off test mode
+ - Add some map description
 
 ## Create world in single player
-
-## Update subspace storage settings
+ - Create the world
+ - Update subspace storage settings
+ - Save the world
 
 ## Upload to server
+ - Create a new instance
+ - Upload the save from above
 
 ## Add instance to webpage
+ - Duplicate a server card, updating the instance id and info
 
 ## Start instance
+ - Start the instance in clusterio
 
 ## Test
+ - Ensure you can log in
+
 
 ### Create and Start an instance
   - Can be created and started via the UI as well

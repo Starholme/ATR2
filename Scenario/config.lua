@@ -15,9 +15,10 @@ return {
     DISCORD = "https://discord.gg/6dq2CbJ3Gx",
     CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
 
+    TEST_MODE = true,
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
-    TEST_MODE = true,
+
     ENABLE_SPLIT_SPAWN = true,
     ENABLE_SUBSPACE = true
 }

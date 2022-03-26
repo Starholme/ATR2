@@ -54,6 +54,8 @@ local function build_step_table()
         local combinator = surface.create_entity({name="subspace-resource-combinator", position = {0,5}, force="player"})
         combinator.destructible = false
         combinator.minable = false
+
+        remote.call("clusterio","reset")
     end)
 
     --Instructions box
