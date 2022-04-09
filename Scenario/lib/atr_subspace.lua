@@ -45,6 +45,7 @@ local function spawn_subspace_pad(chunk_position)
     local name
     if last_spawned == 3 then
         name = "subspace-item-injector"
+        last_spawned = -1
     elseif last_spawned == 0 then
         name = "subspace-item-extractor"
     elseif last_spawned == 1 then
