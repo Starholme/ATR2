@@ -85,7 +85,6 @@ clusterio_instance_rcon_command_size_bytes_count{instance_id="1309285413",plugin
 clusterio_instance_factorio_cpu_time_total{instance_id="1309285413"} 1053.6
 clusterio_instance_factorio_resident_memory_bytes{instance_id="1309285413"} 259567616
 clusterio_instance_factorio_autosave_bytes{instance_id="1309285413"} 3436176
-clusterio_statistics_exporter_instance_player_count{instance_id="1309285413"} 0
 clusterio_statistics_exporter_instance_game_ticks_total{instance_id="1309285413"} 23055149
 clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1309285413",force="player",statistic="item_production_statistics",direction="input",name="wooden-chest"} 10
 clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1309285413",force="player",statistic="item_production_statistics",direction="output",name="wooden-chest"} 0
@@ -787,7 +786,6 @@ clusterio_instance_rcon_command_size_bytes_count{instance_id="1989355807",plugin
 clusterio_instance_factorio_cpu_time_total{instance_id="1989355807"} 1264.75
 clusterio_instance_factorio_resident_memory_bytes{instance_id="1989355807"} 629932032
 clusterio_instance_factorio_autosave_bytes{instance_id="1989355807"} 20348543
-clusterio_statistics_exporter_instance_player_count{instance_id="1989355807"} 0
 clusterio_statistics_exporter_instance_game_ticks_total{instance_id="1989355807"} 28779566
 clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1989355807",force="player",statistic="item_production_statistics",direction="input",name="wooden-chest"} 44
 clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1989355807",force="player",statistic="item_production_statistics",direction="output",name="wooden-chest"} 0
