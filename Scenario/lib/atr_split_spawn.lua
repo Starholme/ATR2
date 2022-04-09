@@ -26,7 +26,8 @@ local atr_gui_ref --Used to keep a handle back to the gui
 --GLOBAL--
 --global.atr_split_spawn:{
 --  player_info:[
---      playerIndex: {x,y,state}
+--      playerIndex: {x,y,state,
+--           sent_invites_to:[otherPlayerIndex:bool]}
 --  ],
 --  last_cycle: {i}
 --}
@@ -257,6 +258,12 @@ function exports.on_load()
     --Ensure the global exists
     global.atr_split_spawn = global.atr_split_spawn or {}
     global.atr_split_spawn.player_info = global.atr_split_spawn.player_info or {}
+    for key, value in pairs(global.atr_split_spawn.player_info) do
+        value.x = value.x or 0
+        value.y = value.y or 0
+        value.state = value.state or STATE_NEW
+        value.sent_invites_to = value.sent_invites_to or {}
+    end
 end
 
 function exports.on_player_created(player_index)
@@ -266,7 +273,8 @@ function exports.on_player_created(player_index)
     global.atr_split_spawn.player_info[player_index] = {
         x = 0,
         y = 0,
-        state = STATE_NEW
+        state = STATE_NEW,
+        sent_invites_to = {}
     }
 end
 
@@ -297,6 +305,8 @@ function exports.build_tab(tab, player, gui)
     gui_utils.add_label(tab, "title", "Spawn options?!", gui_utils.STYLES.LABEL_HEADER_STYLE)
     gui_utils.add_spacer_line(tab)
 
+    gui_utils.add_label(tab, "home_info", "My home:"..player_info.x..","..player_info.y, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+
     gui_utils.add_button(tab, "atr_spawn_teleport_home", "Teleport Home")
 
     if CONFIG.TEST_MODE or player_info.state == STATE_NEW then
@@ -304,7 +314,30 @@ function exports.build_tab(tab, player, gui)
     end
 
     gui_utils.add_spacer_line(tab)
-    gui_utils.add_label(tab, "home_info", "My home:"..player_info.x..","..player_info.y, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
+
+    --Players list: Name-Invite/Invited-Teleport to their home
+    local invite_table = tab.add{type="table", name="atr_invite_table", column_count=3, draw_horizontal_line_after_headers=true}
+    gui_utils.add_label(invite_table, "player_header", "Player ")
+    gui_utils.add_label(invite_table, "invite_header", " ")
+    gui_utils.add_label(invite_table, "teleport_header", " ")
+
+    for other_player_index,v in pairs(game.players) do
+        local other_player_info = global.atr_split_spawn.player_info[other_player_index]
+        gui_utils.add_label(invite_table, "player"..other_player_index, v.name)
+
+        local invite_sent = player_info.sent_invites_to[other_player_index] or false
+        if invite_sent then
+            gui_utils.add_button(invite_table, "atr_btn_invite_player"..other_player_index, "Cancel Invite")
+        else
+            gui_utils.add_button(invite_table, "atr_btn_invite_player"..other_player_index, "Send Invite")
+        end
+
+        local invited_by = other_player_info.sent_invites_to[player.index] or false
+        if invited_by then
+            gui_utils.add_button(invite_table, "atr_btn_teleport_to_home"..other_player_index, "Teleport to")
+        end
+    end
+
 end
 
 function exports.on_gui_click(event)
