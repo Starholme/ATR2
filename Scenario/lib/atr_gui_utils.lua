@@ -62,7 +62,7 @@ function exports.add_label(gui, name, message, style)
                     caption=message}
     if (type(style) == "table") then
         apply_style(g, style)
-    else
+    elseif style then
         g.style = style
     end
 end
