@@ -93,4 +93,8 @@ function exports.spawn_ore_blob(name, amount, x_position, y_position, surface)
     end
 end
 
+function string.starts_with(input, test)
+    return string.sub(input,1,string.len(test))==test
+end
+
 return exports
