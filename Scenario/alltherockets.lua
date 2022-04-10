@@ -30,10 +30,6 @@ function exports.on_init(event)
 
 end
 
-function exports.on_load(event)
-    split_spawn.on_load()
-end
-
 exports.events[defines.events.on_chunk_generated] = function (event)
     subspace.on_chunk_generated(event)
 end
@@ -56,6 +52,10 @@ exports.events[defines.events.on_player_created] = function (event)
         test_mode.on_player_created(player)
     end
 
+end
+
+exports.events[defines.events.on_player_joined_game] = function (event)
+    split_spawn.on_player_joined_game()
 end
 
 exports.events[defines.events.on_player_driving_changed_state] = function (event)

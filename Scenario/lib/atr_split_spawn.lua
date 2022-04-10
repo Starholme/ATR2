@@ -251,12 +251,13 @@ function exports.on_init()
     global.atr_split_spawn.player_info = {}
 end
 
-function exports.on_load()
+function exports.on_player_joined_game()
     if not CONFIG.ENABLE_SPLIT_SPAWN then return end
 
     --Ensure the global exists
     global.atr_split_spawn = global.atr_split_spawn or {}
     global.atr_split_spawn.player_info = global.atr_split_spawn.player_info or {}
+    --Migrate existing data to new format
     for key, value in pairs(global.atr_split_spawn.player_info) do
         value.x = value.x or 0
         value.y = value.y or 0
