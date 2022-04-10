@@ -218,11 +218,10 @@ local function find_new_player_spawn(player_index)
     end
 
     --Where should they spawn?
-    global.atr_split_spawn.player_info[player_index] = {
-        x = position.x,
-        y = position.y,
-        state = STATE_WAITING
-    }
+    local player_info = global.atr_split_spawn.player_info[player_index]
+    player_info.x = position.x
+    player_info.y = position.y
+    player_info.state = STATE_WAITING
 end
 
 local function teleport_home(player_index)
@@ -345,7 +344,7 @@ local function invite_player_clicked(event)
     local other_player_index = tonumber(string.sub(event.element.name, 28))
     local invited = player_info.sent_invites_to[other_player_index] or false
 
-    game.print("invite_player_clicked "..event.player_index.."|"..event.element.name.."|"..other_player_index)
+    --game.print("invite_player_clicked "..event.player_index.."|"..event.element.name.."|"..other_player_index)
     --Toggle invited state
     if invited then
         player_info.sent_invites_to[other_player_index] = false
@@ -365,6 +364,12 @@ function exports.on_gui_click(event)
         atr_gui_ref.hide_gui(player)
     elseif event.element.name == "atr_spawn_find_new" then
         find_new_player_spawn(event.player_index)
+        atr_gui_ref.hide_gui(player)
+    elseif string.starts_with(event.element.name, "atr_spawn_btn_invite_player") then
+        invite_player_clicked(event)
+    elseif string.starts_with(event.element.name, "atr_spawn_btn_teleport_to_home") then
+        local other_player_index = tonumber(string.sub(event.element.name, 31))
+        teleport_home(other_player_index)
         atr_gui_ref.hide_gui(player)
     end
 
