@@ -335,6 +335,8 @@ function exports.build_tab(tab, player, gui)
         local invited_by = other_player_info.sent_invites_to[player.index] or false
         if invited_by then
             gui_utils.add_button(invite_table, "atr_spawn_btn_teleport_to_home"..other_player_index, "Teleport to")
+        else
+            gui_utils.add_label(invite_table, "atr_spawn_btn_teleport_to_home"..other_player_index, " ")
         end
     end
 
