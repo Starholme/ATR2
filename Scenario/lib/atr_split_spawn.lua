@@ -327,17 +327,33 @@ function exports.build_tab(tab, player, gui)
 
         local invite_sent = player_info.sent_invites_to[other_player_index] or false
         if invite_sent then
-            gui_utils.add_button(invite_table, "atr_btn_invite_player"..other_player_index, "Cancel Invite")
+            gui_utils.add_button(invite_table, "atr_spawn_btn_invite_player"..other_player_index, "Cancel Invite")
         else
-            gui_utils.add_button(invite_table, "atr_btn_invite_player"..other_player_index, "Send Invite")
+            gui_utils.add_button(invite_table, "atr_spawn_btn_invite_player"..other_player_index, "Send Invite")
         end
 
         local invited_by = other_player_info.sent_invites_to[player.index] or false
         if invited_by then
-            gui_utils.add_button(invite_table, "atr_btn_teleport_to_home"..other_player_index, "Teleport to")
+            gui_utils.add_button(invite_table, "atr_spawn_btn_teleport_to_home"..other_player_index, "Teleport to")
         end
     end
 
+end
+
+local function invite_player_clicked(event)
+    local player_info = global.atr_split_spawn.player_info[event.player_index]
+    local other_player_index = tonumber(string.sub(event.element.name, 28))
+    local invited = player_info.sent_invites_to[other_player_index] or false
+
+    game.print("invite_player_clicked "..event.player_index.."|"..event.element.name.."|"..other_player_index)
+    --Toggle invited state
+    if invited then
+        player_info.sent_invites_to[other_player_index] = false
+        event.element.caption = "Send Invite"
+    else
+        player_info.sent_invites_to[other_player_index] = true
+        event.element.caption = "Cancel Invite"
+    end
 end
 
 function exports.on_gui_click(event)
