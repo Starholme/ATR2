@@ -5,10 +5,13 @@
 
 --REQUIRES--
 local CONFIG = require("config")
-local spawn = require("lib/atr_spawn")
 local gui = require("lib/atr_gui")
+local spawn = require("lib/atr_spawn")
+local split_spawn = require("lib/atr_split_spawn")
+local subspace = require("lib/atr_subspace")
 local test_mode = require("lib/atr_test_mode")
 local vehicle_snap = require("lib/atr_vehicle_snap")
+
 
 --Holds items that are exported
 local exports = {
@@ -18,6 +21,8 @@ local exports = {
 
 function exports.on_init(event)
     spawn.setup()
+    split_spawn.on_init()
+    subspace.on_init()
 
     --Does this belong somewhere else?
     game.forces.player.research_queue_enabled = CONFIG.ENABLE_RESEARCH_QUEUE
@@ -25,16 +30,23 @@ function exports.on_init(event)
 
 end
 
+exports.events[defines.events.on_chunk_generated] = function (event)
+    subspace.on_chunk_generated(event)
+end
+
 exports.events[defines.events.on_gui_click] = function (event)
     if not (event and event.element and event.element.valid) then return end
 
     gui.on_gui_click(event)
+
+    split_spawn.on_gui_click(event)
 
 end
 
 exports.events[defines.events.on_player_created] = function (event)
     local player = game.players[event.player_index]
     gui.on_player_created(player)
+    split_spawn.on_player_created(event.player_index)
 
     if (CONFIG.TEST_MODE) then
         test_mode.on_player_created(player)
@@ -42,12 +54,21 @@ exports.events[defines.events.on_player_created] = function (event)
 
 end
 
+exports.events[defines.events.on_player_joined_game] = function (event)
+    split_spawn.on_player_joined_game()
+end
+
 exports.events[defines.events.on_player_driving_changed_state] = function (event)
     vehicle_snap.on_player_driving_changed_state(event)
 end
 
 exports.on_nth_tick[6] = function (event)
-    vehicle_snap.on_nth_tick(event)
+    vehicle_snap.on_nth_tick()
+    spawn.on_nth_tick()
+end
+
+exports.on_nth_tick[120] = function (event)
+    split_spawn.check_spawn_state()
 end
 
 exports.on_nth_tick[600] = function (event)

@@ -83,25 +83,12 @@
           <div class="col">
             <div class="card h-100 bg-dark border-success">
               <div class="card-body">
-                <h5 class="card-title">World 1 <span class="badge bg-success">Active</span></h5>
+                <h5 class="card-title">World 3 <span class="badge bg-success">Active</span></h5>
                 <p>
-                  Enjoy your time on this thin slice of nauvis.<br/>
-                  128 tile ribbon, no cliffs
+                  It's the finest of the flavors<br/>
+                  Just a vanilla world.
                 </p>
-                <div class="server" data-instanceid="1309285413"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card h-100 bg-dark border-success">
-              <div class="card-body">
-                <h5 class="card-title">World 2 <span class="badge bg-success">Active</span></h5>
-                <p>
-                  Riches abound, spread far and wide.<br/>
-                  Very rich large resources, low frequency
-              </p>
-              <div class="server" data-instanceid="1989355807"></div>
+                <div class="server" data-instanceid="783120978"></div>
               </div>
             </div>
           </div>
@@ -110,34 +97,17 @@
           <div class="col">
             <div class="card h-100 bg-dark border-danger">
               <div class="card-body">
-                <h5 class="card-title">World X <span class="badge bg-danger">Dying</span></h5>
+                <h5 class="card-title">World X <span class="badge bg-warning">Dying</span></h5>
                 <p>
-                  Riches abound, spread far and wide.<br/>
-                  Very rich large resources, low frequency
+                  Enjoy your time on this thin slice of nauvis.<br/>
+                  128 tile ribbon, no cliffs
                 </p>
                 <p>The world eater has arrived!</p>
-                <div class="server" data-instanceid="123"></div>
+                <div class="server" data-instanceid="1309285413"></div>
               </div>
             </div>
           </div>
           -->
-
-          <!--Dead Template
-          <div class="col">
-            <div class="card h-100 bg-dark border-secondary">
-              <div class="card-body">
-                <h5 class="card-title">World X <span class="badge bg-secondary">Dead</span></h5>
-                <p>
-                  Riches abound, spread far and wide.<br/>
-                  Very rich large resources, low frequency
-                </p>
-                <p>Death by lag</p>
-                <div class="server" data-instanceid="123"></div>
-              </div>
-            </div>
-          </div>
-        -->
-
         </div>
 
         <div class="row mt-3">
@@ -166,6 +136,26 @@
             <div class="card bg-dark border-secondary">
               <div class="card-body">
                 <ul>
+                  <li>V1.5.0 2022-04-09
+                    <ul>
+                      <li>More spawn options: Invite others to teleport to your spawn point!</li>
+                      <li>Fixed bug that could crash when generating new subspace storage pads</li>
+                      <li>Fixed archived servers showing as running</li>
+                    </ul>
+                  </li>
+                  <li>V1.4.0 2022-03-21
+                    <ul>
+                      <li>Subspace Pads - Access points to the subspace storage are randomly spawned on the map. Search em out!</li>
+                      <li>Split spawn points
+                        <ul>
+                          <li>Riff from <a href="https://mods.factorio.com/user/Oarc">OARC</a>a's scenario. Thank you for making it open source!</li>
+                          <li>You can have your own spawn point</li>
+                          <li>You can teleport home at any time</li>
+                        </ul>
+                      </li>
+                      <li></li>
+                    </ul>
+                  </li>
                   <li>V1.3.0 2022-02-10
                     <ul>
                       <li>Added Server Select plugin</li>
@@ -188,6 +178,40 @@
               </div>
             </div>
           </div>
+          <!--Old servers-->
+          <div class="row row-cols-1 row-cols-md-3 mt-3">
+
+            <div class="col">
+              <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body">
+                  <h5 class="card-title">World 2 <span class="badge bg-secondary">Dead</span></h5>
+                  <p>
+                    Riches abound, spread far and wide.<br/>
+                    Very rich large resources, low frequency
+                  </p>
+                  <p>Death by lack of activity</p>
+                  <p>Download save file <a href="https://alltherockets.duckdns.org/archive/world2.zip">World2.zip</a></p>
+                  <div class="server" data-instanceid="1989355807"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body">
+                  <h5 class="card-title">World 1 <span class="badge bg-secondary">Dead</span></h5>
+                  <p>
+                    Enjoy your time on this thin slice of nauvis.<br/>
+                    128 tile ribbon, no cliffs
+                  </p>
+                  <p>Death by lack of activity</p>
+                  <p>Download save file <a href="https://alltherockets.duckdns.org/archive/world1.zip">World1.zip</a></p>
+                  <div class="server" data-instanceid="1309285413"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </main>
@@ -209,7 +233,7 @@
 
     <script>
       (function(){
-        const VERSION = '1.3.0';
+        const VERSION = '1.5.0';
         const PROMETHEUS_ENDPOINT = "https://alltherockets.duckdns.org/prometheus/";
         const MS_PER_STAT = 2000;
 

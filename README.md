@@ -159,3 +159,70 @@ TODO
 	- sudo apt-get autoremove
     - sudo shutdown -r now
   - `upandauto'
+
+# Removing a instance
+
+## Extract metrics
+ - Open up the clusterio metrics endpoint: https://127.0.0.1/clusterio/metrics
+ - Copy the entire page
+ - Paste into notepad++
+ - Use find replace with regex .*^(?!.*yourInstanceIDhere).*$
+ - Followed by ^\s* to remove empy lines
+ - Should have only a list of items that reference your instance now
+ - Copy all lines the reference your instance
+ - Open up the site\archive.txt
+ - Paste in the lines that reference your instance
+
+## Stop instance
+ - Stop the instance through clusterio
+
+## Archive instance save
+ - Navigate to atr/instances/instancename/saves
+ - Copy the latest .zip to the archive folder
+ - `cp ./somesave /var/www/atr/html/archive/worldname.zip`
+
+## Update webpage
+ - Adjust the webpage, moving the world to the dead section
+ - Add a reason, and a save download link
+
+# Adding a instance
+
+## Edit scenario config
+ - Turn off test mode
+ - Add some map description
+
+## Create world in single player
+ - Create the world
+ - Update subspace storage settings
+ - Save the world
+
+## Upload to server
+ - Create a new instance
+ - Upload the save from above
+
+## Add instance to webpage
+ - Duplicate a server card, updating the instance id and info
+
+## Start instance
+ - Start the instance in clusterio
+
+## Test
+ - Ensure you can log in
+
+
+### Create and Start an instance
+  - Can be created and started via the UI as well
+  - Instances are created, assigned to a slave, then started
+  - One slave can run multiple instances
+  - Navigate to the Cluster Root
+  - `npx clusterioctl instance create "My Instance Name"`
+  - `npx clusterioctl instance assign "My Instance Name" "Slave Name"`
+  - Adjust configuration as required - suggest using UI
+    - game_port, between 34190 and 34200
+	- name = "[ATR] All The Rockets - World X"
+	- description = "ATR is a cooperative game that is intended to provide some continuity across map resets. \nSERVER_TEXT \nMAP_INFO"
+	- tags ["clusterio","ATR","COOP"]
+	- username set to factorio username
+	- token set to service token from player-data.json
+  - Move the desired save file to the instance save folder
+  - `npx clusterioctl instance start "My Instance Name"`
