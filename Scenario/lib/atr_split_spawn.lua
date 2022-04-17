@@ -237,6 +237,16 @@ local function teleport_home(player_index)
     end
 end
 
+local function teleport_other_home(player_index, other_player_index)
+    local player = game.get_player(player_index)
+    local other_player_info = global.atr_split_spawn.player_info[other_player_index]
+
+    if not other_player_info then
+        return
+    end
+    player.teleport({other_player_info.x, other_player_info.y})
+end
+
 --Holds items that are exported
 local exports = {}
 
@@ -372,7 +382,7 @@ function exports.on_gui_click(event)
         invite_player_clicked(event)
     elseif string.starts_with(event.element.name, "atr_spawn_btn_teleport_to_home") then
         local other_player_index = tonumber(string.sub(event.element.name, 31))
-        teleport_home(other_player_index)
+        teleport_other_home(event.player_index, other_player_index)
         atr_gui_ref.hide_gui(player)
     end
 
