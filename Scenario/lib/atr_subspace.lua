@@ -43,17 +43,20 @@ local function spawn_subspace_pad(chunk_position)
     --Add the entity
     local last_spawned = global.atr_subspace.last_spawned
     local name
-    if last_spawned == 3 then
-        name = "subspace-item-injector"
-        last_spawned = -1
-    elseif last_spawned == 0 then
+    if last_spawned == 0 then
         name = "subspace-item-extractor"
+        last_spawned = 1
     elseif last_spawned == 1 then
-        name = "subspace-fluid-injector"
+        name = "subspace-item-injector"
+        last_spawned = 2
     elseif last_spawned == 2 then
+        name = "subspace-fluid-injector"
+        last_spawned = 3
+    else
         name = "subspace-fluid-extractor"
+        last_spawned = 0
     end
-    global.atr_subspace.last_spawned = last_spawned + 1
+    global.atr_subspace.last_spawned = last_spawned
     local entity = surface.create_entity({name=name, position = {top_left.x + 16, top_left.y + 16}, force="player"})
     entity.destructible = false
     entity.minable = false
