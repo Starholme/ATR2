@@ -12,6 +12,8 @@ local subspace = require("lib/atr_subspace")
 local test_mode = require("lib/atr_test_mode")
 local vehicle_snap = require("lib/atr_vehicle_snap")
 
+local dore = require("dangoreus/control")
+
 
 --Holds items that are exported
 local exports = {
@@ -28,9 +30,15 @@ function exports.on_init(event)
     game.forces.player.research_queue_enabled = CONFIG.ENABLE_RESEARCH_QUEUE
     game.forces.player.friendly_fire = CONFIG.FRIENDLY_FIRE
 
+    dore.on_init(event)
+end
+
+function exports.on_configuration_changed(event)
+    dore.on_configuration_changed(event)
 end
 
 exports.events[defines.events.on_chunk_generated] = function (event)
+    dore.on_chunk_generated(event)
     subspace.on_chunk_generated(event)
 end
 
@@ -69,12 +77,29 @@ end
 
 exports.on_nth_tick[120] = function (event)
     split_spawn.check_spawn_state()
+    dore.on_nth_tick120(event)
 end
 
 exports.on_nth_tick[600] = function (event)
     if (CONFIG.TEST_MODE) then
         game.print("TEST MODE ACTIVE!")
     end
+end
+
+exports.events[defines.events.on_built_entity] = function (event)
+    dore.on_built_all(event)
+end
+exports.events[defines.events.on_robot_built_entity] = function (event)
+    dore.on_built_all(event)
+end
+exports.events[defines.events.script_raised_built] = function (event)
+    dore.on_built_all(event)
+end
+exports.events[defines.events.script_raised_revive] = function (event)
+    dore.on_built_all(event)
+end
+exports.events[defines.events.on_entity_died] = function (event)
+    dore.on_entity_died(event)
 end
 
 return exports

@@ -1,10 +1,10 @@
 return {
-    VERSION = "V1.5.1",
+    VERSION = "V1.6.0",
     SCENARIO_TEXT =
     "ATR is a cooperative game that is intended to provide some continuity across map resets. \n" ..
     "Rules: Be polite. Ask before changing other player's stuff. Have fun!",
-    SERVER_TEXT = "Something pithy describing this map.",
-    MAP_INFO = "More useful description of the map",
+    SERVER_TEXT = "Twice as dangoreus.",
+    MAP_INFO = "Max Danger Ores!",
     MOD_TEXT = "Mods:\n"..
     "Clusterio Library - Used to communicate with the cluster\n"..
     "Subspace Storage - Allows storing items and fluids in a limitless space, shared across the cluster",
@@ -16,10 +16,11 @@ return {
     DISCORD = "https://discord.gg/6dq2CbJ3Gx",
     CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
 
-    TEST_MODE = true,
+    TEST_MODE = false,
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
 
     ENABLE_SPLIT_SPAWN = true,
-    ENABLE_SUBSPACE = true
+    ENABLE_SUBSPACE = true,
+    ENABLE_DANGOREUS = false
 }
