@@ -22,8 +22,12 @@
         <!--Logo and Header-->
         <div class="row justify-content-md-center mb-3">
           <div class="card bg-dark text-center border-warning mt-3 col-md-6">
-            <div class="card-body">
-              <h5 class="card-title">All The Rockets</h5>
+            <div style="margin-bottom: -24px;" class="card-body">
+              <img style="margin-top:-15px;" src="rocket-crop.png">
+              <h5 style="display:inline-block;" class="card-title">All The Rockets<br><br>
+                <span id="rockets"><i class="bi bi-arrow-repeat"></i></span>
+              </h5>
+              <img style="margin-top:-15px;" src="rocket-crop.png">
             </div>
           </div>
         </div>
@@ -35,10 +39,11 @@
               <span class="badge bg-success">Players: <span id="online_players"><i class="bi bi-arrow-repeat"></i></span></span>
               <span class="badge bg-success">Time wasted: <span id="ticks"><i class="bi bi-arrow-repeat"></i></span></span>
               <span class="badge bg-success" title="Current count of things in Subspace Storage">Junk heaped: <span id="subspace_stuff"><i class="bi bi-arrow-repeat"></i></span></span>
+              <span class="badge bg-success" title="EPU: Excessive Pollution Unit">Enviromentally Beneficial EPU's Generated: <span id="pollution"><i class="bi bi-arrow-repeat"></i></span></span>
               <span class="badge bg-success" title="Trees. What did you expect?">True Enemies Terminated with Extreme Prejudice: <span id="trees"><i class="bi bi-arrow-repeat"></i></span></span>
               <span class="badge bg-success" title="We killed lots of them">Combatants Liberated: <span id="enemies"><i class="bi bi-arrow-repeat"></i></span></span>
               <span class="badge bg-success" title="I don't know why they don't like us">Combatant Homes Euphemised: <span id="homes"><i class="bi bi-arrow-repeat"></i></span></span>
-              <span class="badge bg-success" title="EPU: Excessive Pollution Unit">Enviromentally Beneficial EPU's Generated: <span id="pollution"><i class="bi bi-arrow-repeat"></i></span></span>
+              <span class="badge bg-success" title="Nukes.">Davy Crockett Deliveries: <span id="nukes"><i class="bi bi-arrow-repeat"></i></span></span>
             </div>
           </div>
         </div>
@@ -93,6 +98,19 @@
             </div>
           </div>
 
+          <div class="col">
+            <div class="card h-100 bg-dark border-success">
+              <div class="card-body">
+                <h5 class="card-title">World 4 <span class="badge bg-success">Active</span></h5>
+                <p>
+                  Let's get dangoreus!<br/>
+                  <a href="https://mods.factorio.com/mod/dangOreus">Danger Ores</a>, very agressive biters. Clear out enough space to get to the item injector before it cramps your style.
+                </p>
+                <div class="server" data-instanceid="1516894863"></div>
+              </div>
+            </div>
+          </div>
+
           <!--Dying Template
           <div class="col">
             <div class="card h-100 bg-dark border-danger">
@@ -136,6 +154,11 @@
             <div class="card bg-dark border-secondary">
               <div class="card-body">
                 <ul>
+                  <li>V1.6.0 2022-05-20
+                    <ul>
+                      <li>Danger Ores! New map started.</li>
+                    </ul>
+                  </li>
                   <li>V1.5.1 2022-04-17
                     <ul>
                       <li>Fix teleport to other player spawn point bug</li>
@@ -159,7 +182,6 @@
                           <li>You can teleport home at any time</li>
                         </ul>
                       </li>
-                      <li></li>
                     </ul>
                   </li>
                   <li>V1.3.0 2022-02-10
@@ -254,6 +276,10 @@
         });
 
         function SetupPromQueries(){
+
+          //Title
+          StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{force="player",statistic="item_production_statistics",direction="input",name="rocket-part"})', $('#rockets'), StatsUpdater.TYPES.SPAN, rocketPartsToRocketsLaunched);
+
           //Each instance
           $('.server').each(function(){
             const instanceId = this.dataset.instanceid;
@@ -288,6 +314,7 @@
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{name=~".*-biter|.*-spitter|.*worm-turret", direction="input"})', $('#enemies'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{name=~".*-spawner", direction="input"})', $('#homes'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_game_flow_statistics{direction="input", statistic="pollution_statistics"})', $('#pollution'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
+          StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{force="player",statistic="item_production_statistics",direction="output",name="atomic-bomb"})', $('#nukes'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
         }
 
         const StatsUpdater = (function(){
@@ -401,6 +428,11 @@
 
             // format number and add suffix
             return scaled.toFixed(1) + suffix;
+        }
+
+        function rocketPartsToRocketsLaunched(number){
+          number = Math.floor(number / 100);
+          return abbreviateNumber(number);
         }
 
         function ticksToTime(ticks){
