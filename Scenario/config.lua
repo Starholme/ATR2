@@ -21,5 +21,6 @@ return {
     FRIENDLY_FIRE = false,
 
     ENABLE_SPLIT_SPAWN = true,
-    ENABLE_SUBSPACE = true
+    ENABLE_SUBSPACE = true,
+    ENABLE_DANGOREUS = false
 }

@@ -2,6 +2,8 @@
 --dangOreus, a scenario by Mylon
 --MIT Licensed
 
+local CONFIG = require("config")
+
 --These are checked by type and name.
 local dangOre_exceptions = {
     ["mining-drill"] = true,
@@ -141,52 +143,6 @@ local function divOresity_init()
         end
     end
 
-    --Easy ores
-    -- for k, v in pairs(global.easy_ore_list) do
-    --     local ore = {}
-    --     local biased = {}
-    --     local random = {}
-
-    --     for i = 1, 2 do
-    --         table.insert(ore, v)
-    --         table.insert(biased, v)
-    --     end
-    --     for i = 1, 3 do
-    --         table.insert(biased, v)
-    --     end
-    --     for n, p in pairs(global.easy_ore_list) do
-    --         table.insert(ore, p)
-    --         table.insert(biased, p)
-    --         table.insert(random, p)
-    --     end
-    --     table.insert(global.easy_ores, ore)
-    --     table.insert(global.easy_ores, biased)
-    --     table.insert(global.easy_ores, random)
-    -- end
-
-    -- --Diverse ores
-    -- for k, v in pairs(global.diverse_ore_list) do
-    --     local ore = {}
-    --     local biased = {}
-    --     local random = {}
-
-    --     for i = 1, 2 do
-    --         table.insert(ore, v)
-    --         table.insert(biased, v)
-    --     end
-    --     for i = 1, 3 do
-    --         table.insert(biased, v)
-    --     end
-    --     for n, p in pairs(global.diverse_ore_list) do
-    --         table.insert(ore, p)
-    --         table.insert(biased, p)
-    --         table.insert(random, p)
-    --     end
-    --     table.insert(global.diverse_ores, ore)
-    --     table.insert(global.diverse_ores, biased)
-    --     table.insert(global.diverse_ores, random)
-    -- end
-
     --Perlin Ore list generation
     local ore_ranking_raw = {}
     local ore_ranking = {}
@@ -195,21 +151,6 @@ local function divOresity_init()
     for k,v in pairs(global.diverse_ore_list) do
         local autoplace = game.surfaces[1].map_gen_settings.autoplace_controls[v]
         local adding
-        -- if autoplace then
-        --     if autoplace.frequency == "none" then
-        --         adding = 0
-        --     elseif autoplace.frequency == "very-low" then
-        --         adding = 1
-        --     elseif autoplace.frequency == "low" then
-        --         adding = 2
-        --     elseif autoplace.frequency == "normal" then
-        --         adding = 3
-        --     elseif autoplace.frequency == "high" then
-        --         adding = 4
-        --     elseif autoplace.frequency == "very-high" then
-        --         adding = 5
-        --     end
-        -- end
         if autoplace then
             if autoplace.frequency == "none" then
                 adding = 0
@@ -321,24 +262,7 @@ local function divOresity_init()
     for _, ore in pairs(ore_ranking) do
         table.insert(global.pie.ores, ore)
     end
-    --log(serpent.block(global.pie.ores))
 
-    -- For debugging
-    --log(serpent.block(perlin_ore_list))
-    -- global.a = perlin_ore_list
-    --log(serpent.line(ore_list))
-    --game.print(serpent.line(ore_ranking))
-    -- Test perlin/measured.  Should return 1.
-    -- local sum = 0
-    -- for k,v in pairs(perlin.MEASURED) do
-    --     sum = sum + v
-    -- end
-    -- game.print(sum)
-    -- Tested, returns 1.0000001.  Close enough.
-    --Count the number of generated entities to meausre the ratio.
-    --/c game.print(game.player.surface.count_entities_filtered{name="iron-ore"}/game.player.surface.count_entities_filtered{name="copper-ore"})
-    --prototype coverage ratio
-    --/c game.print(game.entity_prototypes["copper-ore"].autoplace_specification.coverage/game.entity_prototypes["zinc-ore"].autoplace_specification.coverage)
 end
 
 local function voronoi(x, y)
@@ -631,34 +555,8 @@ local function ore_rly(event)
                 end
             end
         end
-        -- for k, v in pairs(items) do
-        --     if event.entity.get_item_count(v) > 0 then
-        --         event.entity.surface.spill_item_stack(event.entity.position, {name=v, count=event.entity.get_item_count(v)})
-        --     end
-        -- end
     end
 end
-
---Unchart one random chunk per minute to keep the map remotely sane.
--- function unchOret(event)
---     if not (event.tick % (60*60) == 0) then
---         return
---     end
-
---     local chunks = {}
---     for chunk in game.surfaces[1].get_chunks() do
---         if game.forces.player.is_chunk_charted("1", {chunk.x, chunk.y}) then
---             if not game.forces.player.is_chunk_visible("1", {chunk.x, chunk.y}) then
---                 table.insert(chunks, {x=chunk.x, y=chunk.y})
---             end
---         end
---     end
-
---     if #chunks > 0 then
---         local chunk = chunks[math.random(#chunks)]
---         game.forces.player.unchart_chunk({chunk.x, chunk.y}, "1")
---     end
--- end
 
 --Limit exploring
 local function flOre_is_lava()
@@ -703,26 +601,31 @@ local exports = {
 
 exports.on_built_all = on_built_all
 exports.on_chunk_generated = function (event)
+    if not CONFIG.ENABLE_DANGOREUS then return end
     if not global.disabled[event.surface.name] then
         gOre(event)
     end
 end
 
 exports.on_entity_died = function(event)
+    if not CONFIG.ENABLE_DANGOREUS then return end
     if not global.disabled[event.entity.surface.name] then
         ore_rly(event)
     end
 end
 
 exports.on_nth_tick120 = function(event)
+    if not CONFIG.ENABLE_DANGOREUS then return end
     flOre_is_lava()
 end
 
 exports.on_configuration_changed = function(event)
+    if not CONFIG.ENABLE_DANGOREUS then return end
     divOresity_init()
 end
 
 function exports.on_init(event)
+    if not CONFIG.ENABLE_DANGOREUS then return end
     divOresity_init()
     perlin.shuffle()
 end
