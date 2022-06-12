@@ -10,8 +10,7 @@ return {
     SOFTMOD_TEXT = "Soft Mods:\n"..
     "Global Chat - Chat text is shared across all servers in the cluster\n"..
     "Server Select - Jump directly between servers in the cluster\n"..
-    "Vehicle Snap - Cars are easier to drive on roads, they snap to one of 8 directions\n"..
-    "Split Spawn - Have your own spawn point, invite others to it",
+    "Vehicle Snap - Cars are easier to drive on roads, they snap to one of 8 directions\n",
     DISCORD = "https://discord.gg/6dq2CbJ3Gx",
     CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
 
