@@ -561,25 +561,38 @@ end
 --Limit exploring
 local function flOre_is_lava()
     --if not settings.global["floor is lava"].value then return end
+    global.flOre = global.flOre or {}
     for n, p in pairs(game.connected_players) do
         if p.character and not global.disabled[p.surface.name] then --Spectator or admin
-            if math.abs(p.position.x) > global.EASY_ORE_RADIUS or math.abs(p.position.y) > global.EASY_ORE_RADIUS then
-                --Check for nearby ore.
-                global.flOre = global.flOre or {}
-                local distance = global.flOre[p.name] or 1
-                local count = p.surface.count_entities_filtered{type="resource", area={{p.position.x-(10*distance), p.position.y-(10*distance)}, {p.position.x+(10*distance), p.position.y+(10*distance)}}}
-                if count > (distance * 20) ^2 * 0.80 and distance < 10 then
-                    global.flOre[p.name] = distance + 1
-                else
-                    global.flOre[p.name] = math.max(distance - 1, 1)
-                end
-                if global.flOre[p.name] > 0 then
-                    local target = p.vehicle or p.character
-                    p.surface.create_entity{name="acid-stream-worm-medium", target=target, source_position=target.position, position=target.position, duration=30}
-                    target.health = target.health - 15 * distance
-                    if target.health == 0 then target.die() end
-                end
+            --Get old time
+            local time = global.flOre[p.name] or 1
+            if time < 0 then time = 0 end
+
+            --Check for nearby ores in 10x10
+            local count = p.surface.count_entities_filtered{type="resource", area={{p.position.x - 2, p.position.y - 2},{p.position.x + 2, p.position.y + 2}}}
+            local target = p.vehicle or p.character
+
+            --Add to timer if in ore, keep same time if ore is some, decrement if no ore
+            if count > 10 then
+                --Start the poison counter
+                time = time + 1
+                --Hit with acid
+                p.surface.create_entity{name="acid-stream-worm-medium", target=target, source_position=target.position, position=target.position, duration=30}
             end
+            if count < 4 then time = time - 1 end
+
+            if time < 0 then time = 0 end
+
+            global.flOre[p.name] = time
+            --Cause poison damage
+            if time > 5 then
+                local target = p.vehicle or p.character
+                p.print("Poisoned for ".. ((time-5)*2) .. " seconds!", {0,255,0,255})
+                target.health = target.health - (15 + time)
+                if target.health == 0 then target.die() end
+            end
+
+
         end
     end
 end
