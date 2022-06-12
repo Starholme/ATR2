@@ -11,6 +11,7 @@ local split_spawn = require("lib/atr_split_spawn")
 local subspace = require("lib/atr_subspace")
 local test_mode = require("lib/atr_test_mode")
 local vehicle_snap = require("lib/atr_vehicle_snap")
+local undecorator = require("lib/atr_undecorate")
 
 local dore = require("dangoreus/control")
 
@@ -70,6 +71,10 @@ exports.events[defines.events.on_player_driving_changed_state] = function (event
     vehicle_snap.on_player_driving_changed_state(event)
 end
 
+exports.on_nth_tick[1] = function(event)
+    undecorator.undecorate(event)
+end
+
 exports.on_nth_tick[6] = function (event)
     vehicle_snap.on_nth_tick()
     spawn.on_nth_tick()
@@ -100,6 +105,10 @@ exports.events[defines.events.script_raised_revive] = function (event)
 end
 exports.events[defines.events.on_entity_died] = function (event)
     dore.on_entity_died(event)
+end
+
+exports.add_commands = function()
+    undecorator.add_commands()
 end
 
 return exports

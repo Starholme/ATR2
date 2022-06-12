@@ -7,18 +7,41 @@ TODO:
 			Prometheus stats:
 				Players deaths?
 				Train murder
-				Rockets total - clusterio_statistics_exporter_instance_force_flow_statistics{instance_id="1989355807",force="player",statistic="item_production_statistics",direction="output",name="satellite"}
+				Current players?
 				artisanal mining
 				Free range robots (logistics)
 				Traditional handmade genuine 
 				Small batch vegan rocket fuel
+				Ammo usage: bullets/rockets/etc.
+					bu
+				Nuclear waste generated (empty fuel cells)
+
+				UPS: rate(clusterio_statistics_exporter_instance_game_ticks_total{job="clusterio"}[3m])
 
 	Setup backups for 
 		cluster root/database folder
 		instance saves
 	
-	Scenario
-		Split spawns
-			GUI
-				Invite to my spawn
-				Show invites to other spawns
+	Soft mod achievements
+		No kill like overkill
+			10 nukes in 10 seconds
+		Macross Missile Massacre
+			2k missiles? In a timespan?
+		Bottomless magazines? and/or Gatling Good?
+		Grenade spam?
+		
+	
+	Private world
+		Each player gets a 'surface'
+			Pure void
+		Size depends on?
+			time played in the cluster?
+			Some sort of production?
+			Landfill?
+			Energy generated?
+				Needs to contribute in some fashion...
+			*Energy consumed?
+				Don't want an array of radars to work!
+				Maybe just 'energy consumed by assemblers/centrifuges'?
+				Furnaces are 'low tech' and should count for less? 
+				Higher tech outputs should count for more?

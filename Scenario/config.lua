@@ -20,7 +20,7 @@ return {
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
 
-    ENABLE_SPLIT_SPAWN = true,
-    ENABLE_SUBSPACE = true,
+    ENABLE_SPLIT_SPAWN = false,
+    ENABLE_SUBSPACE = false,
     ENABLE_DANGOREUS = false
 }

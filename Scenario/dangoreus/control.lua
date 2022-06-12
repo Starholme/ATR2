@@ -75,7 +75,7 @@ local function divOresity_init()
     --relying on resource_category is unsafe!  Let's build a list out of solid ores.  At this stage, we'll also filter infinite resources because why not.
     global.solid_resources = {}
     for name, entity in pairs(game.get_filtered_entity_prototypes{{filter="type", type="resource"}, {filter="autoplace", mode="and"}}) do
-        log("Inspecting " .. name)
+        --log("Inspecting " .. name)
         local add = true
         if entity.infinite_resource then
             add = false
@@ -584,22 +584,20 @@ local function flOre_is_lava()
     end
 end
 
-
-
-local function on_built_all(event)
-    event.created_entity = event.created_entity or event.entity
-    if not global.disabled[event.created_entity.surface.name] then
-        dangOre(event)
-    end
-end
-
 --Holds items that are exported
 local exports = {
     events = {},
     on_nth_tick = {}
 }
 
-exports.on_built_all = on_built_all
+exports.on_built_all = function(event)
+    if not CONFIG.ENABLE_DANGOREUS then return end
+    event.created_entity = event.created_entity or event.entity
+    if not global.disabled[event.created_entity.surface.name] then
+        dangOre(event)
+    end
+end
+
 exports.on_chunk_generated = function (event)
     if not CONFIG.ENABLE_DANGOREUS then return end
     if not global.disabled[event.surface.name] then
