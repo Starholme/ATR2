@@ -18,11 +18,12 @@ return {
     SERVER_TEXT = "Twice as dangoreus.",
     MAP_INFO = "Max Danger Ores!",
 
-    TEST_MODE = false,
+    TEST_MODE = true,
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
 
     ENABLE_SPLIT_SPAWN = false,
     ENABLE_SUBSPACE = false,
+    ENABLE_VOID = true,
     ENABLE_DANGOREUS = false
 }
