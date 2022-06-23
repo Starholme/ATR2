@@ -285,6 +285,8 @@ exports.on_init = function ()
     game.map_settings.pollution.enabled = false
     game.forces["player"].recipes["subspace-electricity-extractor"].enabled = false
     game.forces["player"].recipes["subspace-electricity-injector"].enabled = false
+
+    CONFIG.SOFTMOD_TEXT = CONFIG.SOFTMOD_TEXT .. "Void Space - You get your own space station to build on. Expands with time played!\n"
 end
 
 exports.on_player_created = function (player)
