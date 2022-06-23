@@ -283,8 +283,9 @@ exports.on_init = function ()
 
     global.atr_void = {players = {}}
     game.map_settings.pollution.enabled = false
-    game.forces["player"].recipes["subspace-electricity-extractor"].enabled = false
-    game.forces["player"].recipes["subspace-electricity-injector"].enabled = false
+    game.forces.player.recipes["subspace-electricity-extractor"].enabled = false
+    game.forces.player.recipes["subspace-electricity-injector"].enabled = false
+    game.forces.player.friendly_fire = true --Let there be train kills/nuke oops
 
     CONFIG.SOFTMOD_TEXT = CONFIG.SOFTMOD_TEXT .. "Void Space - You get your own space station to build on. Expands with time played!\n"
 end

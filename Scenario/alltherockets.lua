@@ -24,15 +24,13 @@ local exports = {
 }
 
 function exports.on_init(event)
+    game.forces.player.research_queue_enabled = CONFIG.ENABLE_RESEARCH_QUEUE
+    game.forces.player.friendly_fire = CONFIG.FRIENDLY_FIRE
+
     spawn.setup()
     split_spawn.on_init()
     subspace.on_init()
     void.on_init()
-
-    --Does this belong somewhere else?
-    game.forces.player.research_queue_enabled = CONFIG.ENABLE_RESEARCH_QUEUE
-    game.forces.player.friendly_fire = CONFIG.FRIENDLY_FIRE
-
     dore.on_init(event)
 end
 

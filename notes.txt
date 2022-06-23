@@ -39,8 +39,5 @@ TODO:
 	Soft mod autofill
 		on entity placed, check owner for ammo?
 	
-	Private world
-		Hint to expand!
-			Hold a fish
-			Dolphin takes a fish
-			Fill nearby chunk
+	Void space
+		Random meteors? Smash a random chunk back to void? or too harsh?
