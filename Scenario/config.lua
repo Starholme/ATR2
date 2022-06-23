@@ -15,14 +15,15 @@ return {
     CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
 
     --Specific to this instance--
-    SERVER_TEXT = "Twice as dangoreus.",
-    MAP_INFO = "Max Danger Ores!",
+    SERVER_TEXT = "SHORT DESC",
+    MAP_INFO = "LONG DESC",
 
-    TEST_MODE = false,
+    TEST_MODE = true,
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
 
     ENABLE_SPLIT_SPAWN = false,
     ENABLE_SUBSPACE = false,
+    ENABLE_VOID = true, --You probably want to blacklist steam and subspace electrical injector/extractors
     ENABLE_DANGOREUS = false
 }
