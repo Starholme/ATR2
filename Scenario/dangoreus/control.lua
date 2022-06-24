@@ -637,6 +637,8 @@ end
 
 function exports.on_init(event)
     if not CONFIG.ENABLE_DANGOREUS then return end
+
+    game.draw_resource_selection = false
     divOresity_init()
     perlin.shuffle()
 end
