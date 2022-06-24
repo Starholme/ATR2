@@ -1,6 +1,6 @@
 return {
     --Common across all servers--
-    VERSION = "V1.6.1",
+    VERSION = "V1.7.0",
     SCENARIO_TEXT =
     "ATR is a cooperative game that is intended to provide some continuity across map resets. \n" ..
     "Rules: Be polite. Ask before changing other player's stuff. Have fun!",
@@ -15,14 +15,15 @@ return {
     CONTACT_TEXT = "See stats and server info at https://AllTheRockets.duckdns.org | Discord:Starholme#3744",
 
     --Specific to this instance--
-    SERVER_TEXT = "Twice as dangoreus.",
-    MAP_INFO = "Max Danger Ores!",
+    SERVER_TEXT = "SHORT DESC",
+    MAP_INFO = "LONG DESC",
 
-    TEST_MODE = false,
+    TEST_MODE = true,
     ENABLE_RESEARCH_QUEUE = true,
     FRIENDLY_FIRE = false,
 
     ENABLE_SPLIT_SPAWN = false,
     ENABLE_SUBSPACE = false,
+    ENABLE_VOID = true, --You probably want to blacklist steam/water and subspace electrical injector/extractors
     ENABLE_DANGOREUS = false
 }

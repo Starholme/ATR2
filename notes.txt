@@ -13,7 +13,6 @@ TODO:
 				Traditional handmade genuine 
 				Small batch vegan rocket fuel
 				Ammo usage: bullets/rockets/etc.
-					bu
 				Nuclear waste generated (empty fuel cells)
 
 				UPS: rate(clusterio_statistics_exporter_instance_game_ticks_total{job="clusterio"}[3m])
@@ -22,6 +21,11 @@ TODO:
 		cluster root/database folder
 		instance saves
 	
+	Dangoreus
+		Hide ore counts https://lua-api.factorio.com/latest/LuaGameScript.html#LuaGameScript.draw_resource_selection
+		Speech bubble for flore is lave?
+		https://lua-api.factorio.com/latest/LuaSurface.html#LuaSurface.create_entity
+	
 	Soft mod achievements
 		No kill like overkill
 			10 nukes in 10 seconds
@@ -29,19 +33,10 @@ TODO:
 			2k missiles? In a timespan?
 		Bottomless magazines? and/or Gatling Good?
 		Grenade spam?
-		
+		Godzilla Threshold - First nuke launched in an instance
 	
-	Private world
-		Each player gets a 'surface'
-			Pure void
-		Size depends on?
-			time played in the cluster?
-			Some sort of production?
-			Landfill?
-			Energy generated?
-				Needs to contribute in some fashion...
-			*Energy consumed?
-				Don't want an array of radars to work!
-				Maybe just 'energy consumed by assemblers/centrifuges'?
-				Furnaces are 'low tech' and should count for less? 
-				Higher tech outputs should count for more?
+	Soft mod autofill
+		on entity placed, check owner for ammo?
+	
+	Void space
+		Random meteors? Smash a random chunk back to void? or too harsh?
