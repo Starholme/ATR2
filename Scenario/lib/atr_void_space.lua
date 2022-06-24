@@ -12,8 +12,8 @@ local EVENING = 0.3 --Dark, Default 0.45
 local MORNING = 0.75 --Brightening, Default 0.55
 local MIN_BRIGHTNESS = 0.15 --Darkest possible? Default 0.15
 
-local FAST_CHUNKS = 9 --How many chunks to give before slowing down
-local SECONDS_PER_CHUNK = 90 --How many seconds played to earn a new chunk
+local FAST_CHUNKS = 4 --How many chunks to give before slowing down
+local SECONDS_PER_CHUNK = 180 --How many seconds played to earn a new chunk
 
 --REQUIRES--
 local CONFIG = require("config")

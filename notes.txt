@@ -13,7 +13,6 @@ TODO:
 				Traditional handmade genuine 
 				Small batch vegan rocket fuel
 				Ammo usage: bullets/rockets/etc.
-					bu
 				Nuclear waste generated (empty fuel cells)
 
 				UPS: rate(clusterio_statistics_exporter_instance_game_ticks_total{job="clusterio"}[3m])
