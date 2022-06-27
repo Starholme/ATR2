@@ -6,14 +6,15 @@
 local SOLAR_MODIFIER = 5
 local TICKS_PER_DAY = 3600 --one minutes
 --Middle of the day is '0', middle of night is '1'
-local DAWN = 0.8 --Full bright, Default 0.75
-local DUSK = 0.25 --Dimming, Default 0.25
-local EVENING = 0.3 --Dark, Default 0.45
-local MORNING = 0.75 --Brightening, Default 0.55
+--Targeted to about half day, very short night
+local DAWN = 0.55 --Full bright, Default 0.75
+local DUSK = 0.1 --Dimming, Default 0.25
+local EVENING = 0.32 --Dark, Default 0.45
+local MORNING = 0.33 --Brightening, Default 0.55
 local MIN_BRIGHTNESS = 0.15 --Darkest possible? Default 0.15
 
 local FAST_CHUNKS = 4 --How many chunks to give before slowing down
-local SECONDS_PER_CHUNK = 180 --How many seconds played to earn a new chunk
+local SECONDS_PER_CHUNK = 240 --How many seconds played to earn a new chunk
 
 --REQUIRES--
 local CONFIG = require("config")
@@ -104,6 +105,9 @@ local function update_surface_settings(surface)
     surface.solar_power_multiplier = SOLAR_MODIFIER
     --Create a fast day/night cycle
     surface.ticks_per_day = TICKS_PER_DAY
+    --Need to double set these to stop crashing...
+    surface.evening = 0.32
+    surface.morning = 0.33
     surface.dawn = DAWN
     surface.dusk = DUSK
     surface.evening = EVENING
