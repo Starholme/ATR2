@@ -98,6 +98,7 @@ local function create_spawn_area(surface)
     end
     surface.set_tiles(tiles)
     surface.create_entity({name="subspace-item-extractor", position = {top_left.x + 16, top_left.y + 16}, force="player"})
+    remote.call("clusterio","reset")
 end
 
 local function update_surface_settings(surface)
