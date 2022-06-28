@@ -281,6 +281,36 @@ local function on_tick(event)
     end
 end
 
+local function fix_chunk(player_index)
+    --Get caller
+    local caller = game.players[player_index]
+    --Get surface and chunk from caller
+    local surface = caller.surface
+    local position = caller.position
+    game.print("Player " .. caller.name .. " is regenerating tiles at: " .. surface.name .. ":" .. position.x .. ":" .. position.y)
+
+    --Get the target chunk position
+    local chunk = {x = math.floor(position.x / 32), y = math.floor(position.y / 32)}
+
+    --Get the target player global
+    local target_p
+    for k, p in pairs(global.atr_void.players) do
+        if p.surface_name == surface.name then
+            target_p = p
+        end
+    end
+
+    --Add chunk to currently generating tiles
+    target_p.current_chunk = target_p.current_chunk or {}
+    --Generate tile list
+    for x = chunk.x * 32, (chunk.x * 32) + 31 do
+        for y = chunk.y * 32, (chunk.y * 32) + 31 do
+            table.insert(target_p.current_chunk, {x=x, y=y})
+        end
+    end
+
+end
+
 --Holds items that are exported
 local exports = {}
 exports.on_init = function ()
@@ -313,6 +343,16 @@ end
 exports.on_tick = function(event)
     if not CONFIG.ENABLE_VOID then return end
     on_tick(event)
+end
+
+exports.add_commands = function()
+    commands.add_command("atr_void",
+        "/c atr_void fix_chunk - Regenerate the chunk that you are standing on"
+        ,function(command)
+            if command.parameter == "fix_chunk" then
+                fix_chunk(command.player_index)
+            end
+        end)
 end
 
 return exports

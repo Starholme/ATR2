@@ -113,6 +113,7 @@ end
 
 exports.add_commands = function()
     undecorator.add_commands()
+    void.add_commands()
 end
 
 return exports
