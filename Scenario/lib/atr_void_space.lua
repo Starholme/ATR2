@@ -139,7 +139,8 @@ local function on_player_created(player)
         current_chunk = nil,
         total_chunks = 1,
         surface_name = surface_name,
-        last_test = 0
+        --Don't start filling in for a couple seconds, hopefully the chunk is done generation by then
+        last_test = game.tick + 240
     }
 
     add_candidates(player.index, {x=0, y = 0})
@@ -287,10 +288,13 @@ local function fix_chunk(player_index)
     --Get surface and chunk from caller
     local surface = caller.surface
     local position = caller.position
-    game.print("Player " .. caller.name .. " is regenerating tiles at: " .. surface.name .. ":" .. position.x .. ":" .. position.y)
 
     --Get the target chunk position
     local chunk = {x = math.floor(position.x / 32), y = math.floor(position.y / 32)}
+
+    game.print("Player " .. caller.name
+    .. " is regenerating tiles at: " .. surface.name .. ":"
+    .. position.x .. ":" .. position.y .. " chunk " .. chunk.x .. ":" .. chunk.y)
 
     --Get the target player global
     local target_p
@@ -301,7 +305,7 @@ local function fix_chunk(player_index)
     end
 
     --Add chunk to currently generating tiles
-    target_p.current_chunk = target_p.current_chunk or {}
+    if not target_p.current_chunk then target_p.current_chunk = {} end
     --Generate tile list
     for x = chunk.x * 32, (chunk.x * 32) + 31 do
         for y = chunk.y * 32, (chunk.y * 32) + 31 do
