@@ -124,6 +124,19 @@
             </div>
           </div>
 
+          <div class="col">
+            <div class="card h-100 bg-dark border-success">
+              <div class="card-body">
+                <h5 class="card-title">World 6 <span class="badge bg-success">Active</span></h5>
+                <p>
+                  Most of the Rockets!<br/>
+                  This is where we launch rockets. This world runs all the time to eat up rocket parts, low density structure, rocket fuel, and satellites.
+                </p>
+                <div class="server" data-instanceid="2030805784"></div>
+              </div>
+            </div>
+          </div>
+
           <!--Dying Template
           <div class="col">
             <div class="card h-100 bg-dark border-danger">
@@ -332,7 +345,7 @@
 
           //Top badges bar
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_player_count)', $('#online_players'), StatsUpdater.TYPES.SPAN);
-          StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_game_ticks_total)', $('#ticks'), StatsUpdater.TYPES.SPAN, ticksToTime);
+          StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_game_ticks_total{instance_id!="2030805784"})', $('#ticks'), StatsUpdater.TYPES.SPAN, ticksToTime);
           StatsUpdater.Add('sum(clusterio_subspace_storage_master_inventory)', $('#subspace_stuff'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{name=~".*tree.*|.*trunk.*"})', $('#trees'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
           StatsUpdater.Add('sum(clusterio_statistics_exporter_instance_force_flow_statistics{name=~".*-biter|.*-spitter|.*worm-turret", direction="input"})', $('#enemies'), StatsUpdater.TYPES.SPAN, abbreviateNumber);
