@@ -1,0 +1,10 @@
+{
+    "name": "atr",
+    "version": "0.0.1",
+    "title": "All The Rockets",
+    "description": "This is the mod component for All The Rockets",
+    "author": "Starholme",
+    "factorio_version": "1.1",
+    "dependencies": ["base"],
+    "homepage": "https://alltherockets.duckdns.org/"
+  }
