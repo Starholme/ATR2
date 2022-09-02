@@ -448,10 +448,14 @@
 
 
         const SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
-        function abbreviateNumber(number){
+        function abbreviateNumber(number, tierModifier = 0){
 
             // what tier? (determines SI symbol)
             var tier = Math.log10(Math.abs(number)) / 3 | 0;
+
+            //Adjust the tier if requested
+            tier = tier + tierModifier;
+            if (tier < 0) tier = 0;
 
             // if zero, we don't need a suffix
             if(tier == 0) return number;
@@ -469,7 +473,7 @@
 
         function rocketPartsToRocketsLaunched(number){
           number = Math.floor(number / 100);
-          return abbreviateNumber(number);
+          return abbreviateNumber(number, -1);
         }
 
         function ticksToTime(ticks){
