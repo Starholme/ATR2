@@ -47,8 +47,3 @@ TODO:
         --Edit expansion cooldowns
         Expose stats to info button
         /c game.map_settings.enemy_expansion.min_expansion_cooldown = 600
-        
-        
-World 7 - Ghawar
-    Disable placing subspace interactors
-    Build load/unload stations
