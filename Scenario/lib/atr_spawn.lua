@@ -80,13 +80,10 @@ local function build_step_table()
 
     --Instructions
     table.insert(step_table, function (surface)
-        utils.draw_text_tiny("Subspace Storage", -22, 0)
-        utils.draw_text_tiny("This server is attached to all other ATR servers, and shares", -22, 1)
-        utils.draw_text_tiny("items between them.", -22, 2)
-        utils.draw_text_tiny("Look at all the shiny things! -------------->", -12, 5)
-        utils.draw_text_tiny("Search around the map to find subspace stations", -22, 7)
-        utils.draw_text_tiny(" * Retrieval stations are used to request items from storage", -22, 8)
-        utils.draw_text_tiny(" * Injector stations are used to send items to storage", -22, 9)
+        utils.draw_text_tiny("This region is rich in hydrocarbons, with little else to offer.", -22, 0)
+        utils.draw_text_tiny("One large subspace injector train station has been established,", -22, 1)
+        utils.draw_text_tiny("injectors are unable to be placed elsewhere.", -22, 2)
+        utils.draw_text_tiny("Expand. Defend. Refine. Repeat.", -22, 3)
     end)
 
     --Instructions box right
@@ -111,10 +108,9 @@ local function build_step_table()
 
     --Instructions right
     table.insert(step_table, function (surface)
-        utils.draw_text_tiny("Split Spawns", 6, 0)
-        utils.draw_text_tiny("The 'Click for more info' button has more information!", 6, 1)
-        utils.draw_text_tiny(" * You can have your own spawn point", 6, 2)
-        utils.draw_text_tiny(" * You can teleport to your own spawn point at any time", 6, 3)
+        utils.draw_text_tiny("The enemy evolves to resist our weapons, but great resistance to", 6, 0)
+        utils.draw_text_tiny("one type means weakness to another.", 6, 1) 
+        utils.draw_text_tiny("Show them some love and variety.", 6, 2)
     end)
 end
 

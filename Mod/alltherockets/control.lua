@@ -5,9 +5,16 @@
 
 --REQUIRES--
 local adaptive_biters = require("lib/atr_adaptive_biters")
+local undecorate = require("lib/atr_undecorate")
+
+function add_commands()
+    undecorate.add_commands()
+end
 
 script.on_init(function(event)
     adaptive_biters.on_init(event)
+
+    add_commands()
 end)
 
 script.on_event(defines.events.on_entity_died, function(event)
@@ -21,4 +28,5 @@ end)
 
 script.on_event(defines.events.on_tick, function(event)
     if (event.tick % adaptive_biters.on_tick_modulus == 0) then adaptive_biters.on_tick(event) end
+    if (event.tick % undecorate.on_tick_modulus == 0) then undecorate.on_tick(event) end
 end)

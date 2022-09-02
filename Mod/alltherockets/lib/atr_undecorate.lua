@@ -1,5 +1,5 @@
 --CONSTANTS--
-local REMOVE_PERCENT = 0.99 --1 is 100%, 0.95 is 95%, etc.
+--local ABC = 123
 
 --REQUIRES--
 --local req = require("whatever")
@@ -10,7 +10,20 @@ local exports = {}
 --Variables and functions should be named lowecase with underscores
 --Constants should be all uppercase with underscores
 
-function exports.undecorate(event)
+function nuke_check(surface, area)
+    local found_tiles = surface.find_tiles_filtered{area = area, name="nuclear-ground"}
+    
+    --Pick one at random
+    local count = table_size(found_tiles)
+    if count == 0 then return end
+    local rnd_tile = found_tiles[math.random(count)]
+
+    local tiles = {}
+    table.insert(tiles, {name="water-shallow", position = rnd_tile.position})
+    surface.set_tiles(tiles)
+end
+
+exports.on_tick = function (event)
     local surface = game.get_surface("nauvis")
     local rnd_chunk = surface.get_random_chunk()
 
@@ -19,6 +32,7 @@ function exports.undecorate(event)
 
     --Get all the decoratives in the chunk
     local area = {{x=rnd_chunk.x * 32, y=rnd_chunk.y * 32},{x=(rnd_chunk.x+1) * 32, y=(rnd_chunk.y+1) * 32}}
+    nuke_check(surface, area)
     local decoratives = surface.find_decoratives_filtered{area = area}
 
     --Pick one at random
@@ -36,6 +50,7 @@ function exports.undecorate(event)
 
     surface.destroy_decoratives{position = rnd_decorative.position}
 end
+exports.on_tick_modulus = 10
 
 function exports.add_commands()
     commands.add_command("atr_undecorate", nil, function(command)
@@ -44,3 +59,9 @@ function exports.add_commands()
 end
 
 return exports
+
+
+--/c local spec_decoratives = game.surfaces['nauvis'].find_decoratives_filtered{position = game.player.position} 
+--for k, v in pairs(spec_decoratives) do game.print(v.decorative.name) end
+
+--/c local spec_decoratives = game.surfaces['nauvis'].find_entities{area = {game.player.position.x-10,game.player.position.y-10},{game.player.position.x+10,game.player.position.y+10}}  for k, v in pairs(spec_decoratives) do game.print(v.name) end
