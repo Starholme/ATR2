@@ -22,7 +22,6 @@ TODO:
 		instance saves
 	
 	Dangoreus
-		Hide ore counts https://lua-api.factorio.com/latest/LuaGameScript.html#LuaGameScript.draw_resource_selection
 		Speech bubble for flore is lave?
 		https://lua-api.factorio.com/latest/LuaSurface.html#LuaSurface.create_entity
 	
@@ -40,3 +39,9 @@ TODO:
 	
 	Void space
 		Random meteors? Smash a random chunk back to void? or too harsh?
+        
+    Fancy terrain generation: https://mods.factorio.com/mod/ctg
+    
+    Adaptive biters
+        Adjust force damage bonus to simulate damage resistance
+        
