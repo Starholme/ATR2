@@ -44,4 +44,6 @@ TODO:
     
     Adaptive biters
         Adjust force damage bonus to simulate damage resistance
-        
+        --Edit expansion cooldowns
+        Expose stats to info button
+        /c game.map_settings.enemy_expansion.min_expansion_cooldown = 600
