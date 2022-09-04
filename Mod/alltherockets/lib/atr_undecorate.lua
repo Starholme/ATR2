@@ -34,10 +34,4 @@ exports.on_tick = function (event)
 end
 exports.on_tick_modulus = 10
 
-function exports.add_commands()
-    commands.add_command("atr_undecorate", nil, function(command)
-        game.get_player(command.player_index).print("Decoratives removed:"..global.atr_undecorate)
-    end)
-end
-
 return exports

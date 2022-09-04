@@ -8,11 +8,6 @@ local adaptive_biters = require("lib/atr_adaptive_biters")
 local undecorate = require("lib/atr_undecorate")
 local nuke_crater = require("lib/atr_nuke_crater")
 
-function add_commands()
-    undecorate.add_commands()
-end
-add_commands()
-
 script.on_init(function(event)
     adaptive_biters.on_init(event)
 

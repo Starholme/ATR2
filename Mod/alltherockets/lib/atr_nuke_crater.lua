@@ -48,12 +48,12 @@ local function add_crater(tile, tick, surface)
     --Is this a crater that we already know about?
     for k,v in pairs(craters) do
         if crater_id == v.crater_id then 
-            game.print("duplicate crater")
+            --game.print("duplicate crater")
             return 
         end
     end
 
-    game.print("new crater:"..crater_id.." tiles:"..table_size(found_tiles))
+    --game.print("new crater:"..crater_id.." tiles:"..table_size(found_tiles))
 
     local crater = {tick = tick, tiles = {}, crater_id = crater_id}
     for k,v in pairs(found_tiles) do
@@ -64,7 +64,7 @@ local function add_crater(tile, tick, surface)
 end
 
 local function look_for_crater(surface, tick)
-    game.print("looking for crater")
+    --game.print("looking for crater")
     --Check for 'any' nuke tiles in a random chunk
     local rnd_chunk = surface.get_random_chunk()
 
@@ -77,7 +77,7 @@ local function look_for_crater(surface, tick)
 
     --If at least one found, save as a crater
     if count > 0 then
-        game.print("found crater")
+        --game.print("found crater")
         add_crater(found_tiles[1].position, tick, surface)
     end
 
