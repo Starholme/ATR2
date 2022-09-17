@@ -39,6 +39,9 @@ TODO:
 	
 	Void space
 		Random meteors? Smash a random chunk back to void? or too harsh?
+       
+    Instead of pausing the server, let some run slow?
+        https://lua-api.factorio.com/latest/LuaGameScript.html#LuaGameScript.speed
         
     Fancy terrain generation: https://mods.factorio.com/mod/ctg
     
@@ -47,3 +50,28 @@ TODO:
         --Edit expansion cooldowns
         Expose stats to info button
         /c game.map_settings.enemy_expansion.min_expansion_cooldown = 600
+        
+    The Bunker server - multi surfaces!:
+    Bloodbath and beyond - guns, tanks, power armor, just not ammo
+    The Ammo Dump - just ammo
+        red/green bullets
+        blue shotgun shells
+        cannon shells
+        arty shells
+        Rockets, explosive, atomic
+        Flamethrower ammo
+        Grenades, land mines, poison/slow
+        Defenders/distractors/destroyers
+    Gnome depot
+        Mall? - Only other finished products?
+        Flooring options
+        
+    Mods:
+        https://mods.factorio.com/mod/AutoDeconstruct
+        https://mods.factorio.com/mod/Todo-List
+        https://mods.factorio.com/mod/deadlock-beltboxes-loaders
+        https://mods.factorio.com/mod/space-exploration-official-modpack
+        https://mods.factorio.com/mod/nixie-tubes
+        https://mods.factorio.com/mod/FuelTrainStop
+        https://mods.factorio.com/mod/RealisticReactors
+    
