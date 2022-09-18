@@ -51,6 +51,10 @@ TODO:
         Expose stats to info button
         /c game.map_settings.enemy_expansion.min_expansion_cooldown = 600
         
+    Nuke craters
+        Trigger via script effect, see line 42: https://github.com/More-Wrong/Factorio-True-Nukes/blob/master/True-Nukes_0.3.4/prototypes/nukes/data-nuke-explosions.lua
+        and line 340: https://github.com/More-Wrong/Factorio-True-Nukes/blob/master/True-Nukes_0.3.4/control.lua
+        
     The Bunker server - multi surfaces!:
     Bloodbath and beyond - guns, tanks, power armor, just not ammo
     The Ammo Dump - just ammo
