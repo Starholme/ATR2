@@ -110,6 +110,9 @@ local function build_tab(player, tab_pane)
     local force = player.force
 
     local output = "Adaptive biters enabled: " .. tostring(ENABLED)
+    output = output .. "\n"
+    output = output .. "\n 100% means they take normal damage. 0% means they take NO damage."
+    output = output .. "\n"
     output = output .. "\n artillery-shell:" .. string.format("%i", (force.get_ammo_damage_modifier("artillery-shell") + 1 ) * 100) .. "%"
     output = output .. "\n beam:" .. string.format("%i", (force.get_ammo_damage_modifier("beam") + 1) * 100) .. "%"
     output = output .. "\n bullet:" .. string.format("%i", (force.get_ammo_damage_modifier("bullet") + 1) * 100) .. "%"
@@ -142,6 +145,8 @@ exports.on_init = function(event)
             poison = 0
         }
     }
+    --At max evolution, allow expansions every 10 seconds
+    game.map_settings.enemy_expansion.min_expansion_cooldown = 600
 end
 
 exports.on_entity_died = function(event)

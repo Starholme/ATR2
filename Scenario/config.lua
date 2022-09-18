@@ -1,6 +1,6 @@
 return {
     --Common across all servers--
-    VERSION = "V1.8.0",
+    VERSION = "V1.9.0",
     SCENARIO_TEXT =
     "ATR is a cooperative game that is intended to provide some continuity across map resets. \n" ..
     "Rules: Be polite. Ask before changing other player's stuff. Have fun!",
