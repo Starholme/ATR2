@@ -12,6 +12,7 @@ local subspace = require("lib/atr_subspace")
 local test_mode = require("lib/atr_test_mode")
 local vehicle_snap = require("lib/atr_vehicle_snap")
 local void = require("lib/atr_void_space")
+local recipes = require("lib/atr_recipes")
 
 local dore = require("dangoreus/control")
 
@@ -111,6 +112,7 @@ end
 
 exports.add_commands = function()
     void.add_commands()
+    recipes.add_commands()
 end
 
 return exports

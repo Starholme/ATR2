@@ -58,6 +58,7 @@ TODO:
     The Bunker server - multi surfaces!:
     Bloodbath and beyond - guns, tanks, power armor, just not ammo
     The Ammo Dump - just ammo
+        Bullets"R"Us?
         red/green bullets
         blue shotgun shells
         cannon shells
@@ -78,4 +79,22 @@ TODO:
         https://mods.factorio.com/mod/nixie-tubes
         https://mods.factorio.com/mod/FuelTrainStop
         https://mods.factorio.com/mod/RealisticReactors
-    
+    Scripts:
+        Give extractor: /c game.player.insert{name="subspace-item-extractor", count=1}
+        
+        Set area to clean tiles
+/c local killzone = {left_top={-256,-256},right_bottom = {256,256}}
+local surface = game.surfaces["nauvis"]
+surface.destroy_decoratives(killzone)
+
+local tiles = {}
+for dy = -256,256 do
+for dx = -256,256 do
+    if (dx < -25 or dx > 25) or (dy < -10 or dy > 12) then
+        table.insert(tiles, {name = "tutorial-grid", position = {dx,dy}})
+    end
+end
+end
+surface.set_tiles(tiles)
+surface.always_day = true
+surface.show_clouds = false
