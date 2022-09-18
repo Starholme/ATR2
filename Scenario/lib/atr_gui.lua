@@ -67,6 +67,9 @@ local function init_gui_tabs(player, tab_pane)
         tab = gui_utils.add_tab(player, tab_pane, "Spawn")
         split_spawn.build_tab(tab, player, exports)
     end
+    if (remote.interfaces["atr_adaptive_biters"]["build_tab"]) then
+        remote.call("atr_adaptive_biters", "build_tab", player, tab_pane)
+    end
 end
 
 local function refresh_gui_tabs(player)
@@ -78,6 +81,9 @@ local function refresh_gui_tabs(player)
     if CONFIG.ENABLE_SPLIT_SPAWN then
         all_tabs["Spawn_if"].clear()
         split_spawn.build_tab(all_tabs["Spawn_if"], player, exports)
+    end
+    if (remote.interfaces["atr_adaptive_biters"]["build_tab"]) then
+        remote.call("atr_adaptive_biters", "build_tab", player, tab_pane)
     end
 end
 

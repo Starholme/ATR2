@@ -8,6 +8,10 @@ local adaptive_biters = require("lib/atr_adaptive_biters")
 local undecorate = require("lib/atr_undecorate")
 local nuke_crater = require("lib/atr_nuke_crater")
 
+local function add_commands()
+
+end
+
 script.on_init(function(event)
     adaptive_biters.on_init(event)
 
@@ -18,6 +22,10 @@ script.on_event(defines.events.on_entity_died, function(event)
     adaptive_biters.on_entity_died(event)
 end,
 {adaptive_biters.on_entity_died_filter})
+
+script.on_event(defines.events.on_player_created, function(event)
+    
+end)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     adaptive_biters.on_runtime_mod_setting_changed(event)

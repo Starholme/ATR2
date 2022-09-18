@@ -5,7 +5,12 @@ local IMMUNE = settings.global["adaptive-biters-immune"].value
 
 local EVOLVE_AMOUNT = 0.05 --How much to decrease damage modifier at once
 local EVOLVE_MIN = -0.95 --Lowest possible damage modifier
+
+local ATR_GUI = "atr_gui"
+local TAB_ID ="atr_adaptive_biters_if"
 --REQUIRES--
+local mod_gui = require("mod-gui")
+local gui_utils = require("lib/atr_gui_utils")
 
 local function decrement_and_check_modifier(ammo_category, force)
     local modifier = force.get_ammo_damage_modifier(ammo_category)
@@ -88,20 +93,37 @@ local function adjust_ammo_damage_modifiers(damage_type)
         increment_modifier("rocket", force, each)
         increment_modifier("shotgun-shell", force, each)        
     end
---[[ ammo-category
-artillery-shell - physical, explosion
-beam - electric
-bullet - physical
-cannon-shell - physical, explosion
-electric - electric
-flamethrower - fire
-grenade - explosion
-landmine - explosion
-laser - laser
-melee - physical
-rocket - explosion
-shotgun-shell - physical
---]]
+
+end
+
+local function build_tab(player, tab_pane)
+    if not ENABLED then return end
+
+    --Add tab if needed
+    local all_tabs = mod_gui.get_frame_flow(player)[ATR_GUI].atr_if.atr_tabs
+    local tab = all_tabs[TAB_ID]
+    if not tab then
+        --Create the tab
+        tab = gui_utils.add_tab(player, tab_pane, "Adaptive Biters")
+    end
+    tab.clear()
+    local force = player.force
+
+    local output = "Adaptive biters enabled: " .. tostring(ENABLED)
+    output = output .. "\n artillery-shell:" .. string.format("%i", (force.get_ammo_damage_modifier("artillery-shell") + 1 ) * 100) .. "%"
+    output = output .. "\n beam:" .. string.format("%i", (force.get_ammo_damage_modifier("beam") + 1) * 100) .. "%"
+    output = output .. "\n bullet:" .. string.format("%i", (force.get_ammo_damage_modifier("bullet") + 1) * 100) .. "%"
+    output = output .. "\n cannon-shell:" .. string.format("%i", (force.get_ammo_damage_modifier("cannon-shell") + 1) * 100) .. "%"
+    output = output .. "\n electric:" .. string.format("%i", (force.get_ammo_damage_modifier("electric") + 1) * 100) .. "%"
+    output = output .. "\n flamethrower:" .. string.format("%i", (force.get_ammo_damage_modifier("flamethrower") + 1) * 100) .. "%"
+    output = output .. "\n grenade:" .. string.format("%i", (force.get_ammo_damage_modifier("grenade") + 1) * 100) .. "%"
+    output = output .. "\n landmine:" .. string.format("%i", (force.get_ammo_damage_modifier("landmine") + 1) * 100) .. "%"
+    output = output .. "\n laser:" .. string.format("%i", (force.get_ammo_damage_modifier("laser") + 1) * 100) .. "%"
+    output = output .. "\n melee:" .. string.format("%i", (force.get_ammo_damage_modifier("melee") + 1) * 100) .. "%"
+    output = output .. "\n rocket:" .. string.format("%i", (force.get_ammo_damage_modifier("rocket") + 1) * 100) .. "%"
+    output = output .. "\n shotgun-shell:" .. string.format("%i", (force.get_ammo_damage_modifier("shotgun-shell") + 1) * 100) .. "%"
+
+    gui_utils.add_label(tab, "adaptive_info", output, gui_utils.STYLES.MY_LONGER_LABEL_STYLE)
 end
 
 local exports = {}
@@ -170,6 +192,11 @@ commands.add_command("atr_adaptive_biters", nil, function(command)
     game.player.print(output)
 end)
 
+remote.add_interface("atr_adaptive_biters",
+{
+    build_tab = function(player, tab_pane) build_tab(player, tab_pane) end
+})
+
 return exports
 
 --/c game.print(game.forces["player"].get_ammo_damage_modifier("beam"))
@@ -180,10 +207,8 @@ return exports
 --[[ ammo-category
 artillery-shell - physical, explosion
 beam - electric
-biological - Spitters!
 bullet - physical
 cannon-shell - physical, explosion
-capsule
 electric - electric
 flamethrower - fire
 grenade - explosion
@@ -192,7 +217,7 @@ laser - laser
 melee - physical
 rocket - explosion
 shotgun-shell - physical
-*/
+
 
 /* Damage type
 acid
