@@ -83,7 +83,7 @@ local function refresh_gui_tabs(player)
         split_spawn.build_tab(all_tabs["Spawn_if"], player, exports)
     end
     if (remote.interfaces["atr_adaptive_biters"]["build_tab"]) then
-        remote.call("atr_adaptive_biters", "build_tab", player, tab_pane)
+        remote.call("atr_adaptive_biters", "build_tab", player, all_tabs)
     end
 end
 

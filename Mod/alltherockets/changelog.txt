@@ -3,6 +3,7 @@ Version: 1.9.1
 Date: 2022.09.22
   Changes:
     - Nuke craters more efficient, smaller water puddle
+    - Fixed crash on adaptive biters gui
 ---------------------------------------------------------------------------------------------------
 Version: 1.9.0
 Date: 2022.09.18

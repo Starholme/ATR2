@@ -100,12 +100,7 @@ local function build_tab(player, tab_pane)
     if not ENABLED then return end
 
     --Add tab if needed
-    local all_tabs = mod_gui.get_frame_flow(player)[ATR_GUI].atr_if.atr_tabs
-    local tab = all_tabs[TAB_ID]
-    if not tab then
-        --Create the tab
-        tab = gui_utils.add_tab(player, tab_pane, "Adaptive Biters")
-    end
+    local tab = gui_utils.get_tab(player, tab_pane, "Adaptive Biters")
     tab.clear()
     local force = player.force
 

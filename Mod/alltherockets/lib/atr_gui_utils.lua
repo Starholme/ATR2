@@ -108,6 +108,16 @@ function exports.add_tab(player, tab_pane, name)
     return tab_inside_frame
 end
 
+function exports.get_tab(player, tab_pane, name)
+    local all_tabs = tab_pane
+    local tab = all_tabs[name.."_if"]
+    if not tab then
+        --Create the tab
+        tab = exports.add_tab(player, tab_pane, name)
+    end
+    return tab
+end
+
 function exports.add_spacer_line(gui)
     apply_style(gui.add{type = "line", direction="horizontal"}, STYLES.MY_SPACER_STYLE)
 end
