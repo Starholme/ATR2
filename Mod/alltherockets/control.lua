@@ -31,6 +31,10 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     adaptive_biters.on_runtime_mod_setting_changed(event)
 end)
 
+script.on_event(defines.events.on_script_trigger_effect, function(event)
+    nuke_crater.on_script_trigger_effect(event)
+end)
+
 script.on_event(defines.events.on_tick, function(event)
     if (event.tick % adaptive_biters.on_tick_modulus == 0) then adaptive_biters.on_tick(event) end
     if (event.tick % undecorate.on_tick_modulus == 0) then undecorate.on_tick(event) end

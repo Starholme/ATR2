@@ -1,5 +1,6 @@
 --CONSTANTS--
-local BLAST_RADIUS = 48
+local BLAST_RADIUS = 3
+local BLAST_OBLONGITY = 0
 local REPLACE_TILES = 2
 local MIN_CRATER_AGE = 60 * 60
 
@@ -18,15 +19,26 @@ local function fill_crater(surface, tick)
     --Check age
     if crater.tick + MIN_CRATER_AGE > tick then return end
 
-    --Remove some tiles
-    
-    --Replace one tile with water
-    local nuke_tiles = crater.tiles
+    local position = crater.position or {x = 0, y= 0}
+    local left = {x = position.x - (BLAST_OBLONGITY + 1), y = position.y}
+    local right = {x = position.x + BLAST_OBLONGITY, y = position.y}
+
+    --Look for tiles
+    local nuke_tiles = surface.find_tiles_filtered{position = left, name = "nuclear-ground", radius = BLAST_RADIUS}
+    local right_tiles = surface.find_tiles_filtered{position = right, name = "nuclear-ground", radius = BLAST_RADIUS}
+    --game.print("looking at: "..position.x..":"..position.y)
+
+    --Combine both to get a 'oblong' shape
+    for k,v in pairs(right_tiles) do
+        table.insert(nuke_tiles, v)
+    end
+
+    --Remove some tiles    
     count = table_size(nuke_tiles)
 
     local tiles = {}
     for i=1,REPLACE_TILES do
-        table.insert(tiles, {name="water-shallow", position = table.remove(nuke_tiles, math.random(count))})
+        table.insert(tiles, {name="water-shallow", position = table.remove(nuke_tiles, math.random(count)).position})
         count = count - 1
         if count < 1 then break end
     end
@@ -38,49 +50,17 @@ local function fill_crater(surface, tick)
     end
 end
 
-local function add_crater(tile, tick, surface)
-    local craters = global.atr_nuke_crater
-    
-    --Search for tiles that could be in the blast radius
-    local found_tiles = surface.find_tiles_filtered{position = tile, name = "nuclear-ground", radius = BLAST_RADIUS}
-
-    local crater_id = found_tiles[1].position.x..":"..found_tiles[1].position.y
-    --Is this a crater that we already know about?
-    for k,v in pairs(craters) do
-        if crater_id == v.crater_id then 
-            --game.print("duplicate crater")
-            return 
-        end
-    end
-
-    --game.print("new crater:"..crater_id.." tiles:"..table_size(found_tiles))
-
-    local crater = {tick = tick, tiles = {}, crater_id = crater_id}
-    for k,v in pairs(found_tiles) do
-        table.insert(crater.tiles, v.position)
-    end
-    --Add to list of craters
-    table.insert(craters, crater)
-end
-
-local function look_for_crater(surface, tick)
+local function look_for_crater(event)
     --game.print("looking for crater")
-    --Check for 'any' nuke tiles in a random chunk
-    local rnd_chunk = surface.get_random_chunk()
+    local surface = game.surfaces[event.surface_index]
+    local tick = event.tick
+    local position = event.target_position
+    local craters = global.atr_nuke_crater
 
-    --If 0,0 then no chunks are ready
-    if rnd_chunk.x == 0 and rnd_chunk.y == 0 then return end
-
-    local area = {{x=rnd_chunk.x * 32, y=rnd_chunk.y * 32},{x=(rnd_chunk.x+1) * 32, y=(rnd_chunk.y+1) * 32}}
-    local found_tiles = surface.find_tiles_filtered{area = area, name="nuclear-ground"}
-    local count = table_size(found_tiles)
-
-    --If at least one found, save as a crater
-    if count > 0 then
-        --game.print("found crater")
-        add_crater(found_tiles[1].position, tick, surface)
-    end
-
+    --Create a crater and add to the list
+    local crater_id = position.x..":"..position.y
+    local crater = {tick = tick, crater_id = crater_id, position = position}
+    table.insert(craters, crater)
 end
 
 exports.on_tick = function (event)
@@ -88,11 +68,17 @@ exports.on_tick = function (event)
     global.atr_nuke_crater = global.atr_nuke_crater or {}
 
     local surface = game.get_surface("nauvis")
-    
-    look_for_crater(surface, event.tick)
 
     fill_crater(surface, event.tick)
 end
 exports.on_tick_modulus = 10
+
+exports.on_script_trigger_effect = function (event)
+    --Ensure the global exists
+    global.atr_nuke_crater = global.atr_nuke_crater or {}
+
+    game.print(event.effect_id .. event.target_position.x .. event.target_position.y)
+    look_for_crater(event)
+end
 
 return exports
