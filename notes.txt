@@ -59,6 +59,13 @@ TODO:
     Bloodbath and beyond - guns, tanks, power armor, just not ammo
     The Ammo Dump - just ammo
         Bullets"R"Us?
+        Due to price increase on ammo, do not expect a warning shot!
+        No background checks for medieval artillery
+        There is no overkill. Only 'Open fire!' and 'Reloading!'
+        A bullet may have your name on it, but a grenade is addressed 'To Whom It May Concern'
+        Nuclear weapons may only be exchanged for in-store credit.
+        All merchandise is provided 'as is' without warranty of any kind. All damages are the responsibility of the user.
+        
         red/green bullets
         blue shotgun shells
         cannon shells
@@ -80,7 +87,7 @@ TODO:
         https://mods.factorio.com/mod/FuelTrainStop
         https://mods.factorio.com/mod/RealisticReactors
     Scripts:
-        Give extractor: /c game.player.insert{name="subspace-item-extractor", count=1}
+        Give extractor: /c game.player.insert{name="subspace-item-extractor", count=1} game.player.insert{name="subspace-item-injector", count=1}
         
         Set area to clean tiles
 /c local killzone = {left_top={-256,-256},right_bottom = {256,256}}
