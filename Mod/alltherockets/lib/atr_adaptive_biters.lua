@@ -1,3 +1,5 @@
+local checked_version = false
+
 --CONSTANTS--
 local ENABLED = settings.global["enable-adaptive-biters"].value
 local KILLS_TO_EVOLVE = settings.global["adaptive-biters-kte"].value
@@ -11,6 +13,41 @@ local TAB_ID ="atr_adaptive_biters_if"
 --REQUIRES--
 local mod_gui = require("mod-gui")
 local gui_utils = require("lib/atr_gui_utils")
+
+local function check_version()
+    if checked_version then return end
+    local version = global.atr_adaptive_biters.version or 1
+
+    if version == 1 then
+        global.atr_adaptive_biters = {
+            damage_type = {
+                electric = 0,
+                explosion = 0,
+                fire = 0,
+                laser = 0,
+                physical = 0,
+                acid = 0,
+                impact = 0,
+                poison = 0
+            },
+            damage_type_player = {
+                electric = 0,
+                explosion = 0,
+                fire = 0,
+                laser = 0,
+                physical = 0,
+                acid = 0,
+                impact = 0,
+                poison = 0
+            },
+            version = 2
+        }
+        version = 2
+    end
+
+    global.atr_adaptive_biters.version = version
+    checked_version = true
+end
 
 local function decrement_and_check_modifier(ammo_category, force)
     local modifier = force.get_ammo_damage_modifier(ammo_category)
@@ -33,65 +70,53 @@ local function adjust_ammo_damage_modifiers(damage_type)
     local force = game.forces["player"]
 
     --Get the relevant ammo categories
-    if damage_type == "explosion" then
+    if damage_type == "physical" then
         local amount = 0
-        amount = amount + decrement_and_check_modifier("artillery-shell", force)
-        amount = amount + decrement_and_check_modifier("cannon-shell", force)
-        amount = amount + decrement_and_check_modifier("grenade", force)
-        amount = amount + decrement_and_check_modifier("landmine", force)
-        amount = amount + decrement_and_check_modifier("rocket", force)
-
-        local each = amount / 6
-        increment_modifier("artillery-shell", force, each)
-        increment_modifier("bullet", force, each)
-        increment_modifier("cannon-shell", force, each)
-        increment_modifier("flamethrower", force, each)
-        increment_modifier("laser", force, each)
-        increment_modifier("shotgun-shell", force, each)
-
-    elseif damage_type == "physical" then
-        local amount = 0
-        amount = amount + decrement_and_check_modifier("artillery-shell", force)
         amount = amount + decrement_and_check_modifier("bullet", force)
-        amount = amount + decrement_and_check_modifier("cannon-shell", force)
-        amount = amount + decrement_and_check_modifier("shotgun-shell", force)
 
-        local each = amount / 7
-        increment_modifier("artillery-shell", force, each)
-        increment_modifier("cannon-shell", force, each)
+        local each = amount / 2
         increment_modifier("flamethrower", force, each)
-        increment_modifier("grenade", force, each)
-        increment_modifier("landmine", force, each)
         increment_modifier("laser", force, each)
-        increment_modifier("rocket", force, each)
 
     elseif damage_type == "fire" then
         local amount = 0
         amount = amount + decrement_and_check_modifier("flamethrower", force)
 
-        local each = amount / 8
-        increment_modifier("artillery-shell", force, each)
+        local each = amount / 2
         increment_modifier("bullet", force, each)
-        increment_modifier("cannon-shell", force, each)
-        increment_modifier("grenade", force, each)
-        increment_modifier("landmine", force, each)
         increment_modifier("laser", force, each)
-        increment_modifier("rocket", force, each)
-        increment_modifier("shotgun-shell", force, each)
 
     elseif damage_type == "laser" then
         local amount = 0
         amount = amount + decrement_and_check_modifier("laser", force)
 
-        local each = amount / 8
-        increment_modifier("artillery-shell", force, each)
+        local each = amount / 2
         increment_modifier("bullet", force, each)
-        increment_modifier("cannon-shell", force, each)
         increment_modifier("flamethrower", force, each)
+    end
+end
+
+local function adjust_ammo_damage_modifiers_player(damage_type)
+    local force = game.forces["player"]
+
+    --Get the relevant ammo categories
+    if damage_type == "explosion" then
+        local amount = 0
+        amount = amount + decrement_and_check_modifier("grenade", force)
+        amount = amount + decrement_and_check_modifier("rocket", force)
+
+        local each = amount / 2
+        increment_modifier("cannon-shell", force, each)
+        increment_modifier("shotgun-shell", force, each)
+
+    elseif damage_type == "physical" then
+        local amount = 0
+        amount = amount + decrement_and_check_modifier("cannon-shell", force)
+        amount = amount + decrement_and_check_modifier("shotgun-shell", force)
+
+        local each = amount / 2
         increment_modifier("grenade", force, each)
-        increment_modifier("landmine", force, each)
         increment_modifier("rocket", force, each)
-        increment_modifier("shotgun-shell", force, each)        
     end
 
 end
@@ -138,7 +163,18 @@ exports.on_init = function(event)
             acid = 0,
             impact = 0,
             poison = 0
-        }
+        },
+        damage_type_player = {
+            electric = 0,
+            explosion = 0,
+            fire = 0,
+            laser = 0,
+            physical = 0,
+            acid = 0,
+            impact = 0,
+            poison = 0
+        },
+        version = 2
     }
     --At max evolution, allow expansions every 10 seconds
     game.map_settings.enemy_expansion.min_expansion_cooldown = 600
@@ -146,8 +182,16 @@ end
 
 exports.on_entity_died = function(event)
     if not ENABLED then return end
-    --game.print(event.damage_type.name)
-    global.atr_adaptive_biters.damage_type[event.damage_type.name] = global.atr_adaptive_biters.damage_type[event.damage_type.name] + 1
+    check_version()
+    --game.print(event.cause.name)
+    if event.cause ~= nil and 
+            event.cause.name == "character" or
+            event.cause.name == "spidertron" or
+            event.cause.name == "tank" then
+        global.atr_adaptive_biters.damage_type_player[event.damage_type.name] = global.atr_adaptive_biters.damage_type_player[event.damage_type.name] + 1
+    else
+        global.atr_adaptive_biters.damage_type[event.damage_type.name] = global.atr_adaptive_biters.damage_type[event.damage_type.name] + 1
+    end
 end
 exports.on_entity_died_filter = {filter = "type", type = "unit"}
 
@@ -159,6 +203,7 @@ end
 
 exports.on_tick = function(event)
     if not ENABLED then return end
+    check_version()
     local damage_type = global.atr_adaptive_biters.damage_type
     --Look at the damage type counters
     for k, v in pairs(damage_type) do
@@ -170,10 +215,22 @@ exports.on_tick = function(event)
             adjust_ammo_damage_modifiers(k)
         end
     end
+    local damage_type = global.atr_adaptive_biters.damage_type_player
+    --Look at the damage type counters
+    for k, v in pairs(damage_type) do
+        --Check if it needs to be adjusted
+        if v > KILLS_TO_EVOLVE then
+            --Decrement
+            damage_type[k] = v - KILLS_TO_EVOLVE
+            --Run adjustment
+            adjust_ammo_damage_modifiers_player(k)
+        end
+    end
 end
 exports.on_tick_modulus = 300 --5 seconds
 
 commands.add_command("atr_adaptive_biters", nil, function(command)
+    check_version()
     local output = "Adaptive biters enabled: " .. tostring(ENABLED)
     local force = game.forces["player"]
     
