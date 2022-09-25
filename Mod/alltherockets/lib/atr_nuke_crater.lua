@@ -36,6 +36,12 @@ local function fill_crater(surface, tick)
     --Remove some tiles    
     count = table_size(nuke_tiles)
 
+    --Remove crater if 'done'
+    if (count < 1) then
+        table.remove(craters,1)
+        return
+    end
+
     local tiles = {}
     for i=1,REPLACE_TILES do
         table.insert(tiles, {name="water-shallow", position = table.remove(nuke_tiles, math.random(count)).position})
@@ -77,7 +83,7 @@ exports.on_script_trigger_effect = function (event)
     --Ensure the global exists
     global.atr_nuke_crater = global.atr_nuke_crater or {}
 
-    game.print(event.effect_id .. event.target_position.x .. event.target_position.y)
+    --game.print(event.effect_id .. event.target_position.x .. event.target_position.y)
     look_for_crater(event)
 end
 
