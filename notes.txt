@@ -39,6 +39,9 @@ TODO:
 	
 	Void space
 		Random meteors? Smash a random chunk back to void? or too harsh?
+        Allow teleport to other players?
+        /c game.players['starholme'].teleport({0,0}, game.players['CazuzaCzz'].surface)
+        /atr_void fix_chunk - Regenerate the chunk that you are standing on
        
     Instead of pausing the server, let some run slow?
         https://lua-api.factorio.com/latest/LuaGameScript.html#LuaGameScript.speed

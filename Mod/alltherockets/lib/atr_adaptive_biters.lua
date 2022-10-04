@@ -184,10 +184,10 @@ exports.on_entity_died = function(event)
     if not ENABLED then return end
     check_version()
     --game.print(event.cause.name)
-    if event.cause ~= nil and 
-            event.cause.name == "character" or
+    if event.cause ~= nil and
+            (event.cause.name == "character" or
             event.cause.name == "spidertron" or
-            event.cause.name == "tank" then
+            event.cause.name == "tank") then
         global.atr_adaptive_biters.damage_type_player[event.damage_type.name] = global.atr_adaptive_biters.damage_type_player[event.damage_type.name] + 1
     else
         global.atr_adaptive_biters.damage_type[event.damage_type.name] = global.atr_adaptive_biters.damage_type[event.damage_type.name] + 1
